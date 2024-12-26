@@ -49,11 +49,9 @@ export async function signIn(req, res) {
     console.log(success);
     if (success != true)
       return res.status(404).send({ msg: "Email or Password mismatch" });
-    const token = await sign({ user: user._id }, process.env.JWT_KEY, {
-      expiresIn: "24h",
-    });
+    const token = await sign({ userId: user._id }, process.env.JWT_KEY,{expiresIn: "24h"});
     console.log(token);
-    return res.status(201).send({ msg: "successfully logged in" }, token);
+    return res.status(201).send({ msg: "successfully logged in",token});
   } catch (error) {
     return res.status(404).send({ msg: "Error" });
   }

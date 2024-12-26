@@ -1,29 +1,34 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import '../Login/_Login.scss'
 import axios from 'axios'
-const [data,setData] = useState({
-    email:"",
-    password:""
-})
-const handleChange=(e)=>{
-    console.log(e.target.value);
-    setUser((pre)=>({
-        ...pre,[e.target.name]:e.target.value
-    }))
-}
-const handleSubmit= async(e)=>{
-    e.preventDefault();
-    const res = await axios.post("http://localhost:3000/api/login",data,{Headers:{"Content-Type":"application/json"}})
-    console.log(res);
-    if(res.status==200){
-        alert("Success")
-    } 
-    else{
-        alert("Failed")
-    }  
-}
+
+
 const Login = () => {
+    const navigate = useNavigate();
+    const [data,setData] = useState({
+        email:"",
+        password:""
+    })
+    const handleChange=(e)=>{
+        console.log(e.target.value);
+        setData((pre)=>({
+            ...pre,[e.target.name]:e.target.value
+        }))
+    }
+    const handleSubmit= async(e)=>{
+        e.preventDefault();
+        const res = await axios.post("http://localhost:3000/api/signin",data,{headers:{"Content-Type":"application/json"}})
+        console.log(res);
+        if(res.status==201){
+            localStorage.setItem('Auth',res.data.token)
+            alert("Success")
+            navigate("/")
+        } 
+        else{
+            alert("Failed")
+        }  
+    }
   return (
          <div>
         <div className="cards">
