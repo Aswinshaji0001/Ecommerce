@@ -12,7 +12,8 @@ const [data,setData]=useState({
     email:email,
     username:"",
     password:"",
-    cpassword:""
+    cpassword:"",
+    accounttype:""
 })
 const handleChange=(e)=>{
     console.log(e.target.value);
@@ -33,7 +34,7 @@ const handleChange=(e)=>{
     }
   }
   return (
-    <div>
+    <div className='Signup'>
        <div className="cards">
             <div className="card">
                 <div className="image">
@@ -45,6 +46,10 @@ const handleChange=(e)=>{
                         <input type="text" name="username" id='username' placeholder='Username' onChange={handleChange}/>      
                         <input type="password" name="password" id='password' placeholder='Password' onChange={handleChange}/>
                         <input type="password" name="cpassword" id='cpassword' placeholder='CPassword' onChange={handleChange}/>
+                        <select name="accounttype" id="accounttype" className='login' onChange={handleChange}>
+                            <option value="Seller">Seller</option>
+                            <option value="User">User</option>
+                        </select>
                         <button className='button-24'>Sign Up</button>
                     </form>
                 </div>

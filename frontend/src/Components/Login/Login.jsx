@@ -30,7 +30,7 @@ const Login = () => {
         }  
     }
   return (
-         <div>
+         <div className='Login'>
         <div className="cards">
             <div className="card">
                 <div className="image">

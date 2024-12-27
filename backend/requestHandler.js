@@ -14,7 +14,8 @@ const transporter = nodemailer.createTransport({
 
 export async function signUp(req, res) {
   try {
-    const { email, username, password, cpassword } = req.body;
+    const { email, username, password, cpassword, accounttype } = req.body;
+    console.log(req.body);
     if (!(email && username && password && cpassword))
       return res.status(404).send({ msg: "Fields are empty" });
     if (password != cpassword)
@@ -22,7 +23,7 @@ export async function signUp(req, res) {
     bcrypt.hash(password, 10).then((hashedPassword) => {
       console.log(hashedPassword);
       userSchema
-        .create({ email, username, password: hashedPassword })
+        .create({ email, username, password: hashedPassword,accounttype})
         .then(async () => {
           console.log("Success");
           return res.status(201).send({ msg: "Suceess" });

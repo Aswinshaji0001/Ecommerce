@@ -1,16 +1,20 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
 const Home = () => {
+  const navigate = useNavigate();
   const value = localStorage.getItem('Auth');
   const [name,username]=useState("")
   useEffect(()=>{
     getUser();
   },[])
   const getUser=async()=>{
-    const res = await axios.get("http://localhost:3000/api/home",{headers:{"Authorization":`Bearer ${value}`}})
+    if(value){
+      const res = await axios.get("http://localhost:3000/api/home",{headers:{"Authorization":`Bearer ${value}`}})
     if(res.status==200){
       alert("successs")
       username(res.data.username);
@@ -19,7 +23,11 @@ const Home = () => {
       alert("failed")
     }
   }
-    console.log(name);
+  else{
+    navigate("/login")
+  }
+    
+  }
     
   return (
     <div>
