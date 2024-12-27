@@ -33,9 +33,6 @@ const Login = () => {
          <div className='Login'>
         <div className="cards">
             <div className="card">
-                <div className="image">
-                    <img src="email2.jpg" alt="" />
-                </div>
                 <div className="content">
                 <h1>Login</h1>
                     <form action="" onSubmit={handleSubmit}>

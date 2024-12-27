@@ -35,11 +35,18 @@ const handleChange=(e)=>{
   }
   return (
     <div className='Signup'>
-       <div className="cards">
+       <div className="cardss">
+        <div className="cardx">
+
+        
+        <div className="card1">
+            <div className="head">
+                <h2>Welcome to Vogue !</h2>
+            
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At debitis consequatur blanditiis, voluptates consectetur vel, sed omnis accusantium expedita esse molestiae voluptatem nam harum eius provident cupiditate iure id obcaecati!</p>
+            </div>
+        </div>
             <div className="card">
-                <div className="image">
-                    <img src="email2.jpg" alt="" />
-                </div>
                 <div className="content">
                 <h1>Signup</h1>
                     <form id="signup" onSubmit={handleSubmit}>
@@ -53,6 +60,7 @@ const handleChange=(e)=>{
                         <button className='button-24'>Sign Up</button>
                     </form>
                 </div>
+            </div>
             </div>
         </div>
     </div>

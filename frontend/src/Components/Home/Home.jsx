@@ -5,10 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Home = () => {
+const Home = ({setUser,setLogin}) => {
   const navigate = useNavigate();
   const value = localStorage.getItem('Auth');
-  const [name,username]=useState("")
   useEffect(()=>{
     getUser();
   },[])
@@ -16,8 +15,10 @@ const Home = () => {
     if(value){
       const res = await axios.get("http://localhost:3000/api/home",{headers:{"Authorization":`Bearer ${value}`}})
     if(res.status==200){
+      console.log(res);
       alert("successs")
-      username(res.data.username);
+      setUser(res.data.username);
+      setLogin(res.data.accounttype);
     }
     else{
       alert("failed")
@@ -31,7 +32,7 @@ const Home = () => {
     
   return (
     <div>
-      <h1>HAI {name}</h1>
+      <h1 style={{margin:"auto"}}>DATAS</h1>
     </div>
   )
 }

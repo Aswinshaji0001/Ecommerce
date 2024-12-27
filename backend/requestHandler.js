@@ -140,7 +140,7 @@ export async function Home(req,res) {
       const user = await userSchema.findOne({_id})
       if(!(user))
         return res.status(404).send({msg:"Unauthorized user"})
-      return res.status(200).send({username:user.username})
+      return res.status(200).send({username:user.username,accounttype:user.accounttype})
   }
   catch(error){
     return res.status(404).send({msg:"error"})
