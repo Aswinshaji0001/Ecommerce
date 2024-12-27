@@ -1,5 +1,6 @@
 import React from 'react'
 import '../Nav/Nav.scss'
+import { Link } from 'react-router-dom';
 
 const Nav = ({user,login}) => {
     console.log(user);
@@ -17,7 +18,7 @@ const Nav = ({user,login}) => {
             <h2>{user}</h2>
             </div>
             <div className="login">
-                <h2>{login}</h2>
+                <Link to="/seller"><h2>{login}</h2></Link>
             </div>
         </div>
       </nav>

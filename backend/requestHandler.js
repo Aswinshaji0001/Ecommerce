@@ -1,4 +1,5 @@
 import userSchema from "./models/user.model.js";
+import companySchema from './models/company.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -145,4 +146,52 @@ export async function Home(req,res) {
   catch(error){
     return res.status(404).send({msg:"error"})
   }
+}
+
+export async function Seller(req,res) {
+  try{
+    const _id=req.user.userId;
+    const seller = await companySchema.findOne({sellerId:_id});
+    console.log(seller);
+    const user =await userSchema.findOne({_id});
+    return res.status(201).send({seller,username:user.username,accounttype:user.accounttype})
+  }
+  catch{
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+export async function editSeller(req,res) {
+  try{
+    console.log(req.body);
+    const {...seller}=req.body;
+    const _id =req.user.userId;
+    const sellerd = await companySchema.findOne({sellerId:_id});
+    console.log(sellerd);
+    
+    if(sellerd){
+      const data=await companySchema.updateOne({sellerId:_id},{$set:{...seller}});
+
+    }
+    else{
+      const data = await companySchema.create({...seller,sellerId:_id})
+    }
+    return res.status(201).send({msg:"Edited Success"})        
+}catch(error){
+    res.status(404).send({msg:error})
+}
+}
+
+export async function getSeller(req,res) {
+  try{
+      const _id =req.user.userId;
+    const seller = await companySchema.findOne({sellerId:_id});
+     res.status(201).send(seller)
+  }
+  catch(error){
+    res.status(404).send({msg:error})
+
+  }
+  
 }

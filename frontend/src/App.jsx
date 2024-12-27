@@ -7,7 +7,9 @@ import Email from './Components/Email/Email';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
-import Nav from './Components/Nav/Nav'  
+import Nav from './Components/Nav/Nav';
+import Seller from './Components/Seller/Seller';
+import EditSeller from './Components/EditSeller/EditSeller';
 
 function App() {
   const [user,setUser]=useState(" ")
@@ -22,6 +24,8 @@ function App() {
         <Route path="/email" Component={Email}></Route>
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={Signup}></Route>
+        <Route path='/seller' element={<Seller setUser={setUser} setLogin={setLogin}/> }></Route>
+        <Route path='/editseller' element={<EditSeller setUser={setUser} setLogin={setLogin}/> }></Route>
       </Routes>
       </BrowserRouter>
     </>
