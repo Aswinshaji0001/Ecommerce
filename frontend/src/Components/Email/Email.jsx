@@ -36,7 +36,7 @@ const handleSubmit= async(e)=>{
                 <div className="content">
                 <h1>Email Verification</h1>
                     <form action="" onSubmit={handleSubmit}>
-                        <input type="email" name="email" id='email' onChange={handleChange}/>
+                        <input type="email" name="email" id='email' placeholder='Email' onChange={handleChange}/>
                         <button className='button-24'>Submit</button>
                     </form>
                 </div>

@@ -44,7 +44,6 @@ console.log(seller);
             <div className="content">
                 <h2>{seller.name}</h2>
                 <h2>{seller.location}</h2>
-                <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. In ipsam nemo quasi et quod praesentium, blanditiis dolore minus dolores, molestiae, eligendi provident voluptas obcaecati iure aliquid. Ad, quibusdam ex. Enim.</h3>
             </div>
             <div className='buttons'>
                 <button className='button-3'>Delete</button>
@@ -54,7 +53,7 @@ console.log(seller);
         <div className="right">
             <div className="products">
                 <h1>All Categories</h1>
-                <button className='button-9'>Add Product</button>
+                <Link to="/addproduct"><button className='button-9'>Add Product</button></Link>
             </div>
         </div>
       </div>

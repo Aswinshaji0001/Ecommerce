@@ -1,29 +1,32 @@
-import React from 'react'
-import '../Nav/Nav.scss'
+import React, { useState, useRef, useEffect } from 'react';
+import '../Nav/Nav.scss';
 import { Link } from 'react-router-dom';
 
-const Nav = ({user,login}) => {
-    console.log(user);
+const Nav = ({ user, login }) => {
+
   return (
-    <div className='navbar'>
+    <div className="navbar">
       <nav>
         <div className="left">
-            <h1>VOGUE.COM</h1>
+          <h1 className='bebas-neue-regular'>VOGUE.COM</h1>
         </div>
         <div className="right">
-            <div className="profile">
-                <img src="profile.png" alt="" />
-            </div>
-            <div className="name">
+          <div 
+            className="profile" 
+            
+          > 
+            <img src="profile.png" alt="Profile"/>
+          </div>
+          <div className="name">
             <h2>{user}</h2>
-            </div>
-            <div className="login">
-                <Link to="/seller"><h2>{login}</h2></Link>
-            </div>
+          </div>
+          <div className="login">
+            <Link to="/seller"><h2>{login}</h2></Link>
+          </div>
         </div>
       </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;

@@ -1,5 +1,6 @@
 import userSchema from "./models/user.model.js";
 import companySchema from './models/company.model.js'
+import productSchema from './models/product.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -17,7 +18,7 @@ export async function signUp(req, res) {
   try {
     const { email, username, password, cpassword, accounttype } = req.body;
     console.log(req.body);
-    if (!(email && username && password && cpassword))
+    if (!(email && username && password && cpassword &&accounttype))
       return res.status(404).send({ msg: "Fields are empty" });
     if (password != cpassword)
       return res.status(404).send({ msg: "Password mismatching" });
@@ -194,4 +195,17 @@ export async function getSeller(req,res) {
 
   }
   
+}
+
+export async function addProduct(req,res) {
+  try {
+    const {...product} = req.body;
+    console.log(req.body);
+    const data = await productSchema.create({...product})
+    res.status(201).send({msg:"Sucess"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+ 
 }

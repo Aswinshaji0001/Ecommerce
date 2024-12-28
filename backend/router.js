@@ -9,5 +9,6 @@ router.route("/home").get(Auth,u.Home);
 router.route("/seller").get(Auth,u.Seller);
 router.route("/editseller").post(Auth,u.editSeller);
 router.route("/getseller").get(Auth,u.getSeller)
+router.route("/addproduct").post(u.addProduct)
 
 export default router;

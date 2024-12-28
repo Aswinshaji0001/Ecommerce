@@ -39,13 +39,7 @@ const handleChange=(e)=>{
         <div className="cardx">
 
         
-        <div className="card1">
-            <div className="head">
-                <h2>Welcome to Vogue !</h2>
-            
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At debitis consequatur blanditiis, voluptates consectetur vel, sed omnis accusantium expedita esse molestiae voluptatem nam harum eius provident cupiditate iure id obcaecati!</p>
-            </div>
-        </div>
+       
             <div className="card">
                 <div className="content">
                 <h1>Signup</h1>
@@ -54,6 +48,7 @@ const handleChange=(e)=>{
                         <input type="password" name="password" id='password' placeholder='Password' onChange={handleChange}/>
                         <input type="password" name="cpassword" id='cpassword' placeholder='CPassword' onChange={handleChange}/>
                         <select name="accounttype" id="accounttype" className='login' onChange={handleChange}>
+                            <option value="" >select one option</option>
                             <option value="Seller">Seller</option>
                             <option value="User">User</option>
                         </select>
