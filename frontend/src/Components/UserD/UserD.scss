@@ -1,0 +1,163 @@
+.userd{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    .left{
+            width: 30%;
+            height: 100%;
+            border: 2px solid #8330c2;
+        .card{
+            margin: auto;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            input[type="text"]{
+                padding: 10px;
+                border-radius: 8px;
+                border: none;
+                width: 90%;
+                margin-top: 3%;
+                border: 1px solid black;
+            }
+            input[type="radio"]{
+             
+                border-radius: 8px;
+                border: none;
+                margin: 5%;
+                border: 1px solid black;
+            }
+            .images{
+                width: 250px;
+                height: 250px;
+                margin: auto;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            }
+            .button-24 {
+                width: 90%;
+                 margin-top: 3%;
+                background: #8330c2;
+                border: 1px solid #8330c2;;
+                border-radius: 6px;
+                box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+                box-sizing: border-box;
+                color: #FFFFFF;
+                cursor: pointer;
+                display: inline-block;
+                font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+                font-size: 16px;
+                font-weight: 800;
+                line-height: 16px;
+                min-height: 40px;
+                outline: 0;
+                padding: 12px 14px;
+                text-align: center;
+                text-rendering: geometricprecision;
+                text-transform: none;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                vertical-align: middle;
+                }
+
+                .button-24:hover,
+                .button-24:active {
+                background-color: initial;
+                background-position: 0 0;
+                color: #8330c2;
+                }
+
+                .button-24:active {
+                opacity: .5;
+                }
+
+        }
+    }
+    .right{
+        width: 70%;
+        height: 100%;
+        border: 1px solid black;
+        overflow-y: scroll;
+        .cards{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .cardx{
+                width: 350px;
+                height: 450px;
+                text-align: center;
+                input[type="text"]{
+                    padding: 10px;
+                    border-radius: 8px;
+                    border: none;
+                    width: 90%;
+                    margin-top: 3%;
+                    border: 1px solid black;
+                }
+                .add-button {
+                    background-color: #4CAF50; /* Green background */
+                    color: white; /* White text */
+                    border: none;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    margin-top: 20px;
+                    font-size: 16px;
+                  }
+                  
+                  .add-button:hover {
+                    background-color: #45a049;
+                  }
+                  
+                  .address-card {
+                    margin: 5%;
+                    padding: 20px;
+                    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+                    border-radius: 8px;
+                  }
+                  
+            .buttons{
+                .button-24 {
+                    width: 90%;
+                     margin-top: 3%;
+                    background: #8330c2;
+                    border: 1px solid #8330c2;;
+                    border-radius: 6px;
+                    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+                    box-sizing: border-box;
+                    color: #FFFFFF;
+                    cursor: pointer;
+                    display: inline-block;
+                    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+                    font-size: 16px;
+                    font-weight: 800;
+                    line-height: 16px;
+                    min-height: 40px;
+                    outline: 0;
+                    padding: 12px 14px;
+                    text-align: center;
+                    text-rendering: geometricprecision;
+                    text-transform: none;
+                    user-select: none;
+                    -webkit-user-select: none;
+                    touch-action: manipulation;
+                    vertical-align: middle;
+                    }
+    
+                    .button-24:hover,
+                    .button-24:active {
+                    background-color: initial;
+                    background-position: 0 0;
+                    color: #8330c2;;
+                    }
+    
+                    .button-24:active {
+                    opacity: .5;
+                    }
+                }
+            }
+         }
+    }
+}

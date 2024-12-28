@@ -25,6 +25,7 @@
         align-items: center;
         justify-content: flex-end; // Align right content to the end
         position: relative; // For popover positioning
+        color: white;
   
         // Profile Section
         .profile {
@@ -45,7 +46,11 @@
           width: 50%;
           text-align: center;
           margin: 8%;
-          color: rgb(135, 11, 11);
+          color: white;
+          a{
+            color: white;
+          }
+          text-decoration: none;
         }
       }
     }

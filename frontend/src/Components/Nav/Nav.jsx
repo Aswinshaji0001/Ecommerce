@@ -15,7 +15,7 @@ const Nav = ({ user, login }) => {
             className="profile" 
             
           > 
-            <img src="profile.png" alt="Profile"/>
+            <Link to="/userd"><img src="profile.png" alt="Profile"/></Link>
           </div>
           <div className="name">
             <h2>{user}</h2>

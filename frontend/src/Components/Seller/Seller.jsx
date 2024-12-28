@@ -46,8 +46,8 @@ console.log(seller);
                 <h2>{seller.location}</h2>
             </div>
             <div className='buttons'>
-                <button className='button-3'>Delete</button>
-                <Link to="/editseller"><button className='button-3'>Edit</button></Link>
+                <button className='button-24'>Delete</button>
+                <Link to="/editseller"><button className='button-24'>Edit</button></Link>
             </div>
         </div>
         <div className="right">

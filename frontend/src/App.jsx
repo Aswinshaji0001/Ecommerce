@@ -11,6 +11,7 @@ import Nav from './Components/Nav/Nav';
 import Seller from './Components/Seller/Seller';
 import EditSeller from './Components/EditSeller/EditSeller';
 import AddProduct from './Components/AddProduct/AddProduct'
+import UserD from './Components/UserD/UserD'
 
 function App() {
   const [user,setUser]=useState(" ")
@@ -25,6 +26,7 @@ function App() {
         <Route path="/email" Component={Email}></Route>
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={Signup}></Route>
+        <Route path="/userd" Component={UserD}></Route>
         <Route path='/seller' element={<Seller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/editseller' element={<EditSeller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/addproduct' element={<AddProduct setUser={setUser} setLogin={setLogin}/> }></Route>
