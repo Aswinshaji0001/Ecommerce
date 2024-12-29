@@ -26,7 +26,7 @@ function App() {
         <Route path="/email" Component={Email}></Route>
         <Route path="/login" Component={Login}></Route>
         <Route path="/signup" Component={Signup}></Route>
-        <Route path="/userd" Component={UserD}></Route>
+        <Route path="/userd" element={<UserD setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/seller' element={<Seller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/editseller' element={<EditSeller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/addproduct' element={<AddProduct setUser={setUser} setLogin={setLogin}/> }></Route>

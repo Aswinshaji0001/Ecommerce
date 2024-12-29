@@ -1,13 +1,67 @@
 import React, { useState } from 'react';
 import '../UserD/UserD.scss';
+import axios from 'axios';
+import { useEffect } from 'react';
 
-const UserD = () => {
-  const [addressCards, setAddressCards] = useState([1]); // Initial state with one address card
+const UserD = ({setUser,setLogin}) => {
+  const value = localStorage.getItem('Auth');
+  const [addressCards, setAddressCards] = useState([1]);
 
-  // Function to add a new address card
   const addAddressCard = () => {
     setAddressCards([...addressCards, addressCards.length + 1]);
   };
+  const [isDisabled, setIsDisabled] = useState(true);
+  const toggleInput = () => {
+    setIsDisabled(!isDisabled);
+  };
+  const [data,setData] = useState({
+    userId:"",
+    fname:"",
+    lname:"",
+    mobile:"",
+    gender:""
+  })
+  const [user,getUser] = useState("")
+  useEffect(()=>{
+    getDetails();
+    getData();
+},[])
+const getDetails = async()=>{
+    const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } })
+    if(res.status==201){
+        setUser(res.data.username);
+        setLogin(res.data.accounttype);  
+        setData({userId:res.data._id})
+    }
+    else{
+        alert("error")
+    }
+}
+  const getData=async()=>{
+      const res = await axios.get("http://localhost:3000/api/getuser",{ headers: { "Authorization": `Bearer ${value}` } })
+      console.log(res);
+      getUser(res.data.user)
+      
+  }
+  console.log(user);
+  
+  const handleChange=(e)=>{
+    console.log(e.target.value);
+    setData((pre)=>({
+        ...pre,[e.target.name]:e.target.value
+    }))
+}
+const handleSubmit=async(e)=>{
+  // console.log(data);
+  const res = await axios.post("http://localhost:3000/api/adduser",data,{ headers: { "Authorization": `Bearer ${value}` } })
+  // console.log(res);
+  if(res.status==201){
+    alert("Success")
+  }
+  else{
+    alert(res.data.msg)
+  }
+}
 
   return (
     <div className='userd'>
@@ -17,20 +71,17 @@ const UserD = () => {
           <div className="images">
             <img src="profile.png" alt="Profile" />
           </div>
-          <form action="">
-            <input type="text" placeholder='Fname'/>
-            <input type="text" placeholder='Lname'/>
-            <input type="text" placeholder='Mobile number'/>
+            <input type="text" placeholder='Fname'disabled={isDisabled} name="fname" id='fname' value={user.fname} onChange={handleChange}/>
+            <input type="text" placeholder='Lname' name='lname' disabled={isDisabled} id='lname' value={user.lname} onChange={handleChange}/>
+            <input type="text" placeholder='Mobile number' disabled={isDisabled} name='mobile' id='mobile' value={user.mobile} onChange={handleChange}/>
             <label htmlFor="male">Male</label>
-            <input type="radio" id="male" name="gender" value="male"/>
+            <input type="radio" id="male" disabled={isDisabled} name="gender" value={user.gender}  onChange={handleChange}/>
             <label htmlFor="female">Female</label>
-            <input type="radio" id="female" name="gender" value="female"/>
+            <input type="radio" id="female" disabled={isDisabled} name="gender" value={user.gender} onChange={handleChange}/>
             <div className="buttons">
-              <button className='button-24'>Submit</button>
-              <button className='button-24'>Edit</button>
-              <button className='button-24'>Save</button>
+              <button className='button-24' onClick={handleSubmit}>Save</button>
+              <button className='button-24' onClick={toggleInput}>{isDisabled ? 'Enable' : 'Disable'}</button>
             </div>
-          </form>
         </div>
       </div>
 
