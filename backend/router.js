@@ -12,7 +12,7 @@ router.route("/getseller").get(Auth,u.getSeller)
 router.route("/addproduct").post(u.addProduct)
 router.route("/adduser").post(Auth,u.addUser)
 router.route("/getuser").get(Auth,u.getUser)
-
-
+router.route("/updateuser").put(Auth,u.updateUser)
+router.route("/addaddress").post(Auth,u.addAddress)
 
 export default router;

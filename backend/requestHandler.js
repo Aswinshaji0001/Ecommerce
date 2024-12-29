@@ -2,6 +2,7 @@ import userSchema from "./models/user.model.js";
 import companySchema from './models/company.model.js'
 import productSchema from './models/product.model.js'
 import userDSchema from './models/userdetails.model.js'
+import addressSchema from './models/address.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -215,9 +216,38 @@ export async function addUser(req,res) {
   try {
     const {...user} = req.body;
     console.log(user);
-    const data = await userDSchema.create({...user})
+    const _id =req.user.userId;
+      const data = await userDSchema.create({...user})
+      return res.status(201).send({msg:"Success"})
+    }
+  catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+export async function addAddress(req,res) {
+  try {
+    const {...user} = req.body;
+    console.log(user);
+    const _id =req.user.userId;
+      const data = await addressSchema.create({...user})
+      return res.status(201).send({msg:"Success"})
+    }
+  catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+export async function updateUser(req,res) {
+  try {
+    const _id =req.user.userId;
+    const {...user} = req.body;
+    console.log(req.body);
+    const datas = await userDSchema.updateOne({userId:_id},{$set:{...user}})
     return res.status(201).send({msg:"Success"})
-    
+
   } catch (error) {
     res.status(404).send({msg:error})
 
@@ -229,7 +259,6 @@ export async function  getUser(req,res) {
   try {
         const _id = req.user.userId;
         const user = await userDSchema.findOne({userId:_id});
-        console.log(user);
         return res.status(201).send({msg:"Success",user})
 
   } catch (error) {
@@ -238,3 +267,4 @@ export async function  getUser(req,res) {
   }
   
 }
+

@@ -1,87 +1,210 @@
-import React, { useState } from 'react';
-import '../UserD/UserD.scss';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
+import '../UserD/UserD.scss';
 
-const UserD = ({setUser,setLogin}) => {
+const UserD = ({ setUser, setLogin }) => {
   const value = localStorage.getItem('Auth');
-  const [addressCards, setAddressCards] = useState([1]);
-
-  const addAddressCard = () => {
-    setAddressCards([...addressCards, addressCards.length + 1]);
-  };
+  const [addressCards, setAddressCards] = useState([{
+    housename: '',
+    landmark: '',
+    pincode: '',
+    place: '',
+  }]);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  // State for user data
+  const [data, setData] = useState({
+    userId: "",
+    fname: "",
+    lname: "",
+    mobile: "",
+    gender: "",
+  });
+
+  // Fetch user details from API
+  useEffect(() => {
+    getDetails();
+    getData();
+  }, []);
+
+  const getDetails = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/seller", {
+        headers: { "Authorization": `Bearer ${value}` },
+      });
+      if (res.status === 201) {
+        setUser(res.data.username);
+        setLogin(res.data.accounttype);
+        setData((prevData) => ({ ...prevData, userId: res.data._id }));
+        setAddressCards({userId:res.data.user.userId})
+      } else {
+        alert("Error fetching seller details");
+      }
+    } catch (error) {
+      console.error("Error fetching details:", error);
+    }
+  };
+
+  const getData = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/getuser", {
+        headers: { "Authorization": `Bearer ${value}` },
+      });
+      console.log("User data fetched:", res.data.user); // Debugging log
+      setData({
+        userId: res.data.user.userId,
+        gender: res.data.user.gender || "",
+        fname: res.data.user.fname,
+        lname: res.data.user.lname,
+        mobile: res.data.user.mobile,
+        address: res.data.user.address || [], // Assuming the user data already has addresses
+      });
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const updatedAddressCards = [...addressCards];
+    updatedAddressCards[index][name] = value;
+    setAddressCards(updatedAddressCards);
+  };
+
+  const handleGenderChange = (e) => {
+    setData((prevData) => ({
+      ...prevData,
+      gender: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const updatedData = {
+      data };
+    console.log(updatedData);
+
+    try {
+      let res;
+      if (data.userId) {
+        res = await axios.put("http://localhost:3000/api/updateuser", data, {
+          headers: { "Authorization": `Bearer ${value}` },
+        });
+      } else {
+        res = await axios.post("http://localhost:3000/api/adduser", data, {
+          headers: { "Authorization": `Bearer ${value}` },
+        });
+      }
+
+      if (res.status === 201) {
+        alert("User and addresses saved successfully!");
+      } else {
+        alert(res.data.msg);
+      }
+    } catch (error) {
+      console.error("Error during submission:", error);
+    }
+  };
+
   const toggleInput = () => {
     setIsDisabled(!isDisabled);
   };
-  const [data,setData] = useState({
-    userId:"",
-    fname:"",
-    lname:"",
-    mobile:"",
-    gender:""
-  })
-  const [user,getUser] = useState("")
-  useEffect(()=>{
-    getDetails();
-    getData();
-},[])
-const getDetails = async()=>{
-    const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } })
-    if(res.status==201){
-        setUser(res.data.username);
-        setLogin(res.data.accounttype);  
-        setData({userId:res.data._id})
+
+  const addAddressCard = () => {
+    setAddressCards([
+      ...addressCards,
+      {
+        userId: "",
+        housename: '',
+        landmark: '',
+        pincode: '',
+        place: '',
+      },
+    ]);
+  };
+
+  const handleAddressSubmit = async (index) => {
+    const addressToSubmit = addressCards[index];
+    console.log("Address to be submitted:", addressToSubmit);
+
+    try {
+      const res = await axios.post("http://localhost:3000/api/addaddress", addressToSubmit, {
+        headers: { "Authorization": `Bearer ${value}` },
+      });
+
+      if (res.status === 201) {
+        alert("Address added successfully!");
+      } else {
+        alert("Failed to add address: " + res.data.msg);
+      }
+    } catch (error) {
+      console.error("Error adding address:", error);
+      alert("Error adding address");
     }
-    else{
-        alert("error")
-    }
-}
-  const getData=async()=>{
-      const res = await axios.get("http://localhost:3000/api/getuser",{ headers: { "Authorization": `Bearer ${value}` } })
-      console.log(res);
-      getUser(res.data.user)
-      
-  }
-  console.log(user);
-  
-  const handleChange=(e)=>{
-    console.log(e.target.value);
-    setData((pre)=>({
-        ...pre,[e.target.name]:e.target.value
-    }))
-}
-const handleSubmit=async(e)=>{
-  // console.log(data);
-  const res = await axios.post("http://localhost:3000/api/adduser",data,{ headers: { "Authorization": `Bearer ${value}` } })
-  // console.log(res);
-  if(res.status==201){
-    alert("Success")
-  }
-  else{
-    alert(res.data.msg)
-  }
-}
+  };
 
   return (
-    <div className='userd'>
+    <div className="userd">
       <div className="left">
         <div className="card">
           <h1>User Details</h1>
           <div className="images">
             <img src="profile.png" alt="Profile" />
           </div>
-            <input type="text" placeholder='Fname'disabled={isDisabled} name="fname" id='fname' value={user.fname} onChange={handleChange}/>
-            <input type="text" placeholder='Lname' name='lname' disabled={isDisabled} id='lname' value={user.lname} onChange={handleChange}/>
-            <input type="text" placeholder='Mobile number' disabled={isDisabled} name='mobile' id='mobile' value={user.mobile} onChange={handleChange}/>
-            <label htmlFor="male">Male</label>
-            <input type="radio" id="male" disabled={isDisabled} name="gender" value={user.gender}  onChange={handleChange}/>
-            <label htmlFor="female">Female</label>
-            <input type="radio" id="female" disabled={isDisabled} name="gender" value={user.gender} onChange={handleChange}/>
-            <div className="buttons">
-              <button className='button-24' onClick={handleSubmit}>Save</button>
-              <button className='button-24' onClick={toggleInput}>{isDisabled ? 'Enable' : 'Disable'}</button>
-            </div>
+          <input
+            type="text"
+            placeholder="Fname"
+            disabled={isDisabled}
+            name="fname"
+            value={data.fname}
+            onChange={(e) => setData({ ...data, fname: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Lname"
+            disabled={isDisabled}
+            name="lname"
+            value={data.lname}
+            onChange={(e) => setData({ ...data, lname: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Mobile number"
+            disabled={isDisabled}
+            name="mobile"
+            value={data.mobile}
+            onChange={(e) => setData({ ...data, mobile: e.target.value })}
+          />
+          {/* Gender Radio Buttons */}
+          <label htmlFor="male">Male</label>
+          <input
+            type="radio"
+            id="male"
+            disabled={isDisabled}
+            name="gender"
+            value="male"
+            checked={data.gender === "male"}
+            onChange={handleGenderChange}
+          />
+          <label htmlFor="female">Female</label>
+          <input
+            type="radio"
+            id="female"
+            disabled={isDisabled}
+            name="gender"
+            value="female"
+            checked={data.gender === "female"}
+            onChange={handleGenderChange}
+          />
+
+          <div className="buttons">
+            <button className="button-24" onClick={handleSubmit}>
+              Save
+            </button>
+            <button className="button-24" onClick={toggleInput}>
+              {isDisabled ? "Enable" : "Disable"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -89,26 +212,52 @@ const handleSubmit=async(e)=>{
         <div className="cards">
           <div className="cardx">
             <h1>Address Details</h1>
-            {/* Loop through addressCards state to render each card */}
-            {addressCards.map((card, index) => (
+            {addressCards.map((address, index) => (
               <div key={index} className="address-card">
-                <form action="">
-                  <input type="text" placeholder='Housename'/>
-                  <input type="text" placeholder='Landmark'/>
-                  <input type="text" placeholder='Pincode'/>
-                  <input type="text" placeholder='Place'/>
-                  <div className="buttons">
-                    <button className='button-24'>Submit</button>
-                    <button className='button-24'>Edit</button>
-                    <button className='button-24'>Save</button>
-                  </div>
-                </form>
+                <input
+                  type="text"
+                  placeholder="Housename"
+                  name="housename"
+                  value={address.housename}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <input
+                  type="text"
+                  placeholder="Landmark"
+                  name="landmark"
+                  value={address.landmark}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <input
+                  type="text"
+                  placeholder="Pincode"
+                  name="pincode"
+                  value={address.pincode}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <input
+                  type="text"
+                  placeholder="Place"
+                  name="place"
+                  value={address.place}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                />
+                <div className="buttons">
+                  <button className="button-24" onClick={() => handleAddressSubmit(index)}>
+                    Submit Address
+                  </button>
+                </div>
               </div>
             ))}
-            {/* Plus button to add a new address card */}
-            <button className='add-button' onClick={addAddressCard}>
-              + Add Address
-            </button>
+            <div className="buttons">
+              <button className="button-24" onClick={addAddressCard}>
+                + Add Address
+              </button>
+            </div>
           </div>
         </div>
       </div>

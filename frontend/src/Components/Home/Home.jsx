@@ -22,6 +22,7 @@ const Home = ({setUser,setLogin}) => {
     }
     else{
       alert("failed")
+      navigate("/login")
     }
   }
   else{
