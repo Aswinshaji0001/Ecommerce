@@ -376,3 +376,16 @@ export async function deleteProduct(req,res) {
   }
   
 }
+
+export async function addToCart(req,res) {
+  try {
+    const id =req.user.userId;
+    const {pname,price} = req.body;
+    const data = await categorySchema.create({pname,price})
+    return res.status(201).send({msg:"Success"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}

@@ -10,6 +10,7 @@ const Product = ({ setUser, setLogin }) => {
   const [products, getProducts] = useState({});
   const [mainImage, setMainImage] = useState('');
 
+  })
   useEffect(() => {
     getDetails();
     getProduct();
@@ -46,6 +47,9 @@ const Product = ({ setUser, setLogin }) => {
   const handleThumbnailClick = (image) => {
     setMainImage(image);
   };
+  const AddProduct = async () =>{
+    const res = await axios.post("http://loaclhost:3000/api/addtocart",{pname:products.pname,price:products.price},{ headers: { "Content-Type": "application/json" } });
+  }
 
   return (
     <div className="product">
