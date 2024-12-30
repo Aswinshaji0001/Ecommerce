@@ -1,7 +1,7 @@
 import mongoose, { mongo } from "mongoose";
 
 const categorySchema=new mongoose.Schema({
-    address:{type:Array},
-    userId:{type:String}
+   sellerId:{type:String},
+   category:{type:String}
 });
-export default mongoose.model.address||mongoose.model("address",addressSchema);
+export default mongoose.model.category||mongoose.model("categories",categorySchema);

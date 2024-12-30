@@ -4,12 +4,7 @@ import '../UserD/UserD.scss';
 
 const UserD = ({ setUser, setLogin }) => {
   const value = localStorage.getItem('Auth');
-  const [addressCards, setAddressCards] = useState([{
-    housename: '',
-    landmark: '',
-    pincode: '',
-    place: '',
-  }]);
+  const [addressCards, setAddressCards] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
 
   // State for user data
@@ -36,7 +31,7 @@ const UserD = ({ setUser, setLogin }) => {
         setUser(res.data.username);
         setLogin(res.data.accounttype);
         setData((prevData) => ({ ...prevData, userId: res.data._id }));
-        setAddressCards({userId:res.data.user.userId})
+        setAddressCards(res.data.address.address)
       } else {
         alert("Error fetching seller details");
       }
@@ -66,10 +61,13 @@ const UserD = ({ setUser, setLogin }) => {
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    const updatedAddressCards = [...addressCards];
-    updatedAddressCards[index][name] = value;
-    setAddressCards(updatedAddressCards);
+    setAddressCards((prevCards) => {
+      const updatedAddressCards = [...prevCards];
+      updatedAddressCards[index] = { ...updatedAddressCards[index], [name]: value }; // Correctly update the specific address field
+      return updatedAddressCards;
+    });
   };
+  
 
   const handleGenderChange = (e) => {
     setData((prevData) => ({
@@ -97,7 +95,7 @@ const UserD = ({ setUser, setLogin }) => {
       }
 
       if (res.status === 201) {
-        alert("User and addresses saved successfully!");
+        alert("User saved successfully!");
       } else {
         alert(res.data.msg);
       }
@@ -105,8 +103,12 @@ const UserD = ({ setUser, setLogin }) => {
       console.error("Error during submission:", error);
     }
   };
-
+  console.log(addressCards);
+  
   const toggleInput = () => {
+    setIsDisabled(!isDisabled);
+  };
+  const toggleInputA = () => {
     setIsDisabled(!isDisabled);
   };
 
@@ -114,7 +116,6 @@ const UserD = ({ setUser, setLogin }) => {
     setAddressCards([
       ...addressCards,
       {
-        userId: "",
         housename: '',
         landmark: '',
         pincode: '',
@@ -128,7 +129,7 @@ const UserD = ({ setUser, setLogin }) => {
     console.log("Address to be submitted:", addressToSubmit);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/addaddress", addressToSubmit, {
+      const res = await axios.post("http://localhost:3000/api/addaddress", addressCards, {
         headers: { "Authorization": `Bearer ${value}` },
       });
 
@@ -204,6 +205,7 @@ const UserD = ({ setUser, setLogin }) => {
             <button className="button-24" onClick={toggleInput}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
+            <button className="button-24">Delete</button>
           </div>
         </div>
       </div>
@@ -250,6 +252,10 @@ const UserD = ({ setUser, setLogin }) => {
                   <button className="button-24" onClick={() => handleAddressSubmit(index)}>
                     Submit Address
                   </button>
+                  <button className="button-24" onClick={toggleInputA}>
+              {isDisabled ? "Enable" : "Disable"}
+            </button>
+            <button className="button-24">Delete</button>
                 </div>
               </div>
             ))}

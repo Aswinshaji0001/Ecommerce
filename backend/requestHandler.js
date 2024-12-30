@@ -3,6 +3,7 @@ import companySchema from './models/company.model.js'
 import productSchema from './models/product.model.js'
 import userDSchema from './models/userdetails.model.js'
 import addressSchema from './models/address.model.js'
+import categorySchema from './models/category.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -155,9 +156,9 @@ export async function Seller(req,res) {
   try{
     const _id=req.user.userId;
     const seller = await companySchema.findOne({sellerId:_id});
-    console.log(seller);
     const user =await userSchema.findOne({_id});
-    return res.status(201).send({seller,username:user.username,accounttype:user.accounttype,_id})
+    const address=await addressSchema.findOne({userId:_id})
+    return res.status(201).send({seller,username:user.username,accounttype:user.accounttype,_id,address})
   }
   catch{
     res.status(404).send({msg:error})
@@ -202,8 +203,11 @@ export async function getSeller(req,res) {
 export async function addProduct(req,res) {
   try {
     const {...product} = req.body;
-    console.log(req.body);
-    const data = await productSchema.create({...product})
+      const category = product.category;
+      const id = product.sellerId;
+      console.log(id);
+      const data = await productSchema.create({...product})
+      const datas = await categorySchema.create({sellerId:id,category})
     res.status(201).send({msg:"Sucess"})
   } catch (error) {
     res.status(404).send({msg:error})
@@ -215,7 +219,6 @@ export async function addProduct(req,res) {
 export async function addUser(req,res) {
   try {
     const {...user} = req.body;
-    console.log(user);
     const _id =req.user.userId;
       const data = await userDSchema.create({...user})
       return res.status(201).send({msg:"Success"})
@@ -228,10 +231,14 @@ export async function addUser(req,res) {
 }
 export async function addAddress(req,res) {
   try {
-    const {...user} = req.body;
-    console.log(user);
-    const _id =req.user.userId;
-      const data = await addressSchema.create({...user})
+    const user = req.body;
+    const id =req.user.userId;
+    const check=await addressSchema.findOne({userId:id});
+    if(check){
+      const data = await addressSchema.updateOne({userId:id},{$set:{address:user}})
+    }else{
+      const data = await addressSchema.create({userId:id,address:[user]})
+    }
       return res.status(201).send({msg:"Success"})
     }
   catch (error) {
@@ -244,7 +251,6 @@ export async function updateUser(req,res) {
   try {
     const _id =req.user.userId;
     const {...user} = req.body;
-    console.log(req.body);
     const datas = await userDSchema.updateOne({userId:_id},{$set:{...user}})
     return res.status(201).send({msg:"Success"})
 
@@ -265,6 +271,10 @@ export async function  getUser(req,res) {
     res.status(404).send({msg:error})
 
   }
+  
+}
+
+export async function name(params) {
   
 }
 
