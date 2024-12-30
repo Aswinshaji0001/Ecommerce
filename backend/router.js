@@ -14,5 +14,13 @@ router.route("/adduser").post(Auth,u.addUser)
 router.route("/getuser").get(Auth,u.getUser)
 router.route("/updateuser").put(Auth,u.updateUser)
 router.route("/addaddress").post(Auth,u.addAddress)
+router.route("/addcat").post(u.addCategory)
+router.route("/getcat").get(Auth,u.getCategory)
+router.route("/getproducts").get(Auth,u.getProduct)
+router.route("/getpcat/:category").get(u.getCatProduct)
+router.route("/getallproducts").get(Auth,u.getAllProducts)
+
+
+
 
 export default router;

@@ -205,7 +205,7 @@ const UserD = ({ setUser, setLogin }) => {
             <button className="button-24" onClick={toggleInput}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24">Delete</button>
+            <button className="button-24">Logout</button>
           </div>
         </div>
       </div>

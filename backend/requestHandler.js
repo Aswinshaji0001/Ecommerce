@@ -203,17 +203,26 @@ export async function getSeller(req,res) {
 export async function addProduct(req,res) {
   try {
     const {...product} = req.body;
-      const category = product.category;
-      const id = product.sellerId;
-      console.log(id);
-      const data = await productSchema.create({...product})
-      const datas = await categorySchema.create({sellerId:id,category})
+        const data = await productSchema.create({...product})
     res.status(201).send({msg:"Sucess"})
   } catch (error) {
     res.status(404).send({msg:error})
 
   }
  
+}
+
+export async function getProduct(req,res) {
+  try {
+        const _id = req.user.userId;
+        const data = await productSchema.find({sellerId:_id})
+        console.log(data);
+        return res.status(201).send(data)
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
 }
 
 export async function addUser(req,res) {
@@ -274,7 +283,58 @@ export async function  getUser(req,res) {
   
 }
 
-export async function name(params) {
+export async function addCategory(req,res) {
+    try{
+      console.log(req.body);
+      const {newCategory} = req.body;
+      const category=await categorySchema.findOne({});
+      
+      if (category) {
+        const datas = await categorySchema.updateOne({_id:category._id},{$push:{category:newCategory}})
+      }
+      const datas = await categorySchema.create({category:[newCategory]})
+      return res.status(201).send({msg:"Success"})
+
+    }
+    catch (error){
+      res.status(404).send({msg:error})
+
+    }
+}
+
+export async function getCategory(req,res) {
+  try {
+        const id = req.user.userId;
+        const data = await categorySchema.findOne({});
+        return res.status(201).send(data)
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
   
 }
 
+export async function getCatProduct(req,res) {
+    try {
+          const {category} =req.params;
+          const products = await productSchema.find({category})
+          console.log(products);
+          return res.status(201).send(products)
+    } catch (error) {
+      res.status(404).send({msg:error})
+
+    }
+  
+}
+
+export async function getAllProducts(req,res) {
+  try {
+        const _id = req.user.userId;
+        const products = await productSchema.find({sellerId:_id})
+        return res.status(201).send(products)
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}

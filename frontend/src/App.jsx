@@ -10,8 +10,9 @@ import Signup from './Components/Signup/Signup';
 import Nav from './Components/Nav/Nav';
 import Seller from './Components/Seller/Seller';
 import EditSeller from './Components/EditSeller/EditSeller';
-import AddProduct from './Components/AddProduct/AddProduct'
-import UserD from './Components/UserD/UserD'
+import AddProduct from './Components/AddProduct/AddProduct';
+import UserD from './Components/UserD/UserD';
+import CatProd from './Components/CatProd/CatProd';
 
 function App() {
   const [user,setUser]=useState(" ")
@@ -25,6 +26,7 @@ function App() {
       <Route path="/" element={<Home setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/email" Component={Email}></Route>
         <Route path="/login" Component={Login}></Route>
+        <Route path="/catprod/:category" element={<CatProd setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/signup" Component={Signup}></Route>
         <Route path="/userd" element={<UserD setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/seller' element={<Seller setUser={setUser} setLogin={setLogin}/> }></Route>

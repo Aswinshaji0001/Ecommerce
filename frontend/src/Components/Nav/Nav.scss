@@ -17,6 +17,10 @@
             font-style: normal;
             color: white;
           }
+          a{
+            color: white;
+            text-decoration: none;
+          }
       }
   
       .right {
@@ -49,8 +53,12 @@
           color: white;
           a{
             color: white;
+            text-decoration: none;
           }
-          text-decoration: none;
+          a:hover{
+              color: rgb(196, 164, 211);
+          }
+          
         }
       }
     }

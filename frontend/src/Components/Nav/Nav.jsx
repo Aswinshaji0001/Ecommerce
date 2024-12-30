@@ -8,7 +8,7 @@ const Nav = ({ user, login }) => {
     <div className="navbar">
       <nav>
         <div className="left">
-          <h1 className='bebas-neue-regular'>VOGUE.COM</h1>
+          <Link to="/"><h1 className='bebas-neue-regular'>VOGUE.COM</h1></Link>
         </div>
         <div className="right">
           <div 

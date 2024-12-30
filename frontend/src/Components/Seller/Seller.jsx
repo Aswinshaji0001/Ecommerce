@@ -6,15 +6,17 @@ import { Link } from 'react-router-dom';
 const Seller = ({ setUser, setLogin }) => {
   const [data, getData] = useState({});
   const [seller, getSeller] = useState([]);
-  const [categories, setCategories] = useState([]); // To track the added categories
-  const [showCategoryInput, setShowCategoryInput] = useState(false); // Show/hide category input box
-  const [newCategory, setNewCategory] = useState(''); // Track the new category input
+  const [product,getProduct] = useState([{
+    _id:""
+  }]);
+  const [categories, setCategories] = useState([]); 
   const value = localStorage.getItem('Auth');
 
   useEffect(() => {
     getDetails();
     getSellerD();
     getCategory();
+    getProducts();
   }, []);
 
   const getDetails = async () => {
@@ -23,6 +25,7 @@ const Seller = ({ setUser, setLogin }) => {
       getData(res.data.seller);
       setUser(res.data.username);
       setLogin(res.data.accounttype);
+ 
     } else {
       alert("error");
     }
@@ -38,25 +41,21 @@ const Seller = ({ setUser, setLogin }) => {
   };
 
   const getCategory = async () => {
-    const res = await axios.get("http://localhost:3000/api/getcat");
+    const res = await axios.get("http://localhost:3000/api/getcat", { headers: { "Authorization": `Bearer ${value}` } });
     if (res.status === 201) {
-      setCategories(res.data); // Assuming this response contains categories
+      setCategories(res.data.category); // Assuming this response contains categories
     } else {
       alert("error");
     }
   };
-
-  const handleAddCategory = () => {
-    if (newCategory.trim()) {
-      setCategories([...categories, newCategory]); // Add the new category to the list
-      setNewCategory(''); // Clear the input field
-      setShowCategoryInput(false); // Hide the input field after adding the category
+  const getProducts = async () =>{
+    const res = await axios.get("http://localhost:3000/api/getproducts", { headers: { "Authorization": `Bearer ${value}` } });
+    if(res.status==201){
+      getProduct(res.data)
     }
-  };
-
-  const handleInputChange = (e) => {
-    setNewCategory(e.target.value);
-  };
+    
+  }
+  
 
   return (
     <div className='seller'>
@@ -80,9 +79,20 @@ const Seller = ({ setUser, setLogin }) => {
             <h1>All Categories</h1>
             <div className="add-product-section">
               <Link to="/addproduct"><button className='button-24'>Add Product</button></Link>
+              <div className="catm">
+              {categories.map((cat, index) => (
+
+                <div className="cat">
+                    <div key={index}>
+                      <Link to={`/catprod/${cat}`}><h1>{cat}</h1></Link>
+                    </div>
+             
+                </div>
+                 ))}
               </div>
             </div>
-            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
