@@ -1,25 +1,35 @@
-.home{
-    .center{
+.home {
+    .center {
         height: 100vh;
-        .acard{
+        .acard {
             display: flex;
             align-items: center;
             justify-content: center;
-            .acards{
-                .imxs{
+            flex-wrap: wrap;
+            gap: 20px;  // This adds space between the cards
+
+            .acards {
+                a{
+                    text-decoration: none;
+                    color: white;
+                }
+                .imxs {
                     width: 80px;
                     height: 80px;
                     margin: auto;
-                    img{
+                    img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
+                        border-radius: 100%;
                     }
                 }
-                .contents{
+
+                .contents {
                     margin-top: 5%;
+                   
                 }
-                margin-left: 3%;
+
                 width: 250px;
                 height: 250px;
                 text-align: center;
@@ -28,6 +38,7 @@
                 box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 border-radius: 8px;
+               
             }
         }
     }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Home/Home.scss';
 const Home = ({setUser,setLogin}) => {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ const Home = ({setUser,setLogin}) => {
       <div className="center">
         <div className="acard">
         {products.map((product,index)=>(
-          <div className="acards">
+          <Link to={`/product/${product._id}`}><div className="acards">
             <div className="imxs">
             <img src={product.pimages[0]} alt="" />
             </div>
@@ -56,7 +56,7 @@ const Home = ({setUser,setLogin}) => {
             <h2>{product.price}</h2><hr />
             <h2>{product.category}</h2><hr />
             </div>
-          </div>
+          </div></Link>
           ))}
         </div>
       </div>

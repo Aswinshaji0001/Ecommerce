@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../CatProd/CatProd.scss'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const CatProd = ({ setUser, setLogin }) => {
     const {category} =useParams();
     console.log(category);
@@ -22,6 +23,17 @@ const CatProd = ({ setUser, setLogin }) => {
         }
         
     }
+    const deleteProduct = async(id)=>{
+      const res = await axios.delete(`http://localhost:3000/api/deletep/${id}`)
+      console.log(res);
+      if(res.status==201){
+        alert("Deleted")
+        getProduct();
+      }
+      else{
+        alert("failed")
+      }
+    }
     const getDetails = async () => {
         try {
           const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } });
@@ -36,7 +48,7 @@ const CatProd = ({ setUser, setLogin }) => {
           alert("Failed to fetch seller details");
         }
       };
-    
+
   return (
     <div className='catprod'>
         <div className="main">
@@ -51,6 +63,10 @@ const CatProd = ({ setUser, setLogin }) => {
                     <h2>{product.pname}</h2><hr />
                     <h2>{product.price} </h2><hr />
                     <h2>{product.brand}</h2><hr />
+                    <div className="buttons">
+                      <Link to={`/editproduct/${product._id}`}><button className='button-3'>Edit</button></Link>
+                      <button className='button-4' onClick={()=>deleteProduct(product._id)}>Delete</button>
+                    </div>
                 </div>
                 ))}
             </div>

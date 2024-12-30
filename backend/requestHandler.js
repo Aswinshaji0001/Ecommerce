@@ -338,3 +338,41 @@ export async function getAllProducts(req,res) {
   }
   
 }
+export async function getProductE(req,res) {
+  try{
+    const {id} = req.params;
+    const product = await productSchema.findOne({_id:id});
+    return res.status(201).send(product)
+  }
+  catch(error){
+    res.status(404).send({msg:error})
+  }
+}
+
+export async function editProduct(req,res) {
+  try {
+        const {id} =req.params;
+        const {...product} = req.body;
+        console.log(req.body);
+        const data = await productSchema.updateOne({_id:id},{$set:{...product}})
+        return res.status(201).send({msg:"Success"})
+
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+
+  }
+  
+}
+
+export async function deleteProduct(req,res) {
+  try {
+    const {id} = req.params;
+    const data = await productSchema.deleteOne({_id:id})
+    console.log("deleted");
+    return res.status(201).send({msg:"Sucess"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+  }
+  
+}

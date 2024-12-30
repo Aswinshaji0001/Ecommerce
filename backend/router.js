@@ -18,7 +18,12 @@ router.route("/addcat").post(u.addCategory)
 router.route("/getcat").get(Auth,u.getCategory)
 router.route("/getproducts").get(Auth,u.getProduct)
 router.route("/getpcat/:category").get(u.getCatProduct)
-router.route("/getallproducts").get(Auth,u.getAllProducts)
+router.route("/getallproducts").get(Auth,u.getAllProducts);
+router.route("/getproducte/:id").get(u.getProductE);
+router.route("/editproduct/:id").put(u.editProduct);
+router.route("/deletep/:id").delete(u.deleteProduct);
+
+
 
 
 
