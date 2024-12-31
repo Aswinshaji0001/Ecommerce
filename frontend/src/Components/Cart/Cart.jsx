@@ -54,12 +54,16 @@ const Cart = ({ setUser, setLogin }) => {
     navigate('/checkout');
   };
 
-  // Handle Buy Now for a single item
-  const handleBuyNow = (productId) => {
-    // Here you would typically add the product to a checkout session or proceed to checkout directly
-    alert(`Proceeding to buy product ${productId} now...`);
-    // Redirect to checkout page with the selected product
-    navigate(`/checkout/${productId}`);
+  const handleBuyNow = async(id) => {
+    const res = await axios.delete(`http://localhost:3000/api/deletecart/${id}`)
+    console.log(res);
+    if(res.status==201){
+      alert("Product Purchased")
+      getAllProducts();
+    }
+    else{
+      alert("error")
+    }
   };
 
   return (
@@ -81,7 +85,6 @@ const Cart = ({ setUser, setLogin }) => {
                 <div className="cart-item-info">
                   <h2 className="cart-item-name">{item.pname}</h2>
                   <p className="cart-item-price">₹{item.price}</p>
-                  {/* "Buy Now" Button */}
                   <button className="buy-now-btn" onClick={() => handleBuyNow(item._id)}>
                     Buy Now
                   </button>

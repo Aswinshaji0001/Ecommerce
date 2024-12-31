@@ -9,7 +9,6 @@ const UserD = ({ setUser, setLogin }) => {
 
   // State for user data
   const [data, setData] = useState({
-    userId: "",
     fname: "",
     lname: "",
     mobile: "",
@@ -20,6 +19,7 @@ const UserD = ({ setUser, setLogin }) => {
   useEffect(() => {
     getDetails();
     getData();
+    getAddress();
   }, []);
 
   const getDetails = async () => {
@@ -30,7 +30,6 @@ const UserD = ({ setUser, setLogin }) => {
       if (res.status === 201) {
         setUser(res.data.username);
         setLogin(res.data.accounttype);
-        setData((prevData) => ({ ...prevData, userId: res.data._id }));
         setAddressCards(res.data.address.address)
       } else {
         alert("Error fetching seller details");
@@ -42,23 +41,29 @@ const UserD = ({ setUser, setLogin }) => {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getuser", {
-        headers: { "Authorization": `Bearer ${value}` },
-      });
+      const res = await axios.get("http://localhost:3000/api/getuser", {headers: { "Authorization": `Bearer ${value}` },});
       console.log("User data fetched:", res.data.user); // Debugging log
       setData({
-        userId: res.data.user.userId,
         gender: res.data.user.gender || "",
         fname: res.data.user.fname,
         lname: res.data.user.lname,
         mobile: res.data.user.mobile,
-        address: res.data.user.address || [], // Assuming the user data already has addresses
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
-
+const getAddress = async()=>{
+  const res = await axios.get("http://localhost:3000/api/getaddress", {headers: { "Authorization": `Bearer ${value}` },});
+  if(res.status==201){
+    console.log(res);
+    setAddressCards(res.data.address)
+    
+  }
+  else{
+    alert("Failed")
+  }
+}
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     setAddressCards((prevCards) => {
@@ -78,21 +83,11 @@ const UserD = ({ setUser, setLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedData = {
-      data };
+    const updatedData = {data};
     console.log(updatedData);
 
     try {
-      let res;
-      if (data.userId) {
-        res = await axios.put("http://localhost:3000/api/updateuser", data, {
-          headers: { "Authorization": `Bearer ${value}` },
-        });
-      } else {
-        res = await axios.post("http://localhost:3000/api/adduser", data, {
-          headers: { "Authorization": `Bearer ${value}` },
-        });
-      }
+      const res = await axios.post("http://localhost:3000/api/updateuser", data, {headers: { "Authorization": `Bearer ${value}` },});
 
       if (res.status === 201) {
         alert("User saved successfully!");
@@ -103,7 +98,6 @@ const UserD = ({ setUser, setLogin }) => {
       console.error("Error during submission:", error);
     }
   };
-  console.log(addressCards);
   
   const toggleInput = () => {
     setIsDisabled(!isDisabled);

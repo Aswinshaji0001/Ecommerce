@@ -158,10 +158,9 @@ export async function Seller(req,res) {
     const _id=req.user.userId;
     const seller = await companySchema.findOne({sellerId:_id});
     const user =await userSchema.findOne({_id});
-    const address=await addressSchema.findOne({userId:_id})
-    return res.status(201).send({seller,username:user.username,accounttype:user.accounttype,_id,address})
+    return res.status(201).send({seller,username:user.username,accounttype:user.accounttype,_id,})
   }
-  catch{
+  catch(error){
     res.status(404).send({msg:error})
 
   }
@@ -225,20 +224,6 @@ export async function getProduct(req,res) {
   }
   
 }
-
-export async function addUser(req,res) {
-  try {
-    const {...user} = req.body;
-    const _id =req.user.userId;
-      const data = await userDSchema.create({...user})
-      return res.status(201).send({msg:"Success"})
-    }
-  catch (error) {
-    res.status(404).send({msg:error})
-
-  }
-  
-}
 export async function addAddress(req,res) {
   try {
     const user = req.body;
@@ -257,11 +242,29 @@ export async function addAddress(req,res) {
   }
   
 }
+export async function getAddress(req,res) {
+  try {
+    const _id=req.user.userId;
+    const address=await addressSchema.findOne({userId:_id})
+    console.log(address);
+    
+    return res.status(201).send(address)
+
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+}
 export async function updateUser(req,res) {
   try {
     const _id =req.user.userId;
     const {...user} = req.body;
-    const datas = await userDSchema.updateOne({userId:_id},{$set:{...user}})
+    const check=await userDSchema.findOne({userId:_id});
+    if(check){
+      const datas = await userDSchema.updateOne({userId:_id},{$set:{...user}})
+    }else{
+      const data = await userDSchema.create({userId:_id,...user})
+    }
     return res.status(201).send({msg:"Success"})
 
   } catch (error) {
@@ -400,5 +403,16 @@ export async function getCart(req,res) {
       res.status(404).send({msg:error})
 
     }
+  
+}
+export async function deleteCart(req,res) {
+  try {
+        const {id} =req.params;
+        const data = await cartSchema.deleteOne({_id:id})
+        return res.status(201).send({msg:"Success"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
   
 }

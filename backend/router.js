@@ -10,10 +10,10 @@ router.route("/seller").get(Auth,u.Seller);
 router.route("/editseller").post(Auth,u.editSeller);
 router.route("/getseller").get(Auth,u.getSeller)
 router.route("/addproduct").post(u.addProduct)
-router.route("/adduser").post(Auth,u.addUser)
 router.route("/getuser").get(Auth,u.getUser)
-router.route("/updateuser").put(Auth,u.updateUser)
+router.route("/updateuser").post(Auth,u.updateUser)
 router.route("/addaddress").post(Auth,u.addAddress)
+router.route("/getaddress").get(Auth,u.getAddress)
 router.route("/addcat").post(u.addCategory)
 router.route("/getcat").get(Auth,u.getCategory)
 router.route("/getproducts").get(Auth,u.getProduct)
@@ -24,6 +24,8 @@ router.route("/editproduct/:id").put(u.editProduct);
 router.route("/deletep/:id").delete(u.deleteProduct);
 router.route("/addtocart").post(Auth,u.addToCart);
 router.route("/getcart").get(u.getCart);
+router.route("/deletecart/:id").delete(u.deleteCart);
+
 
 
 
