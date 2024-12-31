@@ -14,7 +14,7 @@ import AddProduct from './Components/AddProduct/AddProduct';
 import UserD from './Components/UserD/UserD';
 import CatProd from './Components/CatProd/CatProd';
 import EditProduct from './Components/EditProduct/EditProduct';
-import Product from './Components/Product/Product'
+import Product from './Components/Product/Product';
 import Cart from './Components/Cart/Cart';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
         <Route path="/email" Component={Email}></Route>
         <Route path="/login" Component={Login}></Route>
         <Route path="/product/:id" element={<Product setUser={setUser} setLogin={setLogin}/> }></Route>
-        <Route path="/cart/:id" element={<Cart setUser={setUser} setLogin={setLogin}/> }></Route>
+        <Route path="/cart" element={<Cart setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/catprod/:category" element={<CatProd setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/signup" Component={Signup}></Route>
         <Route path="/editproduct/:id" element={<EditProduct setUser={setUser} setLogin={setLogin}/> }></Route>

@@ -23,6 +23,8 @@ router.route("/getproducte/:id").get(u.getProductE);
 router.route("/editproduct/:id").put(u.editProduct);
 router.route("/deletep/:id").delete(u.deleteProduct);
 router.route("/addtocart").post(Auth,u.addToCart);
+router.route("/getcart").get(u.getCart);
+
 
 
 

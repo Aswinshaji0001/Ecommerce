@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import '../Product/Product.scss';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const Product = ({ setUser, setLogin }) => {
   const { id } = useParams();
+  const navigate = useNavigate();  // To navigate programmatically
   const value = localStorage.getItem('Auth');
   const [products, getProducts] = useState({});
   const [mainImage, setMainImage] = useState('');
+  const [isInCart, setIsInCart] = useState(false);  // To track if the product is in the cart
 
-  })
   useEffect(() => {
     getDetails();
     getProduct();
-  }, []);
+  }, [id]);
 
   const getDetails = async () => {
     try {
@@ -34,22 +34,46 @@ const Product = ({ setUser, setLogin }) => {
   };
 
   const getProduct = async () => {
-    const res = await axios.get(`http://localhost:3000/api/getproducte/${id}`);
-    if (res.status === 201) {
-      getProducts(res.data);
-      setMainImage(res.data.pimages[0]); // Set the main image initially
-    } else {
-      alert("Error fetching product details");
+    try {
+      const res = await axios.get(`http://localhost:3000/api/getproducte/${id}`);
+      if (res.status === 201) {
+        getProducts(res.data);
+        setMainImage(res.data.pimages[0]);
+      } else {
+        alert("Error fetching product details");
+      }
+    } catch (error) {
+      console.error("Error fetching product details", error);
+      alert("Failed to fetch product details");
     }
   };
 
-  // Handle thumbnail click to update the main image
   const handleThumbnailClick = (image) => {
     setMainImage(image);
   };
-  const AddProduct = async () =>{
-    const res = await axios.post("http://loaclhost:3000/api/addtocart",{pname:products.pname,price:products.price},{ headers: { "Content-Type": "application/json" } });
-  }
+
+  const AddProduct = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/api/addtocart",
+        { pname: products.pname, price: products.price,pimages:products.pimages },
+        { headers: { "Authorization": `Bearer ${value}` } }
+      );
+      if (res.status === 201) {
+        setIsInCart(true);  // Product added to cart
+        alert("Product added to cart");
+      } else {
+        alert("Failed to add product to cart");
+      }
+    } catch (error) {
+      console.error("Error adding product to cart", error);
+      alert("Error adding product to cart");
+    }
+  };
+
+  const goToCart = () => {
+    navigate("/cart");  // Navigate to the cart page
+  };
 
   return (
     <div className="product">
@@ -61,11 +85,11 @@ const Product = ({ setUser, setLogin }) => {
           </div>
           <div className="thumbnail-images">
             {products.pimages && products.pimages.map((image, index) => (
-              <img 
-                key={index} 
-                src={image} 
-                alt={`Thumbnail ${index + 1}`} 
-                onClick={() => handleThumbnailClick(image)} 
+              <img
+                key={index}
+                src={image}
+                alt={`Thumbnail ${index + 1}`}
+                onClick={() => handleThumbnailClick(image)}
                 className="thumbnail"
               />
             ))}
@@ -81,8 +105,17 @@ const Product = ({ setUser, setLogin }) => {
             <p>{products.category}, {products.size}</p>
           </div>
           <div className="buttons">
-            <Link to={`/cart/${id}`}><button className="add-to-cart">Add to Cart</button></Link>
-            <button className="buy-now">Buy Now</button>
+            {/* Button behavior changes depending on isInCart state */}
+            {isInCart ? (
+              <button onClick={goToCart} className="go-to-cart">
+                Go to Cart
+              </button>
+            ) : (
+              <button onClick={AddProduct} className="add-to-cart">
+                Add to Cart
+              </button>
+            )}
+            <button className="buy-now-btn">Buy Now</button>
           </div>
         </div>
       </div>

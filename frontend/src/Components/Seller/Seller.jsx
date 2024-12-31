@@ -6,10 +6,8 @@ import { Link } from 'react-router-dom';
 const Seller = ({ setUser, setLogin }) => {
   const [data, getData] = useState({});
   const [seller, getSeller] = useState([]);
-  const [product,getProduct] = useState([{
-    _id:""
-  }]);
-  const [categories, setCategories] = useState([]); 
+  const [product, getProduct] = useState([{ _id: "" }]);
+  const [categories, setCategories] = useState([]);
   const value = localStorage.getItem('Auth');
 
   useEffect(() => {
@@ -20,42 +18,62 @@ const Seller = ({ setUser, setLogin }) => {
   }, []);
 
   const getDetails = async () => {
-    const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } });
-    if (res.status === 201) {
-      getData(res.data.seller);
-      setUser(res.data.username);
-      setLogin(res.data.accounttype);
- 
-    } else {
-      alert("error");
+    try {
+      const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } });
+      if (res.status === 201) {
+        getData(res.data.seller);
+        setUser(res.data.username);
+        setLogin(res.data.accounttype);
+      } else {
+        alert("Error fetching seller details");
+      }
+    } catch (error) {
+      console.error("Error fetching seller details", error);
+      alert("Error fetching seller details");
     }
   };
 
   const getSellerD = async () => {
-    const res = await axios.get("http://localhost:3000/api/getseller", { headers: { "Authorization": `Bearer ${value}` } });
-    if (res.status === 201) {
-      getSeller(res.data);
-    } else {
-      alert("error");
+    try {
+      const res = await axios.get("http://localhost:3000/api/getseller", { headers: { "Authorization": `Bearer ${value}` } });
+      if (res.status === 201) {
+        getSeller(res.data);
+      } else {
+        alert("Error fetching seller data");
+      }
+    } catch (error) {
+      console.error("Error fetching seller data", error);
+      alert("Error fetching seller data");
     }
   };
 
   const getCategory = async () => {
-    const res = await axios.get("http://localhost:3000/api/getcat", { headers: { "Authorization": `Bearer ${value}` } });
-    if (res.status === 201) {
-      setCategories(res.data.category); // Assuming this response contains categories
-    } else {
-      alert("error");
+    try {
+      const res = await axios.get("http://localhost:3000/api/getcat", { headers: { "Authorization": `Bearer ${value}` } });
+      if (res.status === 201) {
+        setCategories(res.data.category);
+      } else {
+        alert("Error fetching categories");
+      }
+    } catch (error) {
+      console.error("Error fetching categories", error);
+      alert("Error fetching categories");
     }
   };
-  const getProducts = async () =>{
-    const res = await axios.get("http://localhost:3000/api/getproducts", { headers: { "Authorization": `Bearer ${value}` } });
-    if(res.status==201){
-      getProduct(res.data)
+
+  const getProducts = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/getproducts", { headers: { "Authorization": `Bearer ${value}` } });
+      if (res.status === 201) {
+        getProduct(res.data);
+      } else {
+        alert("Error fetching products");
+      }
+    } catch (error) {
+      console.error("Error fetching products", error);
+      alert("Error fetching products");
     }
-    
-  }
-  
+  };
 
   return (
     <div className='seller'>
@@ -80,15 +98,15 @@ const Seller = ({ setUser, setLogin }) => {
             <div className="add-product-section">
               <Link to="/addproduct"><button className='button-24'>Add Product</button></Link>
               <div className="catm">
-              {categories.map((cat, index) => (
-
-                <div className="cat">
-                    <div key={index}>
+                {categories.length > 0 ? (
+                  categories.map((cat, index) => (
+                    <div key={index} className="cat">
                       <Link to={`/catprod/${cat}`}><h1>{cat}</h1></Link>
                     </div>
-             
-                </div>
-                 ))}
+                  ))
+                ) : (
+                  <p>No categories available</p> // Show this if there are no categories
+                )}
               </div>
             </div>
           </div>

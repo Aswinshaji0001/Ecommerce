@@ -63,7 +63,7 @@ const UserD = ({ setUser, setLogin }) => {
     const { name, value } = e.target;
     setAddressCards((prevCards) => {
       const updatedAddressCards = [...prevCards];
-      updatedAddressCards[index] = { ...updatedAddressCards[index], [name]: value }; // Correctly update the specific address field
+      updatedAddressCards[index] = { ...updatedAddressCards[index], [name]: value };
       return updatedAddressCards;
     });
   };
@@ -123,6 +123,7 @@ const UserD = ({ setUser, setLogin }) => {
       },
     ]);
   };
+console.log(data);
 
   const handleAddressSubmit = async (index) => {
     const addressToSubmit = addressCards[index];

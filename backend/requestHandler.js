@@ -4,6 +4,7 @@ import productSchema from './models/product.model.js'
 import userDSchema from './models/userdetails.model.js'
 import addressSchema from './models/address.model.js'
 import categorySchema from './models/category.model.js'
+import cartSchema from './models/cart.model.js'
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -379,13 +380,25 @@ export async function deleteProduct(req,res) {
 
 export async function addToCart(req,res) {
   try {
-    const id =req.user.userId;
-    const {pname,price} = req.body;
-    const data = await categorySchema.create({pname,price})
+    const {pname,price,pimages} = req.body;
+    const data = await cartSchema.create({pname,price,pimages})
+    console.log(data);
     return res.status(201).send({msg:"Success"})
   } catch (error) {
     res.status(404).send({msg:error})
 
   }
+  
+}
+
+export async function getCart(req,res) {
+    try {
+          const data = await cartSchema.find({})
+          return res.status(201).send(data);
+
+    } catch (error) {
+      res.status(404).send({msg:error})
+
+    }
   
 }

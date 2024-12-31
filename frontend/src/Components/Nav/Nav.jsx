@@ -20,6 +20,9 @@ const Nav = ({ user, login }) => {
           <div className="name">
             <h2>{user}</h2>
           </div>
+          <div className="cart">
+            <img src="sm.png" alt="" />
+          </div>
           <div className="login">
             <Link to="/seller"><h2>{login}</h2></Link>
           </div>
