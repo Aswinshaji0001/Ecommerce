@@ -383,8 +383,9 @@ export async function deleteProduct(req,res) {
 
 export async function addToCart(req,res) {
   try {
-    const {pname,price,pimages} = req.body;
-    const data = await cartSchema.create({pname,price,pimages})
+    const _id = req.user.userId;
+    const {pname,price,pimages,quantity,productId} = req.body;
+    const data = await cartSchema.create({pname,price,pimages,userId:_id,quantity,productId})
     console.log(data);
     return res.status(201).send({msg:"Success"})
   } catch (error) {
@@ -396,7 +397,8 @@ export async function addToCart(req,res) {
 
 export async function getCart(req,res) {
     try {
-          const data = await cartSchema.find({})
+          const _id = req.user.userId;
+          const data = await cartSchema.find({userId:_id})
           return res.status(201).send(data);
 
     } catch (error) {
@@ -410,6 +412,30 @@ export async function deleteCart(req,res) {
         const {id} =req.params;
         const data = await cartSchema.deleteOne({_id:id})
         return res.status(201).send({msg:"Success"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+
+export async function updateCart(req,res) {
+  try {
+    const {quantity} = req.body;
+    const {id} =req.params;
+    const res = await cartSchema.updateOne({_id:id},{$set:{quantity}})
+    console.log(res);
+    return res.status(201).send({msg:"Success",res})
+  } catch (error) {
+    res.status(404).send({msg:error})
+  }
+}
+
+export async function clearCart(req,res) {
+  try {
+        const {id} =req.user.userId;
+        const res = await cartSchema.deleteMany({userId:id})
+        return res.status(201).send(res)
   } catch (error) {
     res.status(404).send({msg:error})
 
