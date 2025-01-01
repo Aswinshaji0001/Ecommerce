@@ -27,6 +27,7 @@
     max-width: 250px;
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     overflow: hidden;
+    position: relative; /* Needed for positioning the heart icon */
 
     &:hover {
       transform: translateY(-10px);
@@ -67,7 +68,7 @@
 
       .product-price {
         font-size: 1.2rem;
-        color: #e60000; // Flipkart uses a red color for price
+        color: #e60000; // Red color for price
         margin-bottom: 10px;
       }
 
@@ -76,5 +77,25 @@
         color: #888;
       }
     }
+  }
+
+  // Heart icon styling
+  .heart-icon {
+    font-size: 2.5rem; /* Normal heart size */
+    color: #ccc; /* Default color when unfilled */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.2); /* Slight zoom effect on hover */
+    }
+
+    &.filled {
+      color: red; /* Filled heart color */
+    }
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }

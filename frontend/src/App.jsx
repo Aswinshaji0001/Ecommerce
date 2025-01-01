@@ -16,6 +16,7 @@ import CatProd from './Components/CatProd/CatProd';
 import EditProduct from './Components/EditProduct/EditProduct';
 import Product from './Components/Product/Product';
 import Cart from './Components/Cart/Cart';
+import Wishlist from './Components/Wishlist/Wishlist';
 
 function App() {
   const [user,setUser]=useState(" ")
@@ -38,6 +39,7 @@ function App() {
         <Route path='/seller' element={<Seller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/editseller' element={<EditSeller setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path='/addproduct' element={<AddProduct setUser={setUser} setLogin={setLogin}/> }></Route>
+        <Route path='/wishlist' element={<Wishlist setUser={setUser} setLogin={setLogin}/> }></Route>
       </Routes>
       </BrowserRouter>
     </>

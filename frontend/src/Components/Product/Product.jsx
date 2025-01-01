@@ -5,12 +5,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const Product = ({ setUser, setLogin }) => {
   const { id } = useParams();
-  const navigate = useNavigate(); // To navigate programmatically
+  const navigate = useNavigate();
   const value = localStorage.getItem('Auth');
   const [products, getProducts] = useState({});
   const [mainImage, setMainImage] = useState('');
-  const [isInCart, setIsInCart] = useState(false); 
-  const [quantity, setQuantity] = useState(1); 
+  const [isInCart, setIsInCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [isInWishlist, setIsInWishlist] = useState(false); // Track wishlist status
 
   useEffect(() => {
     getDetails();
@@ -43,6 +44,7 @@ const Product = ({ setUser, setLogin }) => {
         getProducts(res.data);
         setMainImage(res.data.pimages[0]);
         checkIfProductInCart(res.data._id); // Check if the product is in the cart after fetching product details
+        checkIfProductInWishlist(res.data._id); // Check if product is in the wishlist
       } else {
         alert('Error fetching product details');
       }
@@ -59,15 +61,32 @@ const Product = ({ setUser, setLogin }) => {
         headers: { 'Authorization': `Bearer ${value}` },
       });
       if (res.status === 201) {
-        // Check cart for the product based on productId
-        const productInCart = res.data.some(item => item.productId === productId); // Compare using productId
-        setIsInCart(productInCart); // Update isInCart based on product presence
+        const productInCart = res.data.some(item => item.productId === productId);
+        setIsInCart(productInCart);
       } else {
         alert('Error fetching cart details');
       }
     } catch (error) {
       console.error('Error checking cart for product', error);
       alert('Failed to check cart for product');
+    }
+  };
+
+  // Check if the product is in the wishlist
+  const checkIfProductInWishlist = async (productId) => {
+    try {
+      const res = await axios.get('http://localhost:3000/api/getwishlist', {
+        headers: { 'Authorization': `Bearer ${value}` },
+      });
+      if (res.status === 201) {
+        const productInWishlist = res.data.some(item => item.productId === productId);
+        setIsInWishlist(productInWishlist);
+      } else {
+        alert('Error fetching wishlist details');
+      }
+    } catch (error) {
+      console.error('Error checking wishlist for product', error);
+      alert('Failed to check wishlist for product');
     }
   };
 
@@ -91,7 +110,6 @@ const Product = ({ setUser, setLogin }) => {
         { headers: { 'Authorization': `Bearer ${value}` } }
       );
       if (res.status === 201) {
-        // Immediately update isInCart state after adding to cart
         setIsInCart(true);
         alert('Product added to cart');
       } else {
@@ -103,6 +121,37 @@ const Product = ({ setUser, setLogin }) => {
     }
   };
 
+  // Add or remove product from wishlist
+  const toggleWishlist = async () => {
+    try {
+      if (isInWishlist) {
+        // Remove from wishlist
+        const res = await axios.delete(
+          `http://localhost:3000/api/removefromwishlist/${products._id}`,
+          { headers: { 'Authorization': `Bearer ${value}` } }
+        );
+        if (res.status === 201) {
+          setIsInWishlist(false);
+          alert('Product removed from wishlist');
+        }
+      } else {
+        // Add to wishlist
+        const res = await axios.post(
+          'http://localhost:3000/api/addtowishlist',
+          { productId: products._id ,pname: products.pname,price: products.price, pimages:products.pimages, brand:products.brand},
+          { headers: { 'Authorization': `Bearer ${value}` } }
+        );
+        if (res.status === 201) {
+          setIsInWishlist(true);
+          alert('Product added to wishlist');
+        }
+      }
+    } catch (error) {
+      console.error('Error adding/removing product from wishlist', error);
+      alert('Error managing wishlist');
+    }
+  };
+
   // Navigate to the cart page
   const goToCart = () => {
     navigate('/cart'); // Navigate to the cart page
@@ -111,7 +160,6 @@ const Product = ({ setUser, setLogin }) => {
   return (
     <div className="product">
       <div className="product-container">
-        {/* Left side with images */}
         <div className="left">
           <div className="main-image">
             <img src={mainImage} alt="Main Product" />
@@ -129,13 +177,21 @@ const Product = ({ setUser, setLogin }) => {
           </div>
         </div>
 
-        {/* Right side with product info */}
         <div className="right">
           <h1 className="title">{products.pname}</h1>
           <div className="brand">Brand: <span>{products.brand}</span></div>
           <div className="price">₹{products.price}</div>
           <div className="description">
             <p>{products.category}, {products.size}</p>
+          </div>
+
+          {/* Heart Icon for Wishlist */}
+          <div className="wishlist" onClick={toggleWishlist}>
+            {isInWishlist ? (
+              <span className="heart-filled">❤️</span>
+            ) : (
+              <span className="heart-empty">🤍</span>
+            )}
           </div>
 
           {/* Button behavior changes depending on isInCart state */}

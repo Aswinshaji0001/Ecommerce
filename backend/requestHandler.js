@@ -5,6 +5,7 @@ import userDSchema from './models/userdetails.model.js'
 import addressSchema from './models/address.model.js'
 import categorySchema from './models/category.model.js'
 import cartSchema from './models/cart.model.js'
+import wishListSchema from './models/wishlist.model.js';
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -436,6 +437,51 @@ export async function clearCart(req,res) {
         const {id} =req.user.userId;
         const res = await cartSchema.deleteMany({userId:id})
         return res.status(201).send(res)
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+
+export async function addToWishlist(req,res) {
+  try {
+        const {productId,pname,price,pimages} = req.body;
+        const {id} = req.user.userId;
+        const product = await productSchema.findOne({_id:productId})
+        if(!product) return res.status(404).send({msg:"Error"})
+        const existingitem = await wishListSchema.findOne({userId:id,productId,pname,price,pimages})
+      if(existingitem){
+        if(!product) return res.status(404).send({msg:"Error"})
+      }
+      const data = await wishListSchema.create({userId:id,productId,pname,price,pimages});
+      return res.status(201).send({msg:"Success"})
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+
+export async function  removeFromWishlist(req,res) {
+  try { 
+          const {id} =req.user.userId;
+          const {productId} = req.params;
+          const data = await wishListSchema.deleteOne({userId:id,productId})
+          return res.status(201).send({msg:"Success"})
+
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+
+export async function getWishlist(req,res) {
+  try {
+    const {id} = req.user.userId;
+    const data = await wishListSchema.find({userId:id})
+    return res.status(201).send(data)
   } catch (error) {
     res.status(404).send({msg:error})
 

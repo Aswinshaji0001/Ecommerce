@@ -21,7 +21,9 @@ const Nav = ({ user, login }) => {
           
           <div className="names">
           <Link to="/cart"><img src="shp.png" alt="" /></Link>
-
+          </div>
+          <div className="names2">
+          <Link to="/wishlist"><img src="wishlist.png" alt="" /></Link>
           </div>
           <div className="login">
             <Link to="/seller"><h2>{login}</h2></Link>
