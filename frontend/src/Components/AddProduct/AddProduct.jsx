@@ -12,7 +12,13 @@ const AddProduct = ({ setUser, setLogin }) => {
     pname: "",
     category: "",
     price: "",
-    size: "",
+    size: {
+      XS:"",
+      S:"",
+      M:"",
+      L:"",
+      XL:""
+    },
     brand: "",
     sellerId: ""
   });
@@ -168,17 +174,57 @@ const AddProduct = ({ setUser, setLogin }) => {
               <button type="button" onClick={addCategory} className='button-24'>Add Category</button>
             </>
           )}
-
-          {/* Size Select Box */}
-          <select name="size" id="size" onChange={handleChange} value={product.size}>
-            <option value="">Select Size</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-          </select>
-
+          <div className="sizes">
+          <label htmlFor="xs">XS:</label>
+          <input
+            type="number"
+            id="xs"
+            name="xs"
+            onChange={handleChange}
+            min="0"
+          />
+        </div>
+        <div>
+          <label htmlFor="s">S:</label>
+          <input
+            type="number"
+            id="s"
+            name="s"
+            onChange={handleChange}
+            min="0"
+          />
+        </div>
+        <div>
+          <label htmlFor="m">M:</label>
+          <input
+            type="number"
+            id="m"
+            name="m"
+            onChange={handleChange}
+            min="0"
+          />
+        </div>
+        <div>
+          <label htmlFor="l">L:</label>
+          <input
+            type="number"
+            id="l"
+            name="l"
+            onChange={handleChange}
+            min="0"
+          />
+        </div>
+        <div>
+          <label htmlFor="xl">XL:</label>
+          <input
+            type="number"
+            id="xl"
+            name="xl"
+            onChange={handleChange}
+            min="0"
+          />
+          </div>
+          
           <input type="text" placeholder='Price' name='price' id='price' onChange={handleChange} />
           <input type="file" onChange={handleFile} name="pimages" id='pimages' multiple />
 

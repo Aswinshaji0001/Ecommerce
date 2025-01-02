@@ -86,19 +86,7 @@ const CatProd = ({ setUser, setLogin }) => {
                             <h2>{product.brand}</h2><hr />
 
                             <div className="quantity-controls">
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => changeQuantity(product._id, -1)}
-                                >
-                                    -
-                                </button>
-                                <span>{quantities[product._id] || 1}</span>
-                                <button
-                                    className="quantity-button"
-                                    onClick={() => changeQuantity(product._id, 1)}
-                                >
-                                    +
-                                </button>
+                                
                             </div>
 
                             <div className="buttons">
