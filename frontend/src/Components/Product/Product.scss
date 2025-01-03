@@ -110,3 +110,63 @@
     }
   }
 }
+
+/* Style for size options container */
+.size-options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.size-options strong {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the size choices container */
+.size-choices {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Style for each size button */
+.size-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 600;
+  min-width: 60px;  /* Ensure minimum width for buttons */
+  text-align: center;
+}
+
+/* Hover effect for size buttons */
+.size-btn:hover {
+  background-color: #ff5722;
+  color: white;
+  border-color: #ff5722;
+}
+
+/* Disabled size button style */
+.size-btn:disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+  border-color: #ccc;
+}
+
+/* Active size button style (when clicked) */
+.size-btn.active {
+  background-color: #388e3c;
+  color: white;
+  border-color: #388e3c;
+}

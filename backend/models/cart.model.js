@@ -6,6 +6,7 @@ const cartSchema=new mongoose.Schema({
     price:{type:String},
     pimages:{type:Array},
     quantity:{type:Number},
-    productId:{type:String}
+    productId:{type:String},
+    size:{type:String}
 });
 export default mongoose.model.cart||mongoose.model("cart",cartSchema);

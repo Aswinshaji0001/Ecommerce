@@ -12,6 +12,11 @@ const Product = ({ setUser, setLogin }) => {
   const [isInCart, setIsInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isInWishlist, setIsInWishlist] = useState(false); // Track wishlist status
+  const [cart, setCart] = useState({
+    products: {},
+    size: "",
+    quantity: 0
+  });
 
   useEffect(() => {
     getDetails();
@@ -97,6 +102,10 @@ const Product = ({ setUser, setLogin }) => {
 
   // Add the product to the cart
   const AddProduct = async () => {
+    if (!cart.size) {
+      alert('Please select a size');
+      return;
+    }
     try {
       const res = await axios.post(
         'http://localhost:3000/api/addtocart',
@@ -104,8 +113,9 @@ const Product = ({ setUser, setLogin }) => {
           pname: products.pname, 
           price: products.price, 
           pimages: products.pimages, 
-          quantity: quantity,
-          productId: products._id // Add productId to cart data
+          quantity: cart.quantity,
+          productId: products._id,
+          size: cart.size
         },
         { headers: { 'Authorization': `Bearer ${value}` } }
       );
@@ -138,7 +148,7 @@ const Product = ({ setUser, setLogin }) => {
         // Add to wishlist
         const res = await axios.post(
           'http://localhost:3000/api/addtowishlist',
-          { productId: products._id ,pname: products.pname,price: products.price, pimages:products.pimages, brand:products.brand},
+          { productId: products._id, pname: products.pname, price: products.price, pimages: products.pimages, brand: products.brand },
           { headers: { 'Authorization': `Bearer ${value}` } }
         );
         if (res.status === 201) {
@@ -150,6 +160,16 @@ const Product = ({ setUser, setLogin }) => {
       console.error('Error adding/removing product from wishlist', error);
       alert('Error managing wishlist');
     }
+  };
+
+  // Handle size selection
+  const handleSize = (size) => {
+    setCart(prevCart => ({
+      ...prevCart,
+      size: size,
+      products: products, // Ensure the selected product is included in the cart
+      quantity: 1
+    }));
   };
 
   // Navigate to the cart page
@@ -182,10 +202,28 @@ const Product = ({ setUser, setLogin }) => {
           <div className="brand">Brand: <span>{products.brand}</span></div>
           <div className="price">₹{products.price}</div>
           <div className="description">
-            <p>{products.category}, {products.size}</p>
+            <p>{products.category}</p>
           </div>
 
-          {/* Heart Icon for Wishlist */}
+          {/* Size Selection */}
+          <div className="size-options">
+            <strong>Select Size:</strong>
+            <div className="size-choices">
+              {products.size &&
+                Object.keys(products.size).map((size) => (
+                  <button
+                    key={size}
+                    className={`size-btn ${cart.size === size ? 'active' : ''}`}
+                    onClick={() => handleSize(size)}
+                    disabled={products.size[size] <= 0}
+                  >
+                    {size}
+                  </button>
+                ))}
+            </div>
+          </div>
+
+          {/* Wishlist Icon */}
           <div className="wishlist" onClick={toggleWishlist}>
             {isInWishlist ? (
               <span className="heart-filled">❤️</span>

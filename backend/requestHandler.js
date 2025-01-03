@@ -385,8 +385,8 @@ export async function deleteProduct(req,res) {
 export async function addToCart(req,res) {
   try {
     const _id = req.user.userId;
-    const {pname,price,pimages,quantity,productId} = req.body;
-    const data = await cartSchema.create({pname,price,pimages,userId:_id,quantity,productId})
+    const {pname,price,pimages,quantity,productId,size} = req.body;
+    const data = await cartSchema.create({pname,price,pimages,userId:_id,quantity,productId,size})
     console.log(data);
     return res.status(201).send({msg:"Success"})
   } catch (error) {
@@ -467,7 +467,10 @@ export async function  removeFromWishlist(req,res) {
   try { 
           const {id} =req.user.userId;
           const {productId} = req.params;
-          const data = await wishListSchema.deleteOne({userId:id,productId})
+          console.log(productId);
+          
+          
+          const data = await wishListSchema.deleteOne({userId:id,productId:productId})
           return res.status(201).send({msg:"Success"})
 
   } catch (error) {

@@ -13,14 +13,16 @@ const AddProduct = ({ setUser, setLogin }) => {
     category: "",
     price: "",
     size: {
-      XS:"",
-      S:"",
-      M:"",
-      L:"",
-      XL:""
+      XS: 0,
+      S: 0,
+      M: 0,
+      L: 0,
+      XL: 0,
+      XXL: 0,
+      XXXL: 0,
     },
     brand: "",
-    sellerId: ""
+    sellerId:""
   });
   const [categories, setCategories] = useState([]); 
   const [newCategory, setNewCategory] = useState(""); 
@@ -35,9 +37,10 @@ const AddProduct = ({ setUser, setLogin }) => {
     try {
       const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } });
       if (res.status === 201) {  
-        setProduct({ sellerId: res.data.seller.sellerId, brand: res.data.seller.name });
         setUser(res.data.username);
+        console.log(res);
         setLogin(res.data.accounttype);
+        setProduct({  brand: res.data.seller.name,sellerId:res.data.seller.sellerId});
       } else {
         alert("Error fetching seller details");
       }
@@ -46,6 +49,7 @@ const AddProduct = ({ setUser, setLogin }) => {
       alert("Failed to fetch seller details");
     }
   };
+console.log(product);
 
   // Fetch categories from API
   const fetchCategories = async () => {
@@ -70,7 +74,7 @@ const AddProduct = ({ setUser, setLogin }) => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/addcat", {newCategory}, { headers: { "Content-Type": "application/json" } });
+      const res = await axios.post("http://localhost:3000/api/addcat", { newCategory }, { headers: { "Content-Type": "application/json" } });
 
       if (res.status === 201) { 
         alert("Category added successfully");
@@ -141,6 +145,17 @@ const AddProduct = ({ setUser, setLogin }) => {
     setNewCategory(e.target.value);
   };
 
+  const handleSizeQuantityChange = (size, e) => {
+    const value = parseInt(e.target.value, 10) || 0; // Ensure default value of 0 if invalid input
+    setProduct({
+      ...product,
+      size: {
+        ...product.size,
+        [size]: value, // Correctly update the size quantity
+      },
+    });
+  };
+
   return (
     <div className='addp'>
       <div className="mains">
@@ -174,57 +189,22 @@ const AddProduct = ({ setUser, setLogin }) => {
               <button type="button" onClick={addCategory} className='button-24'>Add Category</button>
             </>
           )}
-          <div className="sizes">
-          <label htmlFor="xs">XS:</label>
-          <input
-            type="number"
-            id="xs"
-            name="xs"
-            onChange={handleChange}
-            min="0"
-          />
-        </div>
-        <div>
-          <label htmlFor="s">S:</label>
-          <input
-            type="number"
-            id="s"
-            name="s"
-            onChange={handleChange}
-            min="0"
-          />
-        </div>
-        <div>
-          <label htmlFor="m">M:</label>
-          <input
-            type="number"
-            id="m"
-            name="m"
-            onChange={handleChange}
-            min="0"
-          />
-        </div>
-        <div>
-          <label htmlFor="l">L:</label>
-          <input
-            type="number"
-            id="l"
-            name="l"
-            onChange={handleChange}
-            min="0"
-          />
-        </div>
-        <div>
-          <label htmlFor="xl">XL:</label>
-          <input
-            type="number"
-            id="xl"
-            name="xl"
-            onChange={handleChange}
-            min="0"
-          />
+
+          <div className="size">
+            <label>Sizes (Enter Quantity)</label>
+            <div className="size-quantity">
+              {['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
+                <div key={size} className="size-input">
+                  <input
+                    type="number"
+                    onChange={(e) => handleSizeQuantityChange(size, e)}
+                    placeholder={size}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          
+
           <input type="text" placeholder='Price' name='price' id='price' onChange={handleChange} />
           <input type="file" onChange={handleFile} name="pimages" id='pimages' multiple />
 

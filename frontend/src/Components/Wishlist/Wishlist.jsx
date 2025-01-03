@@ -34,7 +34,6 @@ const Wishlist = ({ setUser, setLogin }) => {
         });
         if (res.status === 201) {
             console.log(res);
-            
           setWishlist(res.data); // Set the fetched wishlist
         } else {
           alert('Error fetching wishlist');
@@ -54,6 +53,8 @@ const Wishlist = ({ setUser, setLogin }) => {
   // Handle removing an item from the wishlist
   const handleRemoveFromWishlist = async (productId) => {
     try {
+      console.log(productId);
+      
       const res = await axios.delete(`http://localhost:3000/api/removefromwishlist/${productId}`, {
         headers: { 'Authorization': `Bearer ${value}` },
       });
@@ -69,6 +70,7 @@ const Wishlist = ({ setUser, setLogin }) => {
       alert('Failed to remove product from wishlist');
     }
   };
+console.log(wishlist);
 
   // Navigate to product details page
   const goToProduct = (productId) => {
@@ -88,7 +90,9 @@ const Wishlist = ({ setUser, setLogin }) => {
           ) : (
             wishlist.map(item => {
               console.log(item.productId.pimages); // Log the images to see what's being fetched
+
               return (
+                
                 <div key={item.productId._id} className="wishlist-item">
                   <img
                     src={"" || 'path/to/default-image.jpg'} // Fallback image
@@ -98,12 +102,12 @@ const Wishlist = ({ setUser, setLogin }) => {
                   />
                   <div className="product-info">
                     <h2>{item.pname}</h2>
-                    <p>Brand: {item.brand}</p>
+                    <p>Brand: {item.productId.brand}</p>
                     <p>Price: ₹{item.price}</p>
                   </div>
                   <button
                     className="remove-btn"
-                    onClick={() => handleRemoveFromWishlist(item.productId._id)}
+                    onClick={() => handleRemoveFromWishlist(item.productId)}
                   >
                     Remove from Wishlist
                   </button>
