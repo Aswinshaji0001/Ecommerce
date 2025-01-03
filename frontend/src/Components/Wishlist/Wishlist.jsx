@@ -27,28 +27,27 @@ const Wishlist = ({ setUser, setLogin }) => {
 
   // Fetch wishlist from the server
   useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const res = await axios.get('http://localhost:3000/api/getwishlist', {
-          headers: { 'Authorization': `Bearer ${value}` },
-        });
-        if (res.status === 201) {
-            console.log(res);
-          setWishlist(res.data); // Set the fetched wishlist
-        } else {
-          alert('Error fetching wishlist');
-        }
-      } catch (error) {
-        console.error('Error fetching wishlist:', error);
-        alert('Failed to fetch wishlist');
-      } finally {
-        setLoading(false); // Stop loading once data is fetched
-      }
-    };
-
     fetchWishlist();
     getDetails();
   }, [value]); // Fetch wishlist whenever the component mounts or token changes
+  const fetchWishlist = async () => {
+    try {
+      const res = await axios.get('http://localhost:3000/api/getwishlist', {
+        headers: { 'Authorization': `Bearer ${value}` },
+      });
+      if (res.status === 201) {
+          console.log(res);
+        setWishlist(res.data); // Set the fetched wishlist
+      } else {
+        alert('Error fetching wishlist');
+      }
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+      alert('Failed to fetch wishlist');
+    } finally {
+      setLoading(false); // Stop loading once data is fetched
+    }
+  };
 
   // Handle removing an item from the wishlist
   const handleRemoveFromWishlist = async (productId) => {
@@ -59,9 +58,11 @@ const Wishlist = ({ setUser, setLogin }) => {
         headers: { 'Authorization': `Bearer ${value}` },
       });
       if (res.status === 201) {
-        // Remove the product from state without needing to refetch
+
         setWishlist(wishlist.filter(item => item.productId._id !== productId));
         alert('Product removed from wishlist');
+        fetchWishlist();
+        
       } else {
         alert('Error removing product from wishlist');
       }

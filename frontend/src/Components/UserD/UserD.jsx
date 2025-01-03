@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../UserD/UserD.scss';
+import { Link } from 'react-router-dom';
 
 const UserD = ({ setUser, setLogin }) => {
   const value = localStorage.getItem('Auth');
@@ -14,6 +15,11 @@ const UserD = ({ setUser, setLogin }) => {
     mobile: "",
     gender: "",
   });
+
+  const[count,setCount] =useState({
+    counts:""
+  })
+console.log(count);
 
   // Fetch user details from API
   useEffect(() => {
@@ -42,13 +48,16 @@ const UserD = ({ setUser, setLogin }) => {
   const getData = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/getuser", {headers: { "Authorization": `Bearer ${value}` },});
-      console.log("User data fetched:", res.data.user); // Debugging log
+      
       setData({
         gender: res.data.user.gender || "",
         fname: res.data.user.fname,
         lname: res.data.user.lname,
         mobile: res.data.user.mobile,
       });
+      setCount({
+        counts:res.data.count
+      })
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -56,7 +65,6 @@ const UserD = ({ setUser, setLogin }) => {
 const getAddress = async()=>{
   const res = await axios.get("http://localhost:3000/api/getaddress", {headers: { "Authorization": `Bearer ${value}` },});
   if(res.status==201){
-    console.log(res);
     setAddressCards(res.data.address)
     
   }
@@ -84,7 +92,6 @@ const getAddress = async()=>{
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedData = {data};
-    console.log(updatedData);
 
     try {
       const res = await axios.post("http://localhost:3000/api/updateuser", data, {headers: { "Authorization": `Bearer ${value}` },});
@@ -117,7 +124,6 @@ const getAddress = async()=>{
       },
     ]);
   };
-console.log(data);
 
   const handleAddressSubmit = async (index) => {
     const addressToSubmit = addressCards[index];
@@ -138,6 +144,11 @@ console.log(data);
       alert("Error adding address");
     }
   };
+
+  const deleteAddress = (id)=>{
+      console.log(id);
+      
+  }
 
   return (
     <div className="userd">
@@ -206,6 +217,11 @@ console.log(data);
       </div>
 
       <div className="right">
+        <div className="buttonss">
+       <button className="button-24"><Link to="/myorders">Your Orders   ({count.counts})</Link></button>
+          <button className='button-24'><Link to="/wishlist">Your Wishlist</Link></button>
+          <button className='button-24'><Link to="/cart">Your Cart</Link></button>
+        </div>
         <div className="cards">
           <div className="cardx">
             <h1>Address Details</h1>
@@ -250,7 +266,7 @@ console.log(data);
                   <button className="button-24" onClick={toggleInputA}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24">Delete</button>
+            <button className="button-24" onClick={()=>deleteAddress(address.name)}>Delete</button>
                 </div>
               </div>
             ))}

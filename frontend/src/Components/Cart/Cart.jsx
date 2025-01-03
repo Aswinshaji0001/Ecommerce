@@ -162,7 +162,6 @@ const Cart = ({ setUser, setLogin }) => {
                     Remove
                   </button>
                   
-                  <Link to={`/orders/${item.productId}`}><button className="buy-now-btn">Buy Now</button></Link>
                 </div>
               </div>
             ))

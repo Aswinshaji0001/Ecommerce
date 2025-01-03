@@ -6,6 +6,7 @@ import addressSchema from './models/address.model.js'
 import categorySchema from './models/category.model.js'
 import cartSchema from './models/cart.model.js'
 import wishListSchema from './models/wishlist.model.js';
+import orderSchema from './models/orders.model.js';
 import bcrypt from "bcrypt";
 import pkg from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -217,7 +218,6 @@ export async function getProduct(req,res) {
   try {
         const _id = req.user.userId;
         const data = await productSchema.find({sellerId:_id})
-        console.log(data);
         return res.status(201).send(data)
   } catch (error) {
     res.status(404).send({msg:error})
@@ -247,7 +247,6 @@ export async function getAddress(req,res) {
   try {
     const _id=req.user.userId;
     const address=await addressSchema.findOne({userId:_id})
-    console.log(address);
     
     return res.status(201).send(address)
 
@@ -279,7 +278,8 @@ export async function  getUser(req,res) {
   try {
         const _id = req.user.userId;
         const user = await userDSchema.findOne({userId:_id});
-        return res.status(201).send({msg:"Success",user})
+        const count = await orderSchema.countDocuments({});
+        return res.status(201).send({msg:"Success",user,count})
 
   } catch (error) {
     res.status(404).send({msg:error})
@@ -323,7 +323,6 @@ export async function getCatProduct(req,res) {
     try {
           const {category} =req.params;
           const products = await productSchema.find({category})
-          console.log(products);
           return res.status(201).send(products)
     } catch (error) {
       res.status(404).send({msg:error})
@@ -358,7 +357,6 @@ export async function editProduct(req,res) {
   try {
         const {id} =req.params;
         const {...product} = req.body;
-        console.log(req.body);
         const data = await productSchema.updateOne({_id:id},{$set:{...product}})
         return res.status(201).send({msg:"Success"})
 
@@ -385,9 +383,8 @@ export async function deleteProduct(req,res) {
 export async function addToCart(req,res) {
   try {
     const _id = req.user.userId;
-    const {pname,price,pimages,quantity,productId,size} = req.body;
-    const data = await cartSchema.create({pname,price,pimages,userId:_id,quantity,productId,size})
-    console.log(data);
+    const {pname,price,pimages,quantity,productId,size,brand} = req.body;
+    const data = await cartSchema.create({pname,price,pimages,userId:_id,quantity,productId,size,brand})
     return res.status(201).send({msg:"Success"})
   } catch (error) {
     res.status(404).send({msg:error})
@@ -412,7 +409,6 @@ export async function getOrder(req,res) {
   try {
         const {id} = req.params;
         const data = await cartSchema.findOne({productId:id})
-        console.log(data);
         return res.status(201).send(data);
 
   } catch (error) {
@@ -480,8 +476,7 @@ export async function  removeFromWishlist(req,res) {
   try { 
           const {id} =req.user.userId;
           const {productId} = req.params;
-          console.log(productId);
-          
+
           
           const data = await wishListSchema.deleteOne({userId:id,productId:productId})
           return res.status(201).send({msg:"Success"})
@@ -500,6 +495,63 @@ export async function getWishlist(req,res) {
     return res.status(201).send(data)
   } catch (error) {
     res.status(404).send({msg:error})
+
+  }
+  
+}
+
+export async function editQuantity(req,res) {
+  try {
+      const {id,quantity,type}=req.body;
+      let newQuantity=0;
+      const bid=req.user.userId;
+     (type==='increase')? newQuantity=quantity+1: newQuantity=quantity-1;
+      const data=await cartSchema.updateOne({_id:id},{ $set: { quantity: newQuantity }} );
+      return res.status(201).send({msg:"Updated"});
+  } catch (error) {
+      return res.status(404).send({msg:"error"})
+  }
+}
+
+export async function addOrder(req,res) {
+  try {
+    const {productId,quantity,sizee,housename,totalPrice} = req.body
+    const id = req.user.userId;
+    const product =await productSchema.findOne({_id:productId})
+    console.log(product.size[sizee]);
+    const newQuantity=product.size[sizee]-quantity;
+    if(newQuantity<0)
+      return res.status(201).send({msg:"Error"})
+    await productSchema.updateOne({_id:productId},{$set:{[`size.${sizee}`]:newQuantity}})
+    const data = await orderSchema.create({userId:id,productId,quantity,housename,totalPrice});
+    return res.status(201).send({msg:"Success",data})
+    
+  } catch (error) {
+    return res.status(404).send({msg:"error"})
+
+  }
+}
+
+export async function getOrders(req,res) {
+  try {
+        console.log("JAFTTF");
+        
+        const uid = req.user.userId;
+        console.log(uid);
+        const count = await orderSchema.countDocuments({})
+        console.log(data);
+        const order = await orderSchema.find({userId:uid});
+        
+        const productData=order.map(async(p)=>{
+          
+          return await productSchema.findOne({_id:p.productId})
+        })
+        const products=await Promise.all(productData)
+        return res.status(201).send({msg:"Success",products,order,count})
+
+        
+  } catch (error) {
+        return res.status(404).send({msg:"error"})
 
   }
   

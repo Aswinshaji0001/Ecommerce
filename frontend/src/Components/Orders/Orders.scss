@@ -1,104 +1,158 @@
 .order-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f5f5f5; // Light background for contrast
 
-  
-  .product-details {
-    display: flex;
-    background : white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-width: 800px;
-    width: 100%;
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  gap: 20px;
+  padding: 40px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease; // Smooth shadow transition
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 20px 40px, rgba(0, 0, 0, 0.25) 0px 15px 15px; // Darker shadow on hover
   }
-  
+}
+
+.product-left {
+  flex: 1;
+
   .product-image-section {
-    flex: 1;
-    padding: 20px;
+    img {
+      width: 100%;
+      max-width: 200px; // Increased max width for better visibility
+      height: auto;
+      border-radius: 10px; // Rounded corners for the image
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px; // Subtle shadow for the image
+    }
   }
-  
-  .product-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  
+
   .product-info {
-    flex: 2;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    margin-left: 20px; // Space between image and info
+
+    .product-name {
+      font-size: 26px; // Slightly larger font size
+      font-weight: bold;
+      color: #333; // Darker color for better readability
+    }
+
+    .product-brand {
+      font-size: 18px;
+      color: gray;
+      margin-bottom: 10px; // Space below brand name
+    }
+
+    .quantity-selection {
+      margin-top: 10px;
+
+      h5 {
+        margin-bottom: 5px; // Space below quantity label
+      }
+
+      .quantity {
+        display: flex;
+        align-items: center;
+
+        .decrease,
+        .increase {
+          cursor: pointer;
+          background-color: #f0f0f0; // Light background for buttons
+          border: 1px solid #ccc; // Border for buttons
+          border-radius: 5px; // Rounded corners
+          padding: 5px 10px; // Padding for buttons
+          transition: background-color 0.2s; // Transition for hover effect
+
+          &:hover {
+            background-color: #e0e0e0; // Darker on hover
+          }
+        }
+
+        .quantity-text {
+          margin: 0 10px;
+          font-size: 20px;
+          font-weight: bold; // Bold quantity text
+        }
+      }
+    }
   }
-  
-  .product-name {
+}
+
+.product-right {
+  text-align: center;
+  flex: 0 0 30%;
+
+  .product-price {
     font-size: 24px;
     font-weight: bold;
-    margin: 0;
+    color: #ff3e6c; // Flipkart's accent color
+    margin-bottom: 20px;
   }
-  
-  .product-brand,
-  .product-price {
-    font-size: 16px;
-    margin: 5px 0;
-  }
-  
-  .size-selection {
-    margin-top: 20px;
-  }
-  
-  .size-option {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0;
-  }
-  
-  .size-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .size-label {
-    font-weight: bold;
-  }
-  
-  .size-available {
-    color: #555;
-  }
-  
-  .quantity-control {
-    display: flex;
-    align-items: center;
-  }
-  
-  .quantity-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 5px;
-  }
-  
-  .quantity-display {
-    font-size: 16px;
-    width: 30px;
-    text-align: center;
-  }
-  
+
   .add-to-cart-btn {
-    margin-top: 20px;
-    background-color: #28a745;
+    margin: 2%;
+    padding: 12px 20px;
+    background-color: #ff3e6c; // Flipkart's primary button color
+    border-radius: 8px;
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
+    width: 100%;
+    transition: background-color 0.3s; // Transition for hover effect
+
+    &:hover {
+      background-color: #e63946; // Darker shade on hover
+    }
   }
+}
+
+.address-selection {
+  margin-top: 20px; // Space above the address selection
+  padding: 15px;
+  border: 1px solid #ccc; // Light border around the address selection
+  border-radius: 8px; // Rounded corners
+  background-color: #f9f9f9; // Light background color
+
+  h3 {
+    margin-bottom: 10px; // Space below the heading
+    font-size: 20px; // Font size for the heading
+    color: #333; // Dark color for better readability
+  }
+
+  .address-option {
+    display: flex; // Flexbox for alignment
+    align-items: center; // Center items vertically
+    margin-bottom: 10px; // Space between address options
+    padding: 10px; // Padding for each address option
+    border: 1px solid transparent; // Default border
+    border-radius: 5px; // Rounded corners
+    transition: border 0.3s, background-color 0.3s; // Smooth transition for hover effects
+
+    &:hover {
+      border: 1px solid #007bff; // Change border color on hover
+      background-color: #e7f0ff; // Light blue background on hover
+    }
+
+    input[type="radio"] {
+      margin-right: 10px; // Space between radio button and label
+      cursor: pointer; // Pointer cursor for better UX
+    }
+
+    label {
+      font-size: 16px; // Font size for the label
+      color: #555; // Color for the label text
+      cursor: pointer; // Pointer cursor for better UX
+    }
+  }
+}
 }

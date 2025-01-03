@@ -31,4 +31,8 @@ router.route("/addtowishlist").post(Auth,u.addToWishlist)
 router.route("/removefromwishlist/:productId").delete(Auth,u.removeFromWishlist)
 router.route("/getwishlist").get(Auth,u.getWishlist);
 router.route("/getorder/:id").get(u.getOrder);
+router.route("/editquantity").post(Auth,u.editQuantity);
+router.route("/addorder").post(Auth,u.addOrder);
+router.route("/getorders").get(Auth,u.getOrders);
+
 export default router;

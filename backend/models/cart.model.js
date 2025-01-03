@@ -7,6 +7,7 @@ const cartSchema=new mongoose.Schema({
     pimages:{type:Array},
     quantity:{type:Number},
     productId:{type:String},
-    size:{type:String}
+    size:{type:String},
+    brand:{type:String}
 });
 export default mongoose.model.cart||mongoose.model("cart",cartSchema);
