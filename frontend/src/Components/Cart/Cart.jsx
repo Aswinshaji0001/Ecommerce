@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Cart.scss';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Cart = ({ setUser, setLogin }) => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ const Cart = ({ setUser, setLogin }) => {
         headers: { "Authorization": `Bearer ${value}` },
       });
       if (res.status === 201) {
+        console.log(res);
         setCartItems(res.data);
       } else {
         alert("Failed to fetch cart");
@@ -135,6 +137,7 @@ const Cart = ({ setUser, setLogin }) => {
                 />
                 <div className="cart-item-info">
                   <h2 className="cart-item-name">{item.pname}</h2>
+                  <h2 className="cart-item-name">Size - {item.size}</h2>
                   <p className="cart-item-price">₹{item.price}</p>
 
                   {/* Quantity Controls */}
@@ -156,8 +159,10 @@ const Cart = ({ setUser, setLogin }) => {
                   </div>
 
                   <button className="buy-now-btn" onClick={() => handleBuyNow(item._id)}>
-                    Buy Now
+                    Remove
                   </button>
+                  
+                  <Link to={`/orders/${item.productId}`}><button className="buy-now-btn">Buy Now</button></Link>
                 </div>
               </div>
             ))

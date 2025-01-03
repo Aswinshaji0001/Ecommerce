@@ -408,6 +408,19 @@ export async function getCart(req,res) {
     }
   
 }
+export async function getOrder(req,res) {
+  try {
+        const {id} = req.params;
+        const data = await cartSchema.findOne({productId:id})
+        console.log(data);
+        return res.status(201).send(data);
+
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
 export async function deleteCart(req,res) {
   try {
         const {id} =req.params;

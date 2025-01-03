@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Product/Product.scss';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Product = ({ setUser, setLogin }) => {
   const { id } = useParams();
@@ -176,7 +177,13 @@ const Product = ({ setUser, setLogin }) => {
   const goToCart = () => {
     navigate('/cart'); // Navigate to the cart page
   };
-
+const Buy = ()=>{
+  if (!cart.size) {
+    alert('Please select a size');
+    return;
+  }
+  navigate(`/orders/${products._id}`)
+}
   return (
     <div className="product">
       <div className="product-container">
@@ -243,7 +250,7 @@ const Product = ({ setUser, setLogin }) => {
                 Add to Cart
               </button>
             )}
-            <button className="buy-now-btn">Buy Now</button>
+            <button className="buy-now-btn" onClick={Buy}>Buy Now</button>
           </div>
         </div>
       </div>
