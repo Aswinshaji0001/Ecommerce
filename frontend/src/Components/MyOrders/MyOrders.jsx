@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './MyOrders.scss';
 
 const MyOrders = ({ setUser, setLogin }) => {
-    const [orders, setOrders] = useState([]);
-    const [orderDetails, setOrderDetails] = useState([]);  // Storing the order details (quantity, totalPrice, etc.)
+    const [orders, setOrders] = useState([]); // Stores the orders and their details combined
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -22,8 +21,12 @@ const MyOrders = ({ setUser, setLogin }) => {
             });
 
             if (res.status === 201) {
-                setOrders(res.data.products); // Setting product details in orders
-                setOrderDetails(res.data.order); // Setting order details (quantity, totalPrice, etc.)
+                const mergedOrders = res.data.products.map((order, index) => {
+                    // Merge order with corresponding order details
+                    const orderDetail = res.data.order[index];  // Assuming order and orderDetails arrays are in sync
+                    return { ...order, orderDetail };
+                });
+                setOrders(mergedOrders);  // Set merged orders with details
                 setLoading(false);
             } else {
                 setError('Failed to fetch orders');
@@ -54,15 +57,8 @@ const MyOrders = ({ setUser, setLogin }) => {
         }
     };
 
-    // Function to get order details (quantity, totalPrice) for each product
-    const getOrderDetailsForProduct = (orderId) => {
-        // Find the corresponding order details from the `orderDetails` array
-        return orderDetails.find((od) => od.orderId === orderId);
-    };
-
     return (
         <div className="my-orders">
-
             {/* Display Loading */}
             {loading && <p className="loading">Loading orders...</p>}
 
@@ -72,32 +68,33 @@ const MyOrders = ({ setUser, setLogin }) => {
             {/* Display Orders if available */}
             {!loading && !error && orders.length > 0 ? (
                 <div className="orders-container">
-                    {orders.map((order) => {
-                        // Get the corresponding details for this order from `orderDetails`
-                        const orderDetail = getOrderDetailsForProduct(order.id);
-                        return (
-                            <div className="order-item" key={order.id}>
-                                <div className="order-image">
+                    {orders.map((order) => (
+                        <div className="order-item" key={order.id}>
+                            <div className="order-image">
+                                {/* Use the correct image source */}
+                                {order.pimages && order.pimages.length > 0 ? (
                                     <img src={order.pimages[0]} alt={order.pname} />
-                                </div>
-                                <div className="order-info">
-                                    <h3>{order.pname}</h3>
-                                    <p className="brand">Brand: {order.brand}</p>
-                                    <p className="price">Price: ₹{order.price}</p>
-
-                                    {/* Display quantity and totalPrice from `orderDetails` if available */}
-                                    {orderDetail ? (
-                                        <>
-                                            <p className="quantity">Quantity: {orderDetail.quantity}</p>
-                                            <p className="total-price">Total: ₹{orderDetail.totalPrice}</p>
-                                        </>
-                                    ) : (
-                                        <p className="error">Details not available</p>
-                                    )}
-                                </div>
+                                ) : (
+                                    <p>No image available</p>
+                                )}
                             </div>
-                        );
-                    })}
+                            <div className="order-info">
+                                <h3>{order.pname}</h3>
+                                <p className="brand">Brand: {order.brand}</p>
+                                <p className="price">Price: ₹{order.price}</p>
+
+                                {/* Display quantity and totalPrice from `orderDetail` if available */}
+                                {order.orderDetail ? (
+                                    <>
+                                        <p className="quantity">Quantity: {order.orderDetail.quantity}</p>
+                                        <p className="total-price">Total: ₹{order.orderDetail.totalPrice}</p>
+                                    </>
+                                ) : (
+                                    <p className="error">Details not available</p>
+                                )}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : (
                 !loading && <p>No orders found.</p>

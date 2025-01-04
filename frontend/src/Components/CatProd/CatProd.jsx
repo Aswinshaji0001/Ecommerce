@@ -71,6 +71,20 @@ const CatProd = ({ setUser, setLogin }) => {
         setTotalCost(total);
     };
 
+    const deleteProduct = async(id)=>{
+        console.log(id);
+        const res = await axios.delete(`http://localhost:3000/api/deletep/${id}`)
+        console.log(res);
+        if(res.status==201){
+            alert("Deleted")
+            getProduct();
+        }
+        else{
+            alert("Failed")
+        }
+        
+    }
+
     return (
         <div className='catprod'>
             <div className="main">
@@ -91,7 +105,7 @@ const CatProd = ({ setUser, setLogin }) => {
 
                             <div className="buttons">
                                 <Link to={`/editproduct/${product._id}`}><button className='button-3'>Edit</button></Link>
-                                <button className='button-4'>Delete</button>
+                                <button className='button-4' onClick={()=>deleteProduct(product._id)}>Delete</button>
                             </div>
                         </div>
                     ))}

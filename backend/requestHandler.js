@@ -534,19 +534,20 @@ export async function addOrder(req,res) {
 
 export async function getOrders(req,res) {
   try {
-        console.log("JAFTTF");
-        
+   
         const uid = req.user.userId;
-        console.log(uid);
         const count = await orderSchema.countDocuments({})
-        console.log(data);
         const order = await orderSchema.find({userId:uid});
+        console.log(order);
+        
+        
         
         const productData=order.map(async(p)=>{
           
           return await productSchema.findOne({_id:p.productId})
         })
         const products=await Promise.all(productData)
+        
         return res.status(201).send({msg:"Success",products,order,count})
 
         
