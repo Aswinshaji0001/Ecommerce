@@ -17,9 +17,13 @@ const UserD = ({ setUser, setLogin }) => {
   });
 
   const[count,setCount] =useState({
-    counts:""
+    counts:"",
+    counts1:"",
+    counts2:""
   })
-console.log(count);
+
+  console.log(count);
+  
 
   // Fetch user details from API
   useEffect(() => {
@@ -49,6 +53,7 @@ console.log(count);
     try {
       const res = await axios.get("http://localhost:3000/api/getuser", {headers: { "Authorization": `Bearer ${value}` },});
       
+      
       setData({
         gender: res.data.user.gender || "",
         fname: res.data.user.fname,
@@ -56,7 +61,10 @@ console.log(count);
         mobile: res.data.user.mobile,
       });
       setCount({
-        counts:res.data.count
+        counts:res.data.count,
+        counts1:res.data.count1,
+        counts2:res.data.count2
+
       })
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -64,6 +72,8 @@ console.log(count);
   };
 const getAddress = async()=>{
   const res = await axios.get("http://localhost:3000/api/getaddress", {headers: { "Authorization": `Bearer ${value}` },});
+  console.log(res);
+  
   if(res.status==201){
     setAddressCards(res.data.address)
     
@@ -145,10 +155,34 @@ const getAddress = async()=>{
     }
   };
 
-  const deleteAddress = (id)=>{
-      console.log(id);
-      
-  }
+  const deleteAddress = async (fieldValue) => {
+    const addressToDelete = addressCards.find((address) => address.housename === fieldValue);
+  
+    if (!addressToDelete) {
+      alert("Address not found");
+      return;
+    }
+    console.log(addressToDelete);
+    
+  
+    try {
+      const res = await axios.delete("http://localhost:3000/api/deleteaddress", {
+        headers: { Authorization: `Bearer ${value}` },
+        data: addressToDelete, // Pass the address to delete
+      });
+  
+      if (res.status === 201) {
+        // Remove the address from the frontend
+        setAddressCards((prevCards) => prevCards.filter((address) => address.housename !== fieldValue));
+        alert("Address deleted successfully!");
+      } else {
+        alert("Failed to delete address: " + res.data.msg);
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      alert("Error deleting address");
+    }
+  };
 
   return (
     <div className="userd">
@@ -219,8 +253,8 @@ const getAddress = async()=>{
       <div className="right">
         <div className="buttonss">
        <button className="button-24"><Link to="/myorders">Your Orders   ({count.counts})</Link></button>
-          <button className='button-24'><Link to="/wishlist">Your Wishlist</Link></button>
-          <button className='button-24'><Link to="/cart">Your Cart</Link></button>
+          <button className='button-24'><Link to="/wishlist">Your Wishlist ({count.counts1})</Link></button>
+          <button className='button-24'><Link to="/cart">Your Cart ({count.counts2})</Link></button>
         </div>
         <div className="cards">
           <div className="cardx">
@@ -266,7 +300,7 @@ const getAddress = async()=>{
                   <button className="button-24" onClick={toggleInputA}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24" onClick={()=>deleteAddress(address.name)}>Delete</button>
+            <button className="button-24" onClick={()=>deleteAddress(address.housename)}>Delete</button>
                 </div>
               </div>
             ))}

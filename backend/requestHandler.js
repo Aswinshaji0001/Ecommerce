@@ -255,6 +255,19 @@ export async function getAddress(req,res) {
 
   }
 }
+
+export async function deleteAddress(req,res){
+  try {
+          const {housename} = req.body;
+          console.log(housename);
+          const res = await addressSchema.deleteOne({userId:uid},{$pull:{address:index}})
+          return res.status(201).send({msg:"Success",res})
+          
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+}
 export async function updateUser(req,res) {
   try {
     const _id =req.user.userId;
@@ -279,7 +292,9 @@ export async function  getUser(req,res) {
         const _id = req.user.userId;
         const user = await userDSchema.findOne({userId:_id});
         const count = await orderSchema.countDocuments({});
-        return res.status(201).send({msg:"Success",user,count})
+        const count1 = await wishListSchema.countDocuments({});
+        const count2 = await cartSchema.countDocuments({});
+        return res.status(201).send({msg:"Success",user,count,count1,count2})
 
   } catch (error) {
     res.status(404).send({msg:error})
