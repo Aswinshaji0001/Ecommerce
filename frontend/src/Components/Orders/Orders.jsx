@@ -108,13 +108,13 @@ console.log(selectedAddress);
     try {
       // Add the product to the orders
       const orderResponse = await axios.post(
-        'http://localhost:3000/api/addorder',  // Assuming this is the endpoint to add a product to the orders
+        'http://localhost:3000/api/addorder', 
         {
           productId: product.productId,
           quantity,
           sizee:product.size,
           housename: selectedAddress,
-          totalPrice: calculatePrice() + calculateDeliveryCharge(),  // Total price including delivery
+          totalPrice: calculatePrice() + calculateDeliveryCharge(), 
         },
         { headers: { 'Authorization': `Bearer ${value}` } }
       );
@@ -123,7 +123,7 @@ console.log(selectedAddress);
         console.log('Product added to orders:', orderResponse.data);
   
         const removeCartResponse = await axios.delete(
-          `http://localhost:3000/api/deletecart/${product._id}`,  // Assuming this endpoint removes the product from the cart
+          `http://localhost:3000/api/deletecart/${product._id}`, 
           { headers: { 'Authorization': `Bearer ${value}` } }
         );
   

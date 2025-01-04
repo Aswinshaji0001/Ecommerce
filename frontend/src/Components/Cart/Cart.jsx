@@ -79,24 +79,36 @@ const Cart = ({ setUser, setLogin }) => {
     }
   };
 
-  // Handle Proceed to Checkout (Clear Cart)
   const handleProceedToCheckout = async () => {
     try {
-      const res = await axios.delete("http://localhost:3000/api/clearcart", {
-        headers: { "Authorization": `Bearer ${value}` },
+      const orderItems = cartItems.map(item => ({
+        productId: item._id,     
+        quantity: item.quantity,  
+        sizee: item.size,         
+        housename: item.housename || "Default House", // House name, default to "Default House"
+        totalPrice: (item.quantity * item.price).toString(),  // Calculate total price for each item
+      }));
+  
+      console.log(orderItems); // Debugging: Check the orderItems structure before sending
+  
+      // Make the request to the backend to add all orders
+      const resAddToOrders = await axios.post("http://localhost:3000/api/addallorders", orderItems, {
+        headers: { "Authorization": `Bearer ${value}` }, // Pass authorization token
       });
-
-      if (res.status === 201) {
-        setMessage('Cart cleared successfully!');  // Show success message
-        setCartItems([]);  // Clear the cart on frontend
+  
+      if (resAddToOrders.status === 201) {
+        alert("Success! Your order has been placed.");
+        setCartItems([]); // Clear the cart in frontend after successful checkout
       } else {
-        alert('Error clearing cart');
+        alert('Error processing checkout');
       }
     } catch (error) {
-      console.error('Error clearing cart', error);
-      alert('Failed to clear cart');
+      console.error('Error during checkout', error);
+      alert('Failed to proceed with checkout');
     }
   };
+  
+
 
   const handleBuyNow = async (id) => {
     try {

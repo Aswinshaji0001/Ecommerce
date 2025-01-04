@@ -162,17 +162,17 @@ const getAddress = async()=>{
       alert("Address not found");
       return;
     }
-    console.log(addressToDelete);
-    
   
     try {
-      const res = await axios.delete("http://localhost:3000/api/deleteaddress", {
-        headers: { Authorization: `Bearer ${value}` },
-        data: addressToDelete, // Pass the address to delete
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/deleteaddress",
+        { housename: fieldValue },
+        {
+          headers: { Authorization: `Bearer ${value}` },
+        }
+      );
   
       if (res.status === 201) {
-        // Remove the address from the frontend
         setAddressCards((prevCards) => prevCards.filter((address) => address.housename !== fieldValue));
         alert("Address deleted successfully!");
       } else {
@@ -183,7 +183,7 @@ const getAddress = async()=>{
       alert("Error deleting address");
     }
   };
-
+  
   return (
     <div className="userd">
       <div className="left">

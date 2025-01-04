@@ -8,13 +8,14 @@ router.route("/verify").post(u.verifyMail);
 router.route("/home").get(Auth,u.Home);
 router.route("/seller").get(Auth,u.Seller);
 router.route("/editseller").post(Auth,u.editSeller);
+router.route("/deleteseller/:id").delete(u.deletSeller);
 router.route("/getseller").get(Auth,u.getSeller)
 router.route("/addproduct").post(u.addProduct)
 router.route("/getuser").get(Auth,u.getUser)
 router.route("/updateuser").post(Auth,u.updateUser)
 router.route("/addaddress").post(Auth,u.addAddress)
 router.route("/getaddress").get(Auth,u.getAddress)
-router.route("/deleteaddress").delete(Auth,u.deleteAddress)
+router.route("/deleteaddress").post(Auth,u.deleteAddress)
 router.route("/addcat").post(u.addCategory)
 router.route("/getcat").get(Auth,u.getCategory)
 router.route("/getproducts").get(Auth,u.getProduct)
@@ -34,6 +35,7 @@ router.route("/getwishlist").get(Auth,u.getWishlist);
 router.route("/getorder/:id").get(u.getOrder);
 router.route("/editquantity").post(Auth,u.editQuantity);
 router.route("/addorder").post(Auth,u.addOrder);
+router.route("/addallorders").post(Auth,u.addAllOrders);
 router.route("/getorders").get(Auth,u.getOrders);
 
 export default router;

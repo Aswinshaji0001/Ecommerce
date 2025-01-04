@@ -38,6 +38,7 @@ const Seller = ({ setUser, setLogin }) => {
       const res = await axios.get("http://localhost:3000/api/getseller", { headers: { "Authorization": `Bearer ${value}` } });
       if (res.status === 201) {
         getSeller(res.data);
+        
       } else {
         alert("Error fetching seller data");
       }
@@ -74,6 +75,17 @@ const Seller = ({ setUser, setLogin }) => {
       alert("Error fetching products");
     }
   };
+const deleteSeller = async(id)=>{
+  const res =await axios.delete(`http://localhost:3000/api/deleteseller/${id}`)
+  if(res.status==201){
+    alert("Deleted")
+    getDetails();
+  }
+  else{
+    alert("Failed")
+  }
+  
+}
 
   return (
     <div className='seller'>
@@ -87,7 +99,7 @@ const Seller = ({ setUser, setLogin }) => {
             <h2>{seller.location}</h2>
           </div>
           <div className='buttons'>
-            <button className='button-24'>Delete</button>
+            <button className='button-24' onClick={()=>deleteSeller(seller.sellerId)}>Delete</button>
             <Link to="/editseller"><button className='button-24'>Edit</button></Link>
           </div>
         </div>

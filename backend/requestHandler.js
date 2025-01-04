@@ -189,6 +189,20 @@ export async function editSeller(req,res) {
 }
 }
 
+export async function deletSeller(req,res) {
+  try {
+    const {id} = req.params;
+    const res = await companySchema.deleteOne({sellerId:id})
+    console.log(res);
+    return res.status(201).send({msg:"Deleted"})        
+
+  } catch (error) {
+    res.status(404).send({msg:error})
+
+  }
+  
+}
+
 export async function getSeller(req,res) {
   try{
       const _id =req.user.userId;
@@ -256,18 +270,28 @@ export async function getAddress(req,res) {
   }
 }
 
-export async function deleteAddress(req,res){
+export async function deleteAddress(req, res) {
   try {
-          const {housename} = req.body;
-          console.log(housename);
-          const res = await addressSchema.deleteOne({userId:uid},{$pull:{address:index}})
-          return res.status(201).send({msg:"Success",res})
-          
-  } catch (error) {
-    res.status(404).send({msg:error})
+    const  housename = req.body; 
+    const  id = req.user.userId;  
+      console.log(req.body);
+      console.log(id);
+      
+      
 
+    const result = await addressSchema.updateOne(
+      { userId: id },
+      { $pull: { address: housename } } 
+    );
+ 
+    return res.status(201).send({ msg: 'Address deleted successfully', result });
+    
+  } catch (error) {
+    console.error('Error during address deletion:', error);
+    return res.status(404).send({ msg: 'Error deleting address', error: error.message });
   }
 }
+
 export async function updateUser(req,res) {
   try {
     const _id =req.user.userId;
@@ -571,4 +595,56 @@ export async function getOrders(req,res) {
 
   }
   
+}
+
+export async function addAllOrders(req, res) {
+  try {
+    const orderItems = req.body; 
+    
+    const userId = req.user.userId; 
+
+    const orderData = [];  
+    let totalOrderPrice = 0; 
+
+    for (const item of orderItems) {
+      const { productId, quantity, sizee, housename, totalPrice } = item;
+
+      const product = await productSchema.findOne({ _id: productId });
+
+      if (!product) {
+        return res.status(404).send({ msg: `Product with ID ${productId} not found` });
+      }
+
+      const newQuantity = product.size[sizee] - quantity;
+      if (newQuantity < 0) {
+        return res.status(400).send({ msg: `Not enough stock for size ${sizee} of ${product.pname}` });
+      }
+
+      await productSchema.updateOne(
+        { _id: productId },
+        { $set: { [`size.${sizee}`]: newQuantity } }
+      );
+
+      orderData.push({
+        userId,
+        productId,
+        quantity,
+        housename,
+        totalPrice,
+      });
+      console.log(orderData);
+      
+
+      totalOrderPrice += parseFloat(totalPrice);  
+    }
+
+    const orders = await orderSchema.insertMany(orderData);
+    console.log(orders);
+    
+
+    return res.status(201).send({ msg: "Orders placed successfully!", orders, totalOrderPrice });
+  } catch (error) {
+    console.error("Error during order creation", error);
+    return res.status(404).send({ msg: "Error processing orders" });
+  }
 }
