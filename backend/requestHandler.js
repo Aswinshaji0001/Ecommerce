@@ -554,19 +554,21 @@ export async function editQuantity(req,res) {
 
 export async function addOrder(req,res) {
   try {
-    const {productId,sizee,quantity,housename,totalPrice} = req.body;   
+    const {productId,sizee,quantity,totalPrice} = req.body;   
     console.log(req.body);
     const uid = req.user.userId;
-    const cart = await cartSchema.findOne({userId:uid})
+    const cart = await cartSchema.findOne({userId:uid,productId})
+    console.log(cart);
+    
     const product =await productSchema.findOne({_id:productId})
     const newQuantity=product.size[sizee]-quantity;
-    console.log(`size.${sizee}`);
+    console.log(newQuantity);
     
     if(newQuantity<0)
       return res.status(201).send({msg:"Error"})
     await productSchema.updateOne({_id:productId},{$set:{[`size.${sizee}`]:newQuantity}})
     const data = await orderSchema.create({userId:uid,product:cart});    
-    const deleteCart=await cartSchema.deleteMany({userId:uid})
+    const deleteCart=await cartSchema.deleteOne({userId:uid,productId})
     return res.status(201).send({msg:"Success",data,deleteCart})
     
   } catch (error) {
@@ -600,15 +602,16 @@ export async function getOrders(req,res) {
 
 export async function addAllOrders(req, res) {
   try {
-    
     const userId = req.user.userId; 
-    const orderItems = await cartSchema.find({userId})
-
+    const orderItems = req.body;
+    console.log(orderItems);
+    
     const orderData = [];  
     let totalOrderPrice = 0; 
     
     for (const item of orderItems) {
       const { productId, quantity, sizee, housename, totalPrice } = item;
+      console.log(productId);
       
       const product = await productSchema.findOne({ _id: productId });
       console.log(product);
@@ -617,7 +620,9 @@ export async function addAllOrders(req, res) {
         return res.status(404).send({ msg: `Product with ID ${productId} not found` });
       }
 
+      console.log(sizee);
       const newQuantity = product.size[sizee] - quantity;
+      
       if (newQuantity < 0) {
         return res.status(400).send({ msg: `Not enough stock for size ${sizee} of ${product.pname}` });
       }

@@ -179,6 +179,10 @@ const Product = ({ setUser, setLogin }) => {
     navigate('/cart'); // Navigate to the cart page
   };
 const Buy = ()=>{
+  if (!cart.size) {
+    alert('Please select a size');
+    return;
+  }
   navigate(`/orders/${products._id}`)
 }
   return (

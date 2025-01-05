@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../Orders/Orders.scss'; // Ensure to add appropriate styles in this file
 import { FiMinus, FiPlus } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 const Orders = ({ setUser, setLogin }) => {
   const value = localStorage.getItem('Auth');
@@ -10,6 +11,7 @@ const Orders = ({ setUser, setLogin }) => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(0);
   const [addresses, setAddresses] = useState([]); // State for addresses
+  const navigate =useNavigate();
   const [selectedAddress, setSelectedAddress] = useState(''); // State for selected address
 
 console.log(selectedAddress);
@@ -121,7 +123,10 @@ console.log(selectedAddress);
   
       if (orderResponse.status === 201) {
         alert("Success")
+        
+
         console.log('Product added to orders:', orderResponse.data);
+        navigate("/")
       } else {
         alert('Error placing order.');
       }

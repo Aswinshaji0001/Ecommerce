@@ -21,6 +21,8 @@ const MyOrders = ({ setUser, setLogin }) => {
             });
 
             if (res.status === 201) { // Change status code to 200
+                console.log(res.data.order);
+                
                 setOrders(res.data.order); // Ensure 'order' is correct; log to check
                 setLoading(false);
             } else {
@@ -71,6 +73,7 @@ const MyOrders = ({ setUser, setLogin }) => {
                                 <h3>{order.product.pname || 'Product name not available'}</h3> {/* Fallback for pname */}
                                 <p className="brand">Brand: {order.product.brand || 'Brand not available'}</p> {/* Fallback for brand */}
                                 <p className="price">Price: ₹{order.product.price || '0'}</p> {/* Fallback for price */}
+
                             </div>
                         </div>
                     ))}

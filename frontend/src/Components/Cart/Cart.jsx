@@ -3,14 +3,12 @@ import './Cart.scss';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
 const Cart = ({ setUser, setLogin }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const value = localStorage.getItem('Auth');
   const [cartItems, setCartItems] = useState([]);
   const [message, setMessage] = useState(''); // To show success or error messages
-
   useEffect(() => {
     getDetails();
     getAllProducts();
@@ -39,7 +37,6 @@ const Cart = ({ setUser, setLogin }) => {
         headers: { "Authorization": `Bearer ${value}` },
       });
       if (res.status === 201) {
-        console.log(res);
         setCartItems(res.data);
       } else {
         alert("Failed to fetch cart");
@@ -82,14 +79,12 @@ const Cart = ({ setUser, setLogin }) => {
   const handleProceedToCheckout = async () => {
     try {
       const orderItems = cartItems.map(item => ({
-        productId: item._id,     
+        productId:item.productId,     
         quantity: item.quantity,  
         sizee: item.size,         
         housename: item.housename || "Default House", // House name, default to "Default House"
         totalPrice: (item.quantity * item.price).toString(),  // Calculate total price for each item
       }));
-
-      console.log(orderItems); // Debugging: Check the orderItems structure before sending
 
       // Make the request to the backend to add all orders
       const resAddToOrders = await axios.post("http://localhost:3000/api/addallorders", orderItems, {
@@ -98,7 +93,8 @@ const Cart = ({ setUser, setLogin }) => {
 
       if (resAddToOrders.status === 201) {
         alert("Success! Your order has been placed.");
-        setCartItems([]); // Clear the cart in frontend after successful checkout
+        setCartItems([]); 
+        navigate("/")
       } else {
         alert('Error processing checkout');
       }

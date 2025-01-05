@@ -37,6 +37,8 @@ const Wishlist = ({ setUser, setLogin }) => {
         headers: { 'Authorization': `Bearer ${value}` },
       });
       if (res.status === 201) {
+        console.log(res.data);
+        
         setWishlist(res.data); // Set the fetched wishlist
       } else {
         alert('Error fetching wishlist');
@@ -106,7 +108,6 @@ const Wishlist = ({ setUser, setLogin }) => {
                   />
                   <div className="product-info">
                     <h2>{item.pname}</h2>
-                    <p>Brand: {item.brand}</p>
                     <p>Price: ₹{item.price}</p>
                   </div>
                   <button
