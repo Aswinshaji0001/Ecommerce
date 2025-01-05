@@ -120,22 +120,8 @@ console.log(selectedAddress);
       );
   
       if (orderResponse.status === 201) {
+        alert("Success")
         console.log('Product added to orders:', orderResponse.data);
-  
-        const removeCartResponse = await axios.delete(
-          `http://localhost:3000/api/deletecart/${product._id}`, 
-          { headers: { 'Authorization': `Bearer ${value}` } }
-        );
-  
-        if (removeCartResponse.status === 201) {
-          console.log('Product removed from cart:', removeCartResponse.data);
-  
-          // Optionally: Redirect the user to the orders page or show an order confirmation message
-          alert('Order placed successfully! Product removed from cart.');
-          // Optionally, you can redirect the user or update state here to reflect changes.
-        } else {
-          alert('Error removing product from cart.');
-        }
       } else {
         alert('Error placing order.');
       }

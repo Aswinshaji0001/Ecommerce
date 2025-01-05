@@ -13,20 +13,20 @@ const Nav = ({ user, login }) => {
         <div className="right">
           <div 
             className="profile" > 
-            <Link to="/userd"><img src="profile.png" alt="Profile"/></Link>
+            <Link to="/userd"><img src="/profile.png" alt="Profile"/></Link>
             <div className="name">
             <h2>{user}</h2>
           </div>
           </div>
           <div className="im">
           <div className="names">
-          <Link to="/cart"><img src="shp.png" alt="" /></Link>
+          <Link to="/cart"><img src="/shp.png" alt="" /></Link>
           </div>
           <div className="names2">
-          <Link to="/wishlist"><img src="wishlist.png" alt="" /></Link>
+          <Link to="/wishlist"><img src="/wishlist.png" alt="" /></Link>
           </div>
           <div className="names3">
-          <Link to="/myorders"><img src="checklist.png" alt="" /></Link>
+          <Link to="/myorders"><img src="/checklist.png" alt="" /></Link>
           </div>
           <div className="login">
             <Link to="/seller"><h2>{login}</h2></Link>

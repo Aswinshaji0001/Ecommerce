@@ -554,16 +554,20 @@ export async function editQuantity(req,res) {
 
 export async function addOrder(req,res) {
   try {
-    const {productId,quantity,sizee,housename,totalPrice} = req.body
-    const id = req.user.userId;
+    const {productId,sizee,quantity,housename,totalPrice} = req.body;   
+    console.log(req.body);
+    const uid = req.user.userId;
+    const cart = await cartSchema.findOne({userId:uid})
     const product =await productSchema.findOne({_id:productId})
-    console.log(product.size[sizee]);
     const newQuantity=product.size[sizee]-quantity;
+    console.log(`size.${sizee}`);
+    
     if(newQuantity<0)
       return res.status(201).send({msg:"Error"})
     await productSchema.updateOne({_id:productId},{$set:{[`size.${sizee}`]:newQuantity}})
-    const data = await orderSchema.create({userId:id,productId,quantity,housename,totalPrice});
-    return res.status(201).send({msg:"Success",data})
+    const data = await orderSchema.create({userId:uid,product:cart});    
+    const deleteCart=await cartSchema.deleteMany({userId:uid})
+    return res.status(201).send({msg:"Success",data,deleteCart})
     
   } catch (error) {
     return res.status(404).send({msg:"error"})
@@ -578,9 +582,6 @@ export async function getOrders(req,res) {
         const count = await orderSchema.countDocuments({})
         const order = await orderSchema.find({userId:uid});
         console.log(order);
-        
-        
-        
         const productData=order.map(async(p)=>{
           
           return await productSchema.findOne({_id:p.productId})
@@ -599,18 +600,19 @@ export async function getOrders(req,res) {
 
 export async function addAllOrders(req, res) {
   try {
-    const orderItems = req.body; 
     
     const userId = req.user.userId; 
+    const orderItems = await cartSchema.find({userId})
 
     const orderData = [];  
     let totalOrderPrice = 0; 
-
+    
     for (const item of orderItems) {
       const { productId, quantity, sizee, housename, totalPrice } = item;
-
+      
       const product = await productSchema.findOne({ _id: productId });
-
+      console.log(product);
+      
       if (!product) {
         return res.status(404).send({ msg: `Product with ID ${productId} not found` });
       }
@@ -627,10 +629,7 @@ export async function addAllOrders(req, res) {
 
       orderData.push({
         userId,
-        productId,
-        quantity,
-        housename,
-        totalPrice,
+        product
       });
       console.log(orderData);
       
@@ -639,7 +638,8 @@ export async function addAllOrders(req, res) {
     }
 
     const orders = await orderSchema.insertMany(orderData);
-    console.log(orders);
+    const deleteCart=await cartSchema.deleteMany({userId})
+    console.log(deleteCart);
     
 
     return res.status(201).send({ msg: "Orders placed successfully!", orders, totalOrderPrice });

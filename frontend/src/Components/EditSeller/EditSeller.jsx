@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../EditSeller/EditSeller.scss'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const EditSeller = ({setUser,setLogin}) => {
 
     const value = localStorage.getItem('Auth')
+    const navigate =useNavigate();
     console.log(value);
     const [sdata,getSData] = useState({})
     useEffect(()=>{
@@ -48,6 +50,7 @@ const EditSeller = ({setUser,setLogin}) => {
     if(res.status==201){
       getSData(res.data)
       alert("Success")
+      navigate("/seller")
     }
     else{
       alert(res.data.msg)

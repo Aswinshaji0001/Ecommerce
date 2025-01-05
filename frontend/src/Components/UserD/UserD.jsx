@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../UserD/UserD.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const UserD = ({ setUser, setLogin }) => {
   const value = localStorage.getItem('Auth');
   const [addressCards, setAddressCards] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
+  const navigate=useNavigate();
 
   // State for user data
   const [data, setData] = useState({
@@ -183,6 +185,12 @@ const getAddress = async()=>{
       alert("Error deleting address");
     }
   };
+  const logout = ()=>{
+    localStorage.removeItem('Auth')
+    alert("Logged Out")
+    navigate("/login")
+
+  }
   
   return (
     <div className="userd">
@@ -245,7 +253,7 @@ const getAddress = async()=>{
             <button className="button-24" onClick={toggleInput}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24">Logout</button>
+            <button className="button-24" onClick={logout}>Logout</button>
           </div>
         </div>
       </div>

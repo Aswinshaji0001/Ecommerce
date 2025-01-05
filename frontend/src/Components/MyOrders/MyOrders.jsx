@@ -20,13 +20,8 @@ const MyOrders = ({ setUser, setLogin }) => {
                 headers: { 'Authorization': `Bearer ${value}` },
             });
 
-            if (res.status === 201) {
-                const mergedOrders = res.data.products.map((order, index) => {
-                    // Merge order with corresponding order details
-                    const orderDetail = res.data.order[index];  // Assuming order and orderDetails arrays are in sync
-                    return { ...order, orderDetail };
-                });
-                setOrders(mergedOrders);  // Set merged orders with details
+            if (res.status === 201) { // Change status code to 200
+                setOrders(res.data.order); // Ensure 'order' is correct; log to check
                 setLoading(false);
             } else {
                 setError('Failed to fetch orders');
@@ -38,7 +33,6 @@ const MyOrders = ({ setUser, setLogin }) => {
             console.error(err);
         }
     };
-
     const getDetails = async () => {
         try {
             const res = await axios.get('http://localhost:3000/api/seller', {
@@ -59,39 +53,24 @@ const MyOrders = ({ setUser, setLogin }) => {
 
     return (
         <div className="my-orders">
-            {/* Display Loading */}
             {loading && <p className="loading">Loading orders...</p>}
-
-            {/* Display Error */}
             {error && <p className="error">{error}</p>}
 
-            {/* Display Orders if available */}
             {!loading && !error && orders.length > 0 ? (
                 <div className="orders-container">
                     {orders.map((order) => (
                         <div className="order-item" key={order.id}>
                             <div className="order-image">
-                                {/* Use the correct image source */}
-                                {order.pimages && order.pimages.length > 0 ? (
-                                    <img src={order.pimages[0]} alt={order.pname} />
+                                {order.product.pimages && order.product.pimages.length > 0 ? (
+                                    <img src={order.product.pimages[0]} alt={order.pname} />
                                 ) : (
                                     <p>No image available</p>
                                 )}
                             </div>
                             <div className="order-info">
-                                <h3>{order.pname}</h3>
-                                <p className="brand">Brand: {order.brand}</p>
-                                <p className="price">Price: ₹{order.price}</p>
-
-                                {/* Display quantity and totalPrice from `orderDetail` if available */}
-                                {order.orderDetail ? (
-                                    <>
-                                        <p className="quantity">Quantity: {order.orderDetail.quantity}</p>
-                                        <p className="total-price">Total: ₹{order.orderDetail.totalPrice}</p>
-                                    </>
-                                ) : (
-                                    <p className="error">Details not available</p>
-                                )}
+                                <h3>{order.product.pname || 'Product name not available'}</h3> {/* Fallback for pname */}
+                                <p className="brand">Brand: {order.product.brand || 'Brand not available'}</p> {/* Fallback for brand */}
+                                <p className="price">Price: ₹{order.product.price || '0'}</p> {/* Fallback for price */}
                             </div>
                         </div>
                     ))}

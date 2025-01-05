@@ -88,14 +88,14 @@ const Cart = ({ setUser, setLogin }) => {
         housename: item.housename || "Default House", // House name, default to "Default House"
         totalPrice: (item.quantity * item.price).toString(),  // Calculate total price for each item
       }));
-  
+
       console.log(orderItems); // Debugging: Check the orderItems structure before sending
-  
+
       // Make the request to the backend to add all orders
       const resAddToOrders = await axios.post("http://localhost:3000/api/addallorders", orderItems, {
         headers: { "Authorization": `Bearer ${value}` }, // Pass authorization token
       });
-  
+
       if (resAddToOrders.status === 201) {
         alert("Success! Your order has been placed.");
         setCartItems([]); // Clear the cart in frontend after successful checkout
@@ -107,8 +107,6 @@ const Cart = ({ setUser, setLogin }) => {
       alert('Failed to proceed with checkout');
     }
   };
-  
-
 
   const handleBuyNow = async (id) => {
     try {
@@ -125,9 +123,18 @@ const Cart = ({ setUser, setLogin }) => {
     }
   };
 
-  // Calculate total price of cart
+  // Calculate total price of cart, apply discount or delivery charge
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cartItems.reduce((total, item) => {
+      let itemTotal = item.price * item.quantity;
+      // Apply 40% discount if quantity is more than 2
+      if (item.quantity > 2) {
+        itemTotal = itemTotal * 0.6; // Apply 40% discount (60% of the price)
+      } else {
+        itemTotal += 40; // Add ₹40 delivery charge if quantity is 2 or less
+      }
+      return total + itemTotal;
+    }, 0);
   };
 
   return (
@@ -173,7 +180,6 @@ const Cart = ({ setUser, setLogin }) => {
                   <button className="buy-now-btn" onClick={() => handleBuyNow(item._id)}>
                     Remove
                   </button>
-                  
                 </div>
               </div>
             ))
@@ -183,7 +189,9 @@ const Cart = ({ setUser, setLogin }) => {
         {/* Cart Footer with Total Price */}
         <div className="cart-footer">
           <div className="total-price">
-            <p>Total: ₹{calculateTotal()}</p>
+            <p>Total: ₹{calculateTotal()}</p> {/* Display calculated total */}
+            <p>40% Discount Added</p>
+            <p>COUPONS FOR YOU APPLIED</p>
           </div>
 
           {/* Proceed to Checkout Card Button */}
