@@ -88,13 +88,12 @@ const CatProd = ({ setUser, setLogin }) => {
     return (
         <div className='catprod'>
             <div className="main">
-                <div className="cardz">
+               <div className="cardz">
                     {products.map((product) => (
-                        <div className="cardy" key={product._id}>
-                            <h1>Products</h1>
-                            <div className="imagesd">
+                         <div className="cardy" key={product._id}>
+                            <Link to={`/product/${product._id}`}><div className="imagesd">
                                 <img src={product.pimages[0]} alt={product.pname} />
-                            </div>
+                            </div></Link>
                             <h2>{product.pname}</h2><hr />
                             <h2>₹{product.price}</h2><hr />
                             <h2>{product.brand}</h2><hr />

@@ -185,8 +185,8 @@ console.log(product);
                 placeholder='Add new category'
                 value={newCategory}
                 onChange={handleNewCategoryChange}
-              />
-              <button type="button" onClick={addCategory} className='button-24'>Add Category</button>
+              /><br></br>
+              <button type="button" onClick={addCategory} className=''>Add Category</button>
             </>
           )}
 
@@ -212,9 +212,13 @@ console.log(product);
             {pimages.map((img, index) => (
               <img key={index} src={img} alt={`Product Preview ${index}`} />
             ))}
-          </div>
 
+
+
+          </div>
+          <div>
           <button className='button-24' onClick={handleSubmit}>Submit</button>
+          </div>
         </div>
       </div>
     </div>

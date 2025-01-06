@@ -42,7 +42,6 @@ const Home = ({ setUser, setLogin }) => {
 
   return (
     <div className='home'>
-      <h1>All Products</h1>
       <div className="product-container">
         {products.map((product, index) => (
           <Link key={index} to={`/product/${product._id}`} className="product-card">

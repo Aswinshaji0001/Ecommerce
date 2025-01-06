@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../UserD/UserD.scss';
-import { Link, useNavigate } from 'react-router-dom';
-import { Navigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "../UserD/UserD.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa"; // Importing icons from react-icons
 
 const UserD = ({ setUser, setLogin }) => {
-  const value = localStorage.getItem('Auth');
+  const value = localStorage.getItem("Auth");
   const [addressCards, setAddressCards] = useState([]);
   const [isDisabled, setIsDisabled] = useState(true);
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   // State for user data
   const [data, setData] = useState({
@@ -18,14 +18,11 @@ const UserD = ({ setUser, setLogin }) => {
     gender: "",
   });
 
-  const[count,setCount] =useState({
-    counts:"",
-    counts1:"",
-    counts2:""
-  })
-
-  console.log(count);
-  
+  const [count, setCount] = useState({
+    counts: "",
+    counts1: "",
+    counts2: "",
+  });
 
   // Fetch user details from API
   useEffect(() => {
@@ -37,12 +34,12 @@ const UserD = ({ setUser, setLogin }) => {
   const getDetails = async () => {
     try {
       const res = await axios.get("http://localhost:3000/api/seller", {
-        headers: { "Authorization": `Bearer ${value}` },
+        headers: { Authorization: `Bearer ${value}` },
       });
       if (res.status === 201) {
         setUser(res.data.username);
         setLogin(res.data.accounttype);
-        setAddressCards(res.data.address.address)
+        setAddressCards(res.data.address.address);
       } else {
         alert("Error fetching seller details");
       }
@@ -53,9 +50,10 @@ const UserD = ({ setUser, setLogin }) => {
 
   const getData = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getuser", {headers: { "Authorization": `Bearer ${value}` },});
-      
-      
+      const res = await axios.get("http://localhost:3000/api/getuser", {
+        headers: { Authorization: `Bearer ${value}` },
+      });
+
       setData({
         gender: res.data.user.gender || "",
         fname: res.data.user.fname,
@@ -63,50 +61,49 @@ const UserD = ({ setUser, setLogin }) => {
         mobile: res.data.user.mobile,
       });
       setCount({
-        counts:res.data.count,
-        counts1:res.data.count1,
-        counts2:res.data.count2
-
-      })
+        counts: res.data.count,
+        counts1: res.data.count1,
+        counts2: res.data.count2,
+      });
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
-const getAddress = async()=>{
-  const res = await axios.get("http://localhost:3000/api/getaddress", {headers: { "Authorization": `Bearer ${value}` },});
-  console.log(res);
-  
-  if(res.status==201){
-    setAddressCards(res.data.address)
-    
-  }
-  else{
-    alert("Failed")
-  }
-}
+
+  const getAddress = async () => {
+    const res = await axios.get("http://localhost:3000/api/getaddress", {
+      headers: { Authorization: `Bearer ${value}` },
+    });
+
+    if (res.status === 201) {
+      setAddressCards(res.data.address);
+    } else {
+      alert("Failed");
+    }
+  };
+
   const handleChange = (e, index) => {
     const { name, value } = e.target;
     setAddressCards((prevCards) => {
       const updatedAddressCards = [...prevCards];
-      updatedAddressCards[index] = { ...updatedAddressCards[index], [name]: value };
+      updatedAddressCards[index] = {
+        ...updatedAddressCards[index],
+        [name]: value,
+      };
       return updatedAddressCards;
     });
-  };
-  
-
-  const handleGenderChange = (e) => {
-    setData((prevData) => ({
-      ...prevData,
-      gender: e.target.value,
-    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedData = {data};
+    const updatedData = { data };
 
     try {
-      const res = await axios.post("http://localhost:3000/api/updateuser", data, {headers: { "Authorization": `Bearer ${value}` },});
+      const res = await axios.post(
+        "http://localhost:3000/api/updateuser",
+        data,
+        { headers: { Authorization: `Bearer ${value}` } }
+      );
 
       if (res.status === 201) {
         alert("User saved successfully!");
@@ -117,11 +114,8 @@ const getAddress = async()=>{
       console.error("Error during submission:", error);
     }
   };
-  
+
   const toggleInput = () => {
-    setIsDisabled(!isDisabled);
-  };
-  const toggleInputA = () => {
     setIsDisabled(!isDisabled);
   };
 
@@ -129,22 +123,26 @@ const getAddress = async()=>{
     setAddressCards([
       ...addressCards,
       {
-        housename: '',
-        landmark: '',
-        pincode: '',
-        place: '',
+        housename: "",
+        landmark: "",
+        pincode: "",
+        place: "",
+        city: "", // Make sure to add a city in the new address
       },
     ]);
   };
 
   const handleAddressSubmit = async (index) => {
     const addressToSubmit = addressCards[index];
-    console.log("Address to be submitted:", addressToSubmit);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/addaddress", addressCards, {
-        headers: { "Authorization": `Bearer ${value}` },
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/addaddress",
+        addressCards,
+        {
+          headers: { Authorization: `Bearer ${value}` },
+        }
+      );
 
       if (res.status === 201) {
         alert("Address added successfully!");
@@ -158,13 +156,15 @@ const getAddress = async()=>{
   };
 
   const deleteAddress = async (fieldValue) => {
-    const addressToDelete = addressCards.find((address) => address.housename === fieldValue);
-  
+    const addressToDelete = addressCards.find(
+      (address) => address.housename === fieldValue
+    );
+
     if (!addressToDelete) {
       alert("Address not found");
       return;
     }
-  
+
     try {
       const res = await axios.post(
         "http://localhost:3000/api/deleteaddress",
@@ -173,9 +173,11 @@ const getAddress = async()=>{
           headers: { Authorization: `Bearer ${value}` },
         }
       );
-  
+
       if (res.status === 201) {
-        setAddressCards((prevCards) => prevCards.filter((address) => address.housename !== fieldValue));
+        setAddressCards((prevCards) =>
+          prevCards.filter((address) => address.housename !== fieldValue)
+        );
         alert("Address deleted successfully!");
       } else {
         alert("Failed to delete address: " + res.data.msg);
@@ -185,13 +187,23 @@ const getAddress = async()=>{
       alert("Error deleting address");
     }
   };
-  const logout = ()=>{
-    localStorage.removeItem('Auth')
-    alert("Logged Out")
-    navigate("/login")
 
-  }
-  
+  const logout = () => {
+    localStorage.removeItem("Auth");
+    alert("Logged Out");
+    navigate("/login");
+  };
+
+  const [editMode, setEditMode] = useState(null);
+
+  const handleEditClick = (index) => {
+    setEditMode(index);
+  };
+
+  const handleCancelEdit = () => {
+    setEditMode(null);
+  };
+
   return (
     <div className="userd">
       <div className="left">
@@ -233,7 +245,7 @@ const getAddress = async()=>{
             name="gender"
             value="male"
             checked={data.gender === "male"}
-            onChange={handleGenderChange}
+            onChange={(e) => setData({ ...data, gender: e.target.value })}
           />
           <label htmlFor="female">Female</label>
           <input
@@ -243,7 +255,7 @@ const getAddress = async()=>{
             name="gender"
             value="female"
             checked={data.gender === "female"}
-            onChange={handleGenderChange}
+            onChange={(e) => setData({ ...data, gender: e.target.value })}
           />
 
           <div className="buttons">
@@ -253,105 +265,143 @@ const getAddress = async()=>{
             <button className="button-24" onClick={toggleInput}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24" onClick={logout}>Logout</button>
+            <button className="button-24" onClick={logout}>
+              Logout
+            </button>
           </div>
         </div>
       </div>
 
       <div className="right">
         <div className="buttonss">
-       <button className="button-24"><Link to="/myorders">Your Orders   ({count.counts})</Link></button>
-          <button className='button-24'><Link to="/wishlist">Your Wishlist ({count.counts1})</Link></button>
-          <button className='button-24'><Link to="/cart">Your Cart ({count.counts2})</Link></button>
+          <button className="button-24">
+            <Link to="/myorders">Your Orders ({count.counts})</Link>
+          </button>
+          <button className="button-24">
+            <Link to="/wishlist">Your Wishlist ({count.counts1})</Link>
+          </button>
+          <button className="button-24">
+            <Link to="/cart">Your Cart ({count.counts2})</Link>
+          </button>
         </div>
         <div className="cards">
           <div className="cardx">
             <h1>Address Details</h1>
             {addressCards.map((address, index) => (
               <div key={index} className="address-card">
-                <div className="ad">
-                <label htmlFor="housename">Housename</label>
-                <input
-                  type="text"
-                  placeholder="Housename"
-                  name="housename"
-                  id="housename"
-                  value={address.housename}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                />
-                <label htmlFor="landmark">Landmark</label>
-                <input
-                  type="text"
-                  placeholder="landmark"
-                  name="landmark"
-                  id="landmark"
-                  value={address.landmark}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                />
-                </div>
-                <div className="ad">
-        <label htmlFor="landmark">Pincode </label>
-                <input
-                  type="text"
-                  placeholder="pincode"
-                  name="pincode"
-                  id='pincode'
-                  value={address.pincode}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                  
-                />
-                <label htmlFor="pincode">Place</label>
-                <input
-                  type="text"
-                  placeholder="place"
-                  name="place"
-                  id='place'
-                  value={address.place}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                />
-                </div>
-              <div className="ad">
-           <label htmlFor="pincode">Address</label>
-                <input
-                  type="text"
-                  placeholder="Pincode"
-                  name="pincode"
-                  id='pincode'
-                  value={address.pincode}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                /></div>
-            <div className="ad">
-            <label htmlFor="place">Place</label>
-                <input
-                  type="text"
-                  placeholder="Place"
-                  name="place"
-                  id='place'
-                  value={address.place}
-                  disabled={isDisabled}
-                  onChange={(e) => handleChange(e, index)}
-                /></div>
-                <div className="buttons">
-                  <button className="button-24" onClick={() => handleAddressSubmit(index)}>
-                    Submit Address
-                  </button>
-                  <button className="button-24" onClick={toggleInputA}>
-              {isDisabled ? "Enable" : "Disable"}
-            </button>
-            <button className="button-24" onClick={()=>deleteAddress(address.housename)}>Delete</button>
-            <button className="button-24" onClick={addAddressCard}>+ Add Address</button>
-            
-                </div>
+                {editMode === index ? (
+                  <>
+                    <div className="ad">
+                      <label htmlFor="housename">Housename</label>
+                      <input
+                        type="text"
+                        placeholder="Housename"
+                        name="housename"
+                        id="housename"
+                        value={address.housename}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                      <label htmlFor="landmark">Landmark</label>
+                      <input
+                        type="text"
+                        placeholder="landmark"
+                        name="landmark"
+                        id="landmark"
+                        value={address.landmark}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                    </div>
+                    <div className="ad">
+                      <label htmlFor="pincode">Pincode</label>
+                      <input
+                        type="text"
+                        placeholder="pincode"
+                        name="pincode"
+                        id="pincode"
+                        value={address.pincode}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                      <label htmlFor="city">City</label>
+                      <input
+                        type="text"
+                        placeholder="city"
+                        name="city"
+                        id="city"
+                        value={address.city}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                    </div>
+                    <div className="ad">
+                      <label htmlFor="place">Place</label>
+                      <input
+                        type="text"
+                        placeholder="place"
+                        name="place"
+                        id="place"
+                        value={address.place}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                      <label htmlFor="town">Town</label>
+                      <input
+                        type="text"
+                        placeholder="town"
+                        name="town"
+                        id="town"
+                        value={address.town}
+                        onChange={(e) => handleChange(e, index)}
+                      />
+                    </div>
+                    <div className="buttons">
+                      <button
+                        className="button-24"
+                        onClick={() => handleAddressSubmit(index)}
+                      >
+                        <FaPlusCircle /> {/* Add Address Icon */}
+                      </button>
+                      <button
+                        className="button-24"
+                        onClick={handleCancelEdit}
+                      >
+                        <FaEdit /> {/* Cancel Edit Icon */}
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="ad">
+                      <p>{address.housename}</p>
+                      <p>{address.landmark}</p>
+                    </div>
+                    <div className="ad">
+                      <p>{address.pincode}</p>
+                      <p>{address.city}</p>
+                    </div>
+                    <div className="ad">
+                      <p>{address.place}</p>
+                      <p>{address.town}</p>
+                    </div>
+                    <div className="buttons">
+                      <button
+                        className="button-24"
+                        onClick={() => handleEditClick(index)}
+                      >
+                        <FaEdit /> {/* Edit Icon */}
+                      </button>
+                      <button
+                        className="button-24"
+                        onClick={() => deleteAddress(address.housename)}
+                      >
+                        <FaTrash /> {/* Delete Icon */}
+                      </button>
+                      <button className="button-24" onClick={addAddressCard}>
+                        <FaPlusCircle /> {/* Add Address Icon */}
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
-            <div className="buttons">
-             
-            </div>
+            <div className="buttons"></div>
           </div>
         </div>
       </div>
