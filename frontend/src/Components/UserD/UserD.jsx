@@ -287,6 +287,11 @@ const UserD = ({ setUser, setLogin }) => {
         <div className="cards">
           <div className="cardx">
             <h1>Address Details</h1>
+            <div className="buttonsss">
+              <button className="button-24" onClick={addAddressCard}>
+                <FaPlusCircle /> {/* Add Address Icon */}
+              </button>
+            </div>
             {addressCards.map((address, index) => (
               <div key={index} className="address-card">
                 {editMode === index ? (
@@ -304,7 +309,7 @@ const UserD = ({ setUser, setLogin }) => {
                       <label htmlFor="landmark">Landmark</label>
                       <input
                         type="text"
-                        placeholder="landmark"
+                        placeholder="Landmark"
                         name="landmark"
                         id="landmark"
                         value={address.landmark}
@@ -315,7 +320,7 @@ const UserD = ({ setUser, setLogin }) => {
                       <label htmlFor="pincode">Pincode</label>
                       <input
                         type="text"
-                        placeholder="pincode"
+                        placeholder="Pincode"
                         name="pincode"
                         id="pincode"
                         value={address.pincode}
@@ -324,7 +329,7 @@ const UserD = ({ setUser, setLogin }) => {
                       <label htmlFor="city">City</label>
                       <input
                         type="text"
-                        placeholder="city"
+                        placeholder="City"
                         name="city"
                         id="city"
                         value={address.city}
@@ -335,7 +340,7 @@ const UserD = ({ setUser, setLogin }) => {
                       <label htmlFor="place">Place</label>
                       <input
                         type="text"
-                        placeholder="place"
+                        placeholder="Place"
                         name="place"
                         id="place"
                         value={address.place}
@@ -344,7 +349,7 @@ const UserD = ({ setUser, setLogin }) => {
                       <label htmlFor="town">Town</label>
                       <input
                         type="text"
-                        placeholder="town"
+                        placeholder="Town"
                         name="town"
                         id="town"
                         value={address.town}
@@ -371,12 +376,8 @@ const UserD = ({ setUser, setLogin }) => {
                     <div className="ad">
                       <p>{address.housename}</p>
                       <p>{address.landmark}</p>
-                    </div>
-                    <div className="ad">
                       <p>{address.pincode}</p>
                       <p>{address.city}</p>
-                    </div>
-                    <div className="ad">
                       <p>{address.place}</p>
                       <p>{address.town}</p>
                     </div>
@@ -393,15 +394,11 @@ const UserD = ({ setUser, setLogin }) => {
                       >
                         <FaTrash /> {/* Delete Icon */}
                       </button>
-                      <button className="button-24" onClick={addAddressCard}>
-                        <FaPlusCircle /> {/* Add Address Icon */}
-                      </button>
                     </div>
                   </>
                 )}
               </div>
             ))}
-            <div className="buttons"></div>
           </div>
         </div>
       </div>

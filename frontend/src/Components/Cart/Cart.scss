@@ -1,16 +1,18 @@
 .cart {
   padding: 20px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   font-family: Arial, sans-serif;
 
   .cart-container {
     max-width: 1200px;
     margin: 0 auto;
-    background: white;
+    background: rgb(255, 255, 255);
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-
+    display: flex;
+    justify-content: space-between; /* Align the cart items and price details card */
+    
     h1 {
       text-align: center;
       margin-bottom: 20px;
@@ -21,7 +23,8 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
-
+      flex: 1; /* Allow cart items to take the available space */
+      
       .cart-item {
         display: flex;
         align-items: center;
@@ -104,23 +107,61 @@
       }
     }
 
-    /* Right-Aligned Cart Footer */
-    .cart-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start; /* Aligns the content at the top */
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #e0e0e0;
+    /* Right-Aligned Cart Footer (Price Details Card) */
+    .cart-footer-right {
+      position: sticky;
+      top: 20px;
+      width: 300px;
+      height: 300px;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-left: 20px;
 
       .total-price {
+        width: 100%;
         font-size: 20px;
-        font-weight: bold;
         color: #333;
-        margin-right: 20px; /* Adds spacing between total and checkout button */
+        margin-bottom: 20px;
+      }
+
+      .price-summary {
+        margin-bottom: 20px;
+        
+        .price-item {
+          margin-top: 5%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+
+        .final-price {
+          display: flex;
+          justify-content: space-between;
+          font-weight: lighter;
+          font-size: 18px;
+          margin-top: 20px;
+
+          h3 {
+            color: #ff5722; /* Highlight final price */
+          }
+        }
+      }
+
+      .offers-applied {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 15px;
       }
 
       .checkout-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
         .proceed-btn {
           background-color: #28a745;
           color: white;
@@ -129,47 +170,11 @@
           padding: 10px 20px;
           cursor: pointer;
           transition: background-color 0.3s;
+          width: 100%; /* Make button full width */
 
           &:hover {
             background-color: #218838;
           }
-        }
-      }
-    }
-
-    /* Footer Section Fixed to Right */
-    .cart-footer-right {
-      position: sticky;
-      top: 20px;
-      width: 300px; /* Set a fixed width for the footer section */
-      padding: 20px;
-      background-color: #f7f7f7;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-left: 20px; /* Margin between the cart items and the footer */
-
-      .total-price {
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-      }
-
-      .checkout-card {
-        display: flex;
-        justify-content: center;
-      }
-
-      .proceed-btn {
-        background-color: #ff5722;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-
-        &:hover {
-          background-color: #e64a19;
         }
       }
     }

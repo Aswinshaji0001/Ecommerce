@@ -1,102 +1,113 @@
 .catprod {
     .main {
-        .cardz {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            flex-wrap: wrap;
-
-            .cardy {
-                border-radius: 8px;
-                margin-left: 2%;
-                width: 250px;
-                height: 380px;
-                text-align: center;
-                background-color: #fff;  // White background for a clean look
-                color: black;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px, rgba(0, 0, 0, 0.12) 0px 8px 16px; // Soft shadow for depth
-                border-radius: 8px;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                transition: transform 0.3s ease, box-shadow 0.3s ease; // Smooth hover transition
-
-                &:hover {
-                    transform: translateY(-5px);  // Slightly lift on hover
-                    box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 16px, rgba(0, 0, 0, 0.12) 0px 12px 24px;  // Enhanced shadow on hover
-                }
-
-                .imagesd {
-                    width: 100%;  // Make the image container take up full width
-                    height: 180px;  // Set a fixed height for the image
-                    margin: 0;
-                    overflow: hidden; 
-                    
-
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;  // Ensure the image covers the container without stretching
-                        object-position: center;  // Center the image if it's larger than the container
-                    }
-                }
-
-                h1, h2 {
-                    font-size: 16px;
-                    margin: 8px 0;
-                    font-weight: 600;
-                }
-
-                hr {
-                    margin: 8px 0;
-                    border: 1px solid #ddd;
-                }
-
-                .buttons {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 15px;
-                    margin: 5%;
-
-                    .button-3,
-                    .button-4 {
-                        padding: 8px 16px;
-                        border-radius: 6px;
-                        font-size: 14px;
-                        font-weight: 600;
-                        cursor: pointer;
-                        border: none;
-                        transition: background-color 0.2s ease, transform 0.2s ease;
-                    }
-
-                    .button-3 {
-                        background-color: #2ea44f;  // Green for edit button
-                        color: white;
-
-                        &:hover {
-                            background-color: #2c974b;
-                        }
-
-                        &:active {
-                            background-color: #298e46;
-                            transform: translateY(2px);
-                        }
-                    }
-
-                    .button-4 {
-                        background-color: #dd1111;  // Red for delete button
-                        color: white;
-
-                        &:hover {
-                            background-color: #ec1d12;
-                        }
-
-                        &:active {
-                            background-color: #e32012;
-                            transform: translateY(2px);
-                        }
-                    }
-                }
+      .cardz {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+  
+        .cardy {
+          background-color: #fff;
+          border-radius: 8px;
+          width: 250px;
+          height: 350px;
+          text-align: center;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 8px, rgba(0, 0, 0, 0.12) 0px 8px 16px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 16px, rgba(0, 0, 0, 0.12) 0px 12px 24px;
+          }
+  
+          .imagesd {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            border-radius: 8px 8px 0 0;
+            margin: 0;
+            
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              object-position: center;
             }
+          }
+  
+          h2, h3 {
+            font-size: 18px;
+            margin: 8px 0;
+            font-weight: 600;
+            color: #333;
+          }
+  
+          p {
+            font-size: 14px;
+            color: #888;
+            margin: 5px 0;
+          }
+  
+          .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding: 0 10px 15px;
+  
+            .button-3,
+            .button-4 {
+              padding: 8px 16px;
+              border-radius: 6px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              border: none;
+              transition: background-color 0.2s ease, transform 0.2s ease;
+            }
+  
+            .button-3 {
+              background-color: #2ea44f;
+              color: white;
+  
+              &:hover {
+                background-color: #2c974b;
+              }
+  
+              &:active {
+                background-color: #298e46;
+                transform: translateY(2px);
+              }
+            }
+  
+            .button-4 {
+              background-color: #dd1111;
+              color: white;
+  
+              &:hover {
+                background-color: #ec1d12;
+              }
+  
+              &:active {
+                background-color: #e32012;
+                transform: translateY(2px);
+              }
+            }
+          }
         }
+      }
     }
-}
+  
+    .total-cost {
+      margin-top: 20px;
+      text-align: center;
+  
+      h3 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #333;
+      }
+    }
+  }
+  

@@ -13,9 +13,11 @@ const Nav = ({ user, login }) => {
         </div>
         <div className="right">
           <div className="profile"> 
+            <div className='logo'>
             <Link to="/userd">
               <FaUser size={24} color="white" /> {/* Profile Icon with white color */}
             </Link>
+            </div>
             <div className="name">
               <h2>{user}</h2>
             </div>
