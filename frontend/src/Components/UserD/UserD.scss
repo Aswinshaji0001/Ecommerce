@@ -154,17 +154,26 @@
         justify-content: center;
 
         .cardx {
-            width: 350px;
+            width: 650px;
             height: 450px;
             text-align: center;
+            .ad{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                label{
+               
+                }
+            }
+
 
             input[type="text"] {
-                padding: 10px;
-                border-radius: 8px;
+                padding: 15px;
                 border: none;
-                width: 90%;
+                width: 125px;
                 margin-top: 3%;
                 border: 1px solid black;
+                text-align: center;
             }
 
             .add-button {
@@ -185,9 +194,12 @@
 
             .address-card {
                 margin: 5%;
-                padding: 20px;
+                padding: 30px;
                 box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
                 border-radius: 8px;
+                input:disabled{
+                    border: 1px solid rgb(217, 214, 214);
+                }
             }
             .buttons{
               

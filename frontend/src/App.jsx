@@ -19,6 +19,7 @@ import Cart from './Components/Cart/Cart';
 import Wishlist from './Components/Wishlist/Wishlist';
 import Orders from './Components/Orders/Orders';
 import MyOrders from './Components/MyOrders/MyOrders'
+import Final from './Components/Final/Final';
 
 function App() {
   const [user,setUser]=useState(" ")
@@ -31,6 +32,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/email" Component={Email}></Route>
+        <Route path="/final" Component={Final}></Route>
         <Route path="/login" Component={Login}></Route>
         <Route path="/product/:id" element={<Product setUser={setUser} setLogin={setLogin}/> }></Route>
         <Route path="/orders/:id" element={<Orders setUser={setUser} setLogin={setLogin}/> }></Route>

@@ -269,38 +269,73 @@ const getAddress = async()=>{
             <h1>Address Details</h1>
             {addressCards.map((address, index) => (
               <div key={index} className="address-card">
+                <div className="ad">
+                <label htmlFor="housename">Housename</label>
                 <input
                   type="text"
                   placeholder="Housename"
                   name="housename"
+                  id="housename"
                   value={address.housename}
                   disabled={isDisabled}
                   onChange={(e) => handleChange(e, index)}
                 />
+                <label htmlFor="landmark">Landmark</label>
                 <input
                   type="text"
-                  placeholder="Landmark"
+                  placeholder="landmark"
                   name="landmark"
+                  id="landmark"
                   value={address.landmark}
                   disabled={isDisabled}
                   onChange={(e) => handleChange(e, index)}
                 />
+                </div>
+                <div className="ad">
+        <label htmlFor="landmark">Pincode </label>
                 <input
                   type="text"
-                  placeholder="Pincode"
+                  placeholder="pincode"
                   name="pincode"
+                  id='pincode'
                   value={address.pincode}
                   disabled={isDisabled}
                   onChange={(e) => handleChange(e, index)}
+                  
                 />
+                <label htmlFor="pincode">Place</label>
                 <input
                   type="text"
-                  placeholder="Place"
+                  placeholder="place"
                   name="place"
+                  id='place'
                   value={address.place}
                   disabled={isDisabled}
                   onChange={(e) => handleChange(e, index)}
                 />
+                </div>
+              <div className="ad">
+           <label htmlFor="pincode">Address</label>
+                <input
+                  type="text"
+                  placeholder="Pincode"
+                  name="pincode"
+                  id='pincode'
+                  value={address.pincode}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                /></div>
+            <div className="ad">
+            <label htmlFor="place">Place</label>
+                <input
+                  type="text"
+                  placeholder="Place"
+                  name="place"
+                  id='place'
+                  value={address.place}
+                  disabled={isDisabled}
+                  onChange={(e) => handleChange(e, index)}
+                /></div>
                 <div className="buttons">
                   <button className="button-24" onClick={() => handleAddressSubmit(index)}>
                     Submit Address
@@ -309,13 +344,13 @@ const getAddress = async()=>{
               {isDisabled ? "Enable" : "Disable"}
             </button>
             <button className="button-24" onClick={()=>deleteAddress(address.housename)}>Delete</button>
+            <button className="button-24" onClick={addAddressCard}>+ Add Address</button>
+            
                 </div>
               </div>
             ))}
             <div className="buttons">
-              <button className="button-24" onClick={addAddressCard}>
-                + Add Address
-              </button>
+             
             </div>
           </div>
         </div>

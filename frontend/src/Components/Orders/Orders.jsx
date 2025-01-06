@@ -126,7 +126,7 @@ console.log(selectedAddress);
         
 
         console.log('Product added to orders:', orderResponse.data);
-        navigate("/")
+        navigate("/final")
       } else {
         alert('Error placing order.');
       }

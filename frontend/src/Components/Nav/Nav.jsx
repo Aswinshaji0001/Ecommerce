@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom';
 
 const Nav = ({ user, login }) => {
 
+
+
   return (
+    
     <div className="navbar">
       <nav>
         <div className="left">

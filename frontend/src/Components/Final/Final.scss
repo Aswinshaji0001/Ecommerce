@@ -1,0 +1,76 @@
+// src/styles/OrderPlacedPage.scss
+
+// Define variables for colors, fonts, and spacing
+$primary-color: #4caf50; // Green for success
+$accent-color: #ff9800;  // Accent color for buttons
+$background-color: #f7f7f7;
+$text-color: #333;
+$white-color: #ffffff;
+$font-family: 'Arial', sans-serif;
+
+$padding: 30px;
+$border-radius: 10px;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+// Define some mixins for reusable styles
+@mixin button-styles {
+  background-color: $accent-color;
+  color: $white-color;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: darken($accent-color, 10%);
+    transform: scale(1.05);
+  }
+}
+
+.order-placed-container {
+  background-color: $background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; // Ensure the content is vertically centered
+  font-family: $font-family;
+
+  .order-message {
+    background-color: $white-color;
+    padding: $padding;
+    border-radius: $border-radius;
+    box-shadow: 0 4px 8px $shadow-color;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    
+    h1 {
+      color: $primary-color;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    p {
+      color: $text-color;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
