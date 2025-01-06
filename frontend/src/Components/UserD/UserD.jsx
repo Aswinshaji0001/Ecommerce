@@ -146,6 +146,10 @@ const UserD = ({ setUser, setLogin }) => {
 
       if (res.status === 201) {
         alert("Address added successfully!");
+        setEditMode(null)
+        getDetails();
+        getData();
+        getAddress();
       } else {
         alert("Failed to add address: " + res.data.msg);
       }
