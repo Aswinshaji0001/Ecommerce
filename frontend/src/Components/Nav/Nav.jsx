@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import '../Nav/Nav.scss';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaHeart, FaClipboardList, FaUser } from 'react-icons/fa'; // Importing the FaUser icon
@@ -13,14 +13,16 @@ const Nav = ({ user, login }) => {
         </div>
         <div className="right">
           <div className="profile"> 
-            <div className='logo'>
-            <Link to="/userd">
-              <FaUser size={24} color="white" /> {/* Profile Icon with white color */}
-            </Link>
-            </div>
-            <div className="name">
-              <h2>{user}</h2>
-            </div>
+            {/* Conditionally render user profile only if login is 'seller' */}
+            
+                <div className='logo'>
+                  <Link to="/userd">
+                    <FaUser size={24} color="white" /> {/* Profile Icon with white color */}
+                  </Link>
+                </div>
+                <div className="name">
+                  <h2>{user}</h2> {/* Show the user's name */}
+                </div>
           </div>
           <div className="im">
             <div className="names">
@@ -38,9 +40,13 @@ const Nav = ({ user, login }) => {
                 <FaClipboardList size={24} color="white" /> {/* My Orders Icon with white color */}
               </Link>
             </div>
+            {login === 'Seller' && (
+               <>
             <div className="login">
               <Link to="/seller"><h2>{login}</h2></Link>
             </div>
+            </>
+            )}
           </div>
         </div>
       </nav>

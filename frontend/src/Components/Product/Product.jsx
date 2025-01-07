@@ -178,10 +178,34 @@ const Product = ({ setUser, setLogin }) => {
   const goToCart = () => {
     navigate('/cart'); // Navigate to the cart page
   };
-const Buy = ()=>{
+const Buy = async()=>{
   if (!cart.size) {
     alert('Please select a size');
     return;
+  }
+  try {
+    const res = await axios.post(
+      'http://localhost:3000/api/addtocart',
+      { 
+        pname: products.pname, 
+        price: products.price, 
+        pimages: products.pimages, 
+        quantity: cart.quantity,
+        productId: products._id,
+        size: cart.size,
+        brand:products.brand
+      },
+      { headers: { 'Authorization': `Bearer ${value}` } }
+    );
+    if (res.status === 201) {
+      setIsInCart(true);
+      alert('Product added to cart');
+    } else {
+      alert('Failed to add product to cart');
+    }
+  } catch (error) {
+    console.error('Error adding product to cart', error);
+    alert('Error adding product to cart');
   }
   navigate(`/orders/${products._id}`)
 }

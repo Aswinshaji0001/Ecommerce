@@ -6,7 +6,7 @@ import { FaEdit, FaTrash, FaPlusCircle } from "react-icons/fa"; // Importing ico
 
 const UserD = ({ setUser, setLogin }) => {
   const value = localStorage.getItem("Auth");
-  const [addressCards, setAddressCards] = useState([]);
+  const [addressCards, setAddressCards] = useState([]); // Ensure addressCards is always an array
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const UserD = ({ setUser, setLogin }) => {
       if (res.status === 201) {
         setUser(res.data.username);
         setLogin(res.data.accounttype);
-        setAddressCards(res.data.address.address);
+        setAddressCards(res.data.address.address || []); // Ensure addressCards is an array
       } else {
         alert("Error fetching seller details");
       }
@@ -76,7 +76,7 @@ const UserD = ({ setUser, setLogin }) => {
     });
 
     if (res.status === 201) {
-      setAddressCards(res.data.address);
+      setAddressCards(res.data.address || []); // Fallback to an empty array if no address data
     } else {
       alert("Failed");
     }
@@ -130,6 +130,8 @@ const UserD = ({ setUser, setLogin }) => {
         city: "", // Make sure to add a city in the new address
       },
     ]);
+    setPosition(addressCards.length);
+    setEditMode(true);
   };
 
   const handleAddressSubmit = async (index) => {
@@ -146,7 +148,7 @@ const UserD = ({ setUser, setLogin }) => {
 
       if (res.status === 201) {
         alert("Address added successfully!");
-        setEditMode(null)
+        setEditMode(null);
         getDetails();
         getData();
         getAddress();
@@ -198,10 +200,12 @@ const UserD = ({ setUser, setLogin }) => {
     navigate("/login");
   };
 
-  const [editMode, setEditMode] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [position, setPosition] = useState(0);
 
   const handleEditClick = (index) => {
-    setEditMode(index);
+    setPosition(index);
+    setEditMode(true);
   };
 
   const handleCancelEdit = () => {
@@ -296,92 +300,97 @@ const UserD = ({ setUser, setLogin }) => {
                 <FaPlusCircle /> {/* Add Address Icon */}
               </button>
             </div>
-            {addressCards.map((address, index) => (
-              <div key={index} className="address-card">
-                {editMode === index ? (
-                  <>
-                    <div className="ad">
-                      <label htmlFor="housename">Housename</label>
-                      <input
-                        type="text"
-                        placeholder="Housename"
-                        name="housename"
-                        id="housename"
-                        value={address.housename}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                      <label htmlFor="landmark">Landmark</label>
-                      <input
-                        type="text"
-                        placeholder="Landmark"
-                        name="landmark"
-                        id="landmark"
-                        value={address.landmark}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                    </div>
-                    <div className="ad">
-                      <label htmlFor="pincode">Pincode</label>
-                      <input
-                        type="text"
-                        placeholder="Pincode"
-                        name="pincode"
-                        id="pincode"
-                        value={address.pincode}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                      <label htmlFor="city">City</label>
-                      <input
-                        type="text"
-                        placeholder="City"
-                        name="city"
-                        id="city"
-                        value={address.city}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                    </div>
-                    <div className="ad">
-                      <label htmlFor="place">Place</label>
-                      <input
-                        type="text"
-                        placeholder="Place"
-                        name="place"
-                        id="place"
-                        value={address.place}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                      <label htmlFor="town">Town</label>
-                      <input
-                        type="text"
-                        placeholder="Town"
-                        name="town"
-                        id="town"
-                        value={address.town}
-                        onChange={(e) => handleChange(e, index)}
-                      />
-                    </div>
-                    <div className="buttons">
-                      <button
-                        className="button-24"
-                        onClick={() => handleAddressSubmit(index)}
-                      >
-                        <FaPlusCircle /> {/* Add Address Icon */}
-                      </button>
-                      <button
-                        className="button-24"
-                        onClick={handleCancelEdit}
-                      >
-                        <FaEdit /> {/* Cancel Edit Icon */}
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="ad">
-                      <p>{address.housename}</p>
-                      <p>{address.landmark}</p>
-                      <p>{address.pincode}</p>
-                      <p>{address.city}</p>
+            {editMode && (
+              <div className="address-card">
+                <div className="ad">
+                  <label htmlFor="housename">Housename</label>
+                  <input
+                    type="text"
+                    placeholder="Housename"
+                    name="housename"
+                    id="housename"
+                    value={addressCards[position]?.housename || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                  <label htmlFor="landmark">Landmark</label>
+                  <input
+                    type="text"
+                    placeholder="Landmark"
+                    name="landmark"
+                    id="landmark"
+                    value={addressCards[position]?.landmark || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                </div>
+                <div className="ad">
+                  <label htmlFor="pincode">Pincode</label>
+                  <input
+                    type="text"
+                    placeholder="Pincode"
+                    name="pincode"
+                    id="pincode"
+                    value={addressCards[position]?.pincode || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                  <label htmlFor="city">City</label>
+                  <input
+                    type="text"
+                    placeholder="City"
+                    name="city"
+                    id="city"
+                    value={addressCards[position]?.city || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                </div>
+                <div className="ad">
+                  <label htmlFor="place">Place</label>
+                  <input
+                    type="text"
+                    placeholder="Place"
+                    name="place"
+                    id="place"
+                    value={addressCards[position]?.place || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                  <label htmlFor="town">Town</label>
+                  <input
+                    type="text"
+                    placeholder="Town"
+                    name="town"
+                    id="town"
+                    value={addressCards[position]?.town || ""}
+                    onChange={(e) => handleChange(e, position)}
+                  />
+                </div>
+                <div className="buttons">
+                  <button
+                    className="button-24"
+                    onClick={() => handleAddressSubmit(position)}
+                  >
+                    <FaPlusCircle /> {/* Add Address Icon */}
+                  </button>
+                  <button
+                    className="button-24"
+                    onClick={handleCancelEdit}
+                  >
+                    <FaEdit /> {/* Cancel Edit Icon */}
+                  </button>
+                </div>
+              </div>
+            )}
+            {Array.isArray(addressCards) && addressCards.length > 0 ? (
+              addressCards.map((address, index) => (
+                address.housename && (
+                  <div key={index} className="address-card">
+                    <div className="bad">
+                      <div className="badx">
+                        <p>{address.housename}</p>
+                        <p>{address.landmark}</p>
+                      </div>
+                      <div className="badr">
+                        <p>{address.pincode}</p>
+                        <p>{address.city}</p>
+                      </div>
                       <p>{address.place}</p>
                       <p>{address.town}</p>
                     </div>
@@ -399,10 +408,12 @@ const UserD = ({ setUser, setLogin }) => {
                         <FaTrash /> {/* Delete Icon */}
                       </button>
                     </div>
-                  </>
-                )}
-              </div>
-            ))}
+                  </div>
+                )
+              ))
+            ) : (
+              <p>No address available.</p> // Optional message when no addresses exist
+            )}
           </div>
         </div>
       </div>

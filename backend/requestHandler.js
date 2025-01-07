@@ -372,8 +372,7 @@ export async function getCatProduct(req,res) {
 
 export async function getAllProducts(req,res) {
   try {
-        const _id = req.user.userId;
-        const products = await productSchema.find({sellerId:_id})
+        const products = await productSchema.find()
         return res.status(201).send(products)
   } catch (error) {
     res.status(404).send({msg:error})
