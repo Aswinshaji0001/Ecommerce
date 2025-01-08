@@ -144,9 +144,10 @@
     }
 
     .cards {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        // display: flex;
+        height: auto;
+        margin-top: 2%;
+        // justify-content: center;
         text-align:center;
 
         .cardx {

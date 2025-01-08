@@ -186,7 +186,7 @@ console.log(product);
                 value={newCategory}
                 onChange={handleNewCategoryChange}
               /><br></br>
-              <button type="button" onClick={addCategory} className=''>Add Category</button>
+              <button type="button" onClick={addCategory} className='button-24'>Add Category</button>
             </>
           )}
 
