@@ -27,7 +27,7 @@ router.route("/deletep/:id").delete(u.deleteProduct);
 router.route("/addtocart").post(Auth,u.addToCart);
 router.route("/getcart").get(Auth,u.getCart);
 router.route("/deletecart/:id").delete(u.deleteCart);
-router.route("/updatecart/:id").put(u.updateCart)
+router.route("/updatecart/:id").put(Auth,u.updateCart)
 router.route("/clearcart").delete(Auth,u.clearCart)
 router.route("/addtowishlist").post(Auth,u.addToWishlist)
 router.route("/removefromwishlist/:productId").delete(Auth,u.removeFromWishlist)

@@ -470,12 +470,12 @@ export async function deleteCart(req,res) {
 export async function updateCart(req,res) {
   try {
     const {quantity} = req.body;
-    const {id} =req.params;
-    const res = await cartSchema.updateOne({_id:id},{$set:{quantity}})
-    console.log(res);
-    return res.status(201).send({msg:"Success",res})
+    const {id} = req.params;
+    const data = await cartSchema.updateOne({_id:id},{$set:{quantity:quantity}})
+    console.log("Jao");
+    return res.status(201).send(data)
   } catch (error) {
-    res.status(404).send({msg:error})
+    res.status(403).send({msg:error})
   }
 }
 

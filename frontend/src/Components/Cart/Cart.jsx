@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Cart = ({ setUser, setLogin }) => {
-  const { id } = useParams();
   const navigate = useNavigate();
   const value = localStorage.getItem('Auth');
   const [cartItems, setCartItems] = useState([]);
@@ -38,6 +37,8 @@ const Cart = ({ setUser, setLogin }) => {
         headers: { "Authorization": `Bearer ${value}` },
       });
       if (res.status === 201) {
+        console.log(res.data);
+        
         setCartItems(res.data);
       } else {
         alert("Failed to fetch cart");
@@ -51,7 +52,8 @@ const Cart = ({ setUser, setLogin }) => {
   // Update quantity of an item in the cart
   const updateQuantity = async (id, newQuantity) => {
     if (newQuantity < 1) return;  // Prevent negative quantity
-
+    console.log(id);
+    
     try {
       // Optimistically update the local state first
       setCartItems(prevItems =>
@@ -61,15 +63,12 @@ const Cart = ({ setUser, setLogin }) => {
       );
 
       // Now send the update to the backend
-      const res = await axios.put(
-        `http://localhost:3000/api/updatecart/${id}`,
-        { quantity: newQuantity },
-        { headers: { "Authorization": `Bearer ${value}` } }
-      );
+      const res = await axios.put(`http://localhost:3000/api/updatecart/${id}`, { quantity: newQuantity },{ headers: { "Authorization": `Bearer ${value}` } });
 
-      if (res.status !== 201) {
+      if (res.status == 201) {
         // If the backend request fails, reset the state to the original value
-        getAllProducts();  // Fetch the latest data again
+        console.log("HAI");
+         // Fetch the latest data again
       }
     } catch (error) {
       console.error("Error updating quantity", error);
@@ -83,8 +82,8 @@ const Cart = ({ setUser, setLogin }) => {
         productId: item.productId,     
         quantity: item.quantity,  
         sizee: item.size,         
-        housename: item.housename || "Default House", // House name, default to "Default House"
-        totalPrice: (item.quantity * item.price).toString(),  // Calculate total price for each item
+        housename: item.housename || "Default House",
+        totalPrice: (item.quantity * item.price).toString(),
       }));
 
       // Make the request to the backend to add all orders

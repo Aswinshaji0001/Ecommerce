@@ -15,13 +15,14 @@ const Nav = ({ user, login }) => {
           <div className="profile"> 
             {/* Conditionally render user profile only if login is 'seller' */}
             
+                
+                <div className="name">
                 <div className='logo'>
                   <Link to="/userd">
                     <FaUser size={24} color="white" /> {/* Profile Icon with white color */}
                   </Link>
                 </div>
-                <div className="name">
-                  <h2>{user}</h2> {/* Show the user's name */}
+                  <h2 className='bebas-neue-regular'>{user}</h2> {/* Show the user's name */}
                 </div>
           </div>
           <div className="im">

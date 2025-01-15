@@ -32,6 +32,7 @@ console.log(selectedAddress);
       alert('Failed to fetch product details');
     }
   };
+console.log(product);
 
   const getDetails = async () => {
     try {
@@ -104,7 +105,6 @@ console.log(selectedAddress);
   const calculateDeliveryCharge = () => {
     return quantity <= 2 ? 40 : 0; // ₹40 delivery charge if quantity is 2 or less
   };
-  console.log(product);
   
   const buyProduct = async () => {
     try {

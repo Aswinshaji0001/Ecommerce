@@ -215,69 +215,140 @@ const UserD = ({ setUser, setLogin }) => {
   return (
     <div className="userd">
       <div className="left">
-        <div className="card">
-          <h1>User Details</h1>
-          <div className="images">
-            <img src="profile.png" alt="Profile" />
-          </div>
-          <input
-            type="text"
-            placeholder="Fname"
-            disabled={isDisabled}
-            name="fname"
-            value={data.fname}
-            onChange={(e) => setData({ ...data, fname: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Lname"
-            disabled={isDisabled}
-            name="lname"
-            value={data.lname}
-            onChange={(e) => setData({ ...data, lname: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Mobile number"
-            disabled={isDisabled}
-            name="mobile"
-            value={data.mobile}
-            onChange={(e) => setData({ ...data, mobile: e.target.value })}
-          />
-          {/* Gender Radio Buttons */}
-          <label htmlFor="male">Male</label>
-          <input
-            type="radio"
-            id="male"
-            disabled={isDisabled}
-            name="gender"
-            value="male"
-            checked={data.gender === "male"}
-            onChange={(e) => setData({ ...data, gender: e.target.value })}
-          />
-          <label htmlFor="female">Female</label>
-          <input
-            type="radio"
-            id="female"
-            disabled={isDisabled}
-            name="gender"
-            value="female"
-            checked={data.gender === "female"}
-            onChange={(e) => setData({ ...data, gender: e.target.value })}
-          />
+          <div className="edit">
+             <div className="card">
+               {/* Card Image Section */}
+               <div className="card__img">
+                 <svg width="100%" xmlns="http://www.w3.org/2000/svg">
+                   <rect height="450" width="540" fill="#ffffff"></rect>
+                   <defs>
+                     <linearGradient gradientTransform="rotate(222,648,379)" y2="100%" y1="0" x2="0" x1="0" gradientUnits="userSpaceOnUse" id="a">
+                       <stop stopColor="#ffffff" offset="0"></stop>
+                       <stop stopColor="#002349" offset="1"></stop>
+                     </linearGradient>
+                     <pattern viewBox="0 0 1080 900" y="0" x="0" height="250" width="300" id="b" patternUnits="userSpaceOnUse">
+                       <g fillOpacity="0.5">
+                         <polygon points="90 150 0 300 180 300" fill="#444"></polygon>
+                         <polygon points="90 150 180 0 0 0"></polygon>
+                       </g>
+                     </pattern>
+                   </defs>
+                   <rect height="100%" width="100%" fill="url(#a)" y="0" x="0"></rect>
+                   <rect height="100%" width="100%" fill="url(#b)" y="0" x="0"></rect>
+                 </svg>
+               </div>
+       
+               {/* Avatar Section */}
+               <div className="card__avatar">
+                 <img
+                   src={"/profile.png" || "https://via.placeholder.com/128"}
+                   alt="Avatar"
+                   className="card__avatar-img"
+                 />
+                 <input
+                   type="file"
+                   id="profile"
+                   name="profile"
+                   style={{ display: "none" }}
+                   accept="image/*"
+                 />
+               </div>
+       
+               {/* Form Section */}
+               <form className="card__form">
+                 <div className="card__input-wrapper">
+                   <input
+                     type="text"
+                     id="fname"
+                     name="fname"
+                     value={data.fname} // Bind to details.username
+                     placeholder="Enter Firstname"
+                     disabled={isDisabled}
 
-          <div className="buttons">
-            <button className="button-24" onClick={handleSubmit}>
-              Save
-            </button>
-            <button className="button-24" onClick={toggleInput}>
+                     onChange={(e) => setData({ ...data, fname: e.target.value })}
+
+                     required
+                   />
+                 </div>
+       
+                 <div className="card__input-wrapper">
+                   <input
+                     type="email"
+                     id="lname"
+                     name="lname"
+                     value={data.lname} // Bind to details.email
+                     placeholder="Enter Lastname"
+                     disabled={isDisabled}
+
+                     onChange={(e) => setData({ ...data, lname: e.target.value })}
+
+                     required
+                   />
+                 </div>
+                 <div className="card__input-wrapper">
+                   <input
+                     type="email"
+                     id="email"
+                     name="mobile"
+                     value={data.mobile} // Bind to details.email
+                     placeholder="Enter Mobile"
+                     disabled={isDisabled}
+
+                     onChange={(e) => setData({ ...data, mobile: e.target.value })}
+
+                     required
+                   />
+                 </div>
+                
+
+                 <div className="cards__input-wrapper">
+                
+                  <div className="a">
+                  <label htmlFor="male">Male</label> 
+                   <input
+                     type="radio"
+                     id="male"
+                     name="gender"
+                      value="male"
+                      disabled={isDisabled}
+
+                     checked={data.gender === "male"} // Bind to details.email
+                     onChange={(e) => setData({ ...data, gender: e.target.value })}
+                     required
+                   />
+                   </div>
+                   <div className="b">
+
+                       <label htmlFor="male">Female</label>
+                   <input
+                     type="radio"
+                     id="female"
+                     name="gender"
+                     disabled={isDisabled}
+
+                      value="female"
+                     checked={data.gender === "female"} // Bind to details.email
+                     onChange={(e) => setData({ ...data, gender: e.target.value })}
+                     required
+                   />
+                </div>
+                 </div>
+                 
+
+             
+                 
+               </form>
+               <div className="cardg">
+               <button type="submit" className="cardsss" onClick={handleSubmit}>SAVE</button>
+               <button className="cardsss" onClick={toggleInput}>
               {isDisabled ? "Enable" : "Disable"}
             </button>
-            <button className="button-24" onClick={logout}>
+            <button className="cardsss" onClick={logout}>
               Logout
             </button>
-          </div>
-        </div>
+               </div>
+             </div>
+           </div>
       </div>
 
       <div className="right">
@@ -384,15 +455,13 @@ const UserD = ({ setUser, setLogin }) => {
                   <div key={index} className="address-card">
                     <div className="bad">
                       <div className="badx">
-                        <p>{address.housename}</p>
+                        <h2>{address.housename}</h2>
                         <p>{address.landmark}</p>
-                      </div>
-                      <div className="badr">
                         <p>{address.pincode}</p>
                         <p>{address.city}</p>
+                        <p>{address.place}</p>
+                        <p>{address.town}</p>
                       </div>
-                      <p>{address.place}</p>
-                      <p>{address.town}</p>
                     </div>
                     <div className="buttons">
                       <button

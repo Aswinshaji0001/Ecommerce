@@ -91,17 +91,76 @@ const deleteSeller = async(id)=>{
     <div className='seller'>
       <div className="main">
         <div className="left">
-          <div className="image">
-            <img src="profile.png" alt="" />
+          <div className="edit">
+      <div className="card">
+        {/* Card Image Section */}
+        <div className="card__img">
+          <svg width="100%" xmlns="http://www.w3.org/2000/svg">
+            <rect height="450" width="540" fill="#ffffff"></rect>
+            <defs>
+              <linearGradient gradientTransform="rotate(222,648,379)" y2="100%" y1="0" x2="0" x1="0" gradientUnits="userSpaceOnUse" id="a">
+                <stop stopColor="#ffffff" offset="0"></stop>
+                <stop stopColor="#002349" offset="1"></stop>
+              </linearGradient>
+              <pattern viewBox="0 0 1080 900" y="0" x="0" height="250" width="300" id="b" patternUnits="userSpaceOnUse">
+                <g fillOpacity="0.5">
+                  <polygon points="90 150 0 300 180 300" fill="#444"></polygon>
+                  <polygon points="90 150 180 0 0 0"></polygon>
+                </g>
+              </pattern>
+            </defs>
+            <rect height="100%" width="100%" fill="url(#a)" y="0" x="0"></rect>
+            <rect height="100%" width="100%" fill="url(#b)" y="0" x="0"></rect>
+          </svg>
+        </div>
+
+        {/* Avatar Section */}
+        <div className="card__avatar">
+          <img
+            src={"/profile.png" || "https://via.placeholder.com/128"}
+            alt="Avatar"
+            className="card__avatar-img"
+          />
+          <input
+            type="file"
+            id="profile"
+            name="profile"
+            style={{ display: "none" }}
+            accept="image/*"
+          />
+        </div>
+
+        {/* Form Section */}
+        <form className="card__form">
+          <div className="card__input-wrapper">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={seller.name} // Bind to details.username
+              placeholder="Enter username"
+              required
+            />
           </div>
-          <div className="content">
-            <h2>{seller.name}</h2>
-            <h2>{seller.location}</h2>
+
+          <div className="card__input-wrapper">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={seller.location} // Bind to details.email
+              placeholder="Enter email"
+              required
+            />
           </div>
-          <div className='buttons'>
-            <button className='button-24' onClick={()=>deleteSeller(seller.sellerId)}>Delete</button>
-            <Link to="/editseller"><button className='button-24'>Edit</button></Link>
-          </div>
+        </form>
+        <div className="cardg">
+        <button type="submit" className="cardsss" onClick={()=>{deleteSeller(seller.seller._id)}}>DELETE</button>
+        <Link to="/editseller"><button className='cardsss'>EDIT</button></Link>
+
+        </div>
+      </div>
+    </div>
         </div>
 
         <div className="right">
