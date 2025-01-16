@@ -76,9 +76,7 @@ const MyOrders = ({ setUser, setLogin }) => {
                                 <h3>{order.product.pname || 'Product name not available'}</h3> {/* Fallback for pname */}
                                 <p className="brand">Brand: {order.product.brand || 'Brand not available'}</p> {/* Fallback for brand */}
                                 <p className="price">Price: ₹{order.product.price || '0'}</p> {/* Fallback for price */}
-                                <p className="quantity">Quantity: {order.product.quantity || '0'}</p> {/* Fallback for quantity */}
                                 <p className="total-price">
-                                    Total Price: ₹{(order.product.price * order.product.quantity) || '0'}
                                 </p>
                             </div>
                         </div>

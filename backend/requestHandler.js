@@ -602,24 +602,19 @@ export async function getOrders(req,res) {
 export async function addAllOrders(req, res) {
   try {
     const userId = req.user.userId; 
-    const orderItems = req.body;
-    console.log(orderItems);
-    
+    const orderItems = req.body;    
     const orderData = [];  
     let totalOrderPrice = 0; 
     
     for (const item of orderItems) {
-      const { productId, quantity, sizee, housename, totalPrice } = item;
-      console.log(productId);
+      const { productId, quantity, sizee, totalPrice } = item;
       
       const product = await productSchema.findOne({ _id: productId });
-      console.log(product);
       
       if (!product) {
         return res.status(404).send({ msg: `Product with ID ${productId} not found` });
       }
 
-      console.log(sizee);
       const newQuantity = product.size[sizee] - quantity;
       
       if (newQuantity < 0) {
@@ -635,15 +630,14 @@ export async function addAllOrders(req, res) {
         userId,
         product
       });
-      console.log(orderData);
-      
 
       totalOrderPrice += parseFloat(totalPrice);  
     }
 
     const orders = await orderSchema.insertMany(orderData);
+   
+    
     const deleteCart=await cartSchema.deleteMany({userId})
-    console.log(deleteCart);
     
 
     return res.status(201).send({ msg: "Orders placed successfully!", orders, totalOrderPrice });
