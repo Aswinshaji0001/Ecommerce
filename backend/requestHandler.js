@@ -330,6 +330,7 @@ export async function  getUser(req,res) {
 export async function addCategory(req,res) {
     try{
       console.log(req.body);
+      const id =req.user.userId;
       const {newCategory} = req.body;
       const category=await categorySchema.findOne({});
       
@@ -472,8 +473,7 @@ export async function updateCart(req,res) {
     const {quantity} = req.body;
     const {id} = req.params;
     const data = await cartSchema.updateOne({_id:id},{$set:{quantity:quantity}})
-    console.log("Jao");
-    return res.status(201).send(data)
+    return res.status(201).send(data);
   } catch (error) {
     res.status(403).send({msg:error})
   }
@@ -603,11 +603,13 @@ export async function addAllOrders(req, res) {
   try {
     const userId = req.user.userId; 
     const orderItems = req.body;    
+    
     const orderData = [];  
     let totalOrderPrice = 0; 
     
     for (const item of orderItems) {
       const { productId, quantity, sizee, totalPrice } = item;
+      
       
       const product = await productSchema.findOne({ _id: productId });
       
@@ -616,6 +618,8 @@ export async function addAllOrders(req, res) {
       }
 
       const newQuantity = product.size[sizee] - quantity;
+      console.log(newQuantity);
+      
       
       if (newQuantity < 0) {
         return res.status(400).send({ msg: `Not enough stock for size ${sizee} of ${product.pname}` });
@@ -628,21 +632,38 @@ export async function addAllOrders(req, res) {
 
       orderData.push({
         userId,
-        product
+        product,
+        quantity,
+        totalPrice
       });
 
-      totalOrderPrice += parseFloat(totalPrice);  
     }
 
     const orders = await orderSchema.insertMany(orderData);
+    console.log(orderData);
+    
    
     
     const deleteCart=await cartSchema.deleteMany({userId})
     
 
-    return res.status(201).send({ msg: "Orders placed successfully!", orders, totalOrderPrice });
+    return res.status(201).send({ msg: "Orders placed successfully!", orders});
   } catch (error) {
     console.error("Error during order creation", error);
     return res.status(404).send({ msg: "Error processing orders" });
   }
+}
+
+export async function getShipping(req,res) {
+  try {
+    const id = req.user.userId;
+    
+    const order = await orderSchema.find({"product.sellerId":id})
+    console.log(order);
+    return res.status(201).send(order)
+  } catch (error) {
+    return res.status(404).send({ msg: "Error processing orders" });
+
+  }
+  
 }

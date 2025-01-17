@@ -16,10 +16,10 @@ router.route("/updateuser").post(Auth,u.updateUser)
 router.route("/addaddress").post(Auth,u.addAddress)
 router.route("/getaddress").get(Auth,u.getAddress)
 router.route("/deleteaddress").post(Auth,u.deleteAddress)
-router.route("/addcat").post(u.addCategory)
+router.route("/addcat").post(Auth,u.addCategory)
 router.route("/getcat").get(Auth,u.getCategory)
 router.route("/getproducts").get(Auth,u.getProduct)
-router.route("/getpcat/:category").get(u.getCatProduct)
+router.route("/getpcat/:category").get(Auth,u.getCatProduct)
 router.route("/getallproducts").get(Auth,u.getAllProducts);
 router.route("/getproducte/:id").get(u.getProductE);
 router.route("/editproduct/:id").put(u.editProduct);
@@ -37,5 +37,6 @@ router.route("/editquantity").post(Auth,u.editQuantity);
 router.route("/addorder").post(Auth,u.addOrder);
 router.route("/addallorders").post(Auth,u.addAllOrders);
 router.route("/getorders").get(Auth,u.getOrders);
+router.route("/getshipping").get(Auth,u.getShipping);
 
 export default router;

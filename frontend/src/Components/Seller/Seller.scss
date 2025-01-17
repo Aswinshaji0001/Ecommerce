@@ -251,6 +251,36 @@
       .products {
         margin-top: 20px;
         text-align: center;
+        .cardsss {
+          margin: 2%;
+          width: 120px;
+          height: 35px;
+          text-align: center;
+          background-color: #ff4d4d; 
+          color: #ffffff; 
+          background-color: #002349;
+          font-size: 12px;
+          font-weight: 700;
+          padding: 12px 24px; 
+          border: none;
+          border-radius: 4px;
+          // Rounded corners
+          cursor: pointer; // Pointer cursor to indicate interactivity
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+          transition: all 0.3s ease-in-out; // Smooth transitions for hover effects
+  
+          &:hover {
+            background-color: #e60000; // Darker red on hover
+            transform: scale(1.05); // Slightly increase size on hover
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); // Enhance shadow on hover
+          }
+  
+          &:active {
+            background-color: #cc0000; // Even darker red on click
+            transform: scale(1); // Reset scale to default on click
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Slightly reduced shadow
+          }
+        }
   
         h1 {
           font-size: 1.5rem;

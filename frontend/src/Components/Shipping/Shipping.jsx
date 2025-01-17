@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import './MyOrders.scss';
+import './Shipping.scss';
 
-const MyOrders = ({ setUser, setLogin }) => {
+const Shipping = ({ setUser, setLogin }) => {
     const [orders, setOrders] = useState([]); // Stores the orders and their details combined
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -16,16 +16,16 @@ const MyOrders = ({ setUser, setLogin }) => {
 
     const getData = async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/getorders', {
+            const res = await axios.get('http://localhost:3000/api/getshipping', {
                 headers: { 'Authorization': `Bearer ${value}` },
             });
 
             if (res.status === 201) { // Status code should be 200 for success
                 console.log(res);
                 
-                console.log(res.data.order);
+                console.log(res.data);
                 
-                setOrders(res.data.order || []); // Ensure 'order' is correct; log to check
+                setOrders(res.data || []); // Ensure 'order' is correct; log to check
                 setLoading(false);
             } else {
                 setError('Failed to fetch orders');
@@ -89,4 +89,4 @@ const MyOrders = ({ setUser, setLogin }) => {
     );
 };
 
-export default MyOrders;
+export default Shipping;

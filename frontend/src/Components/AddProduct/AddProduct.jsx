@@ -74,7 +74,7 @@ console.log(product);
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/addcat", { newCategory }, { headers: { "Content-Type": "application/json" } });
+      const res = await axios.post("http://localhost:3000/api/addcat", { newCategory }, { headers: { "Authorization": `Bearer ${value}` } });
 
       if (res.status === 201) { 
         alert("Category added successfully");

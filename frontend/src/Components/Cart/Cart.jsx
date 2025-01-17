@@ -49,30 +49,24 @@ const Cart = ({ setUser, setLogin }) => {
     }
   };
 
-  // Update quantity of an item in the cart
   const updateQuantity = async (id, newQuantity) => {
-    if (newQuantity < 1) return;  // Prevent negative quantity
+    if (newQuantity < 1) return;  
     console.log(id);
     
     try {
-      // Optimistically update the local state first
       setCartItems(prevItems =>
         prevItems.map(item =>
           item._id === id ? { ...item, quantity: newQuantity } : item
         )
       );
 
-      // Now send the update to the backend
       const res = await axios.put(`http://localhost:3000/api/updatecart/${id}`, { quantity: newQuantity },{ headers: { "Authorization": `Bearer ${value}` } });
 
       if (res.status == 201) {
-        // If the backend request fails, reset the state to the original value
-        console.log("HAI");
-         // Fetch the latest data again
       }
     } catch (error) {
       console.error("Error updating quantity", error);
-      getAllProducts();  // Fetch the latest data again
+      getAllProducts(); 
     }
   };
 
@@ -86,15 +80,14 @@ const Cart = ({ setUser, setLogin }) => {
         totalPrice: (item.quantity * item.price).toString(),
       }));
 
-      // Make the request to the backend to add all orders
+
       const resAddToOrders = await axios.post("http://localhost:3000/api/addallorders", orderItems, {
-        headers: { "Authorization": `Bearer ${value}` }, // Pass authorization token
+        headers: { "Authorization": `Bearer ${value}` },
       });
 
       if (resAddToOrders.status === 201) {
         alert("Success! Your order has been placed.");
         setCartItems([]); 
-        navigate("/")
       } else {
         alert('Error processing checkout');
       }
@@ -103,6 +96,7 @@ const Cart = ({ setUser, setLogin }) => {
       alert('Failed to proceed with checkout');
     }
   };
+  
 
   const handleBuyNow = async (id) => {
     try {
@@ -206,7 +200,7 @@ const Cart = ({ setUser, setLogin }) => {
 
             <div className="final-price">
               <p>Final Price</p>
-              <h3>₹{calculateTotal() - (calculateTotal() * 0.4) - 100 + 40}</h3> {/* Final Price after discount and delivery charge */}
+              <h3> {cartItems==0?0:calculateTotal() - (calculateTotal() * 0.4) - 100 + 40}</h3>
             </div>
           </div>
 

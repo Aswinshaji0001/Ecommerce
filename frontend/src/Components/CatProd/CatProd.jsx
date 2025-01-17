@@ -21,8 +21,10 @@ const CatProd = ({ setUser, setLogin }) => {
   }, [quantities, products]);
 
   const getProduct = async () => {
-    const res = await axios.get(`http://localhost:3000/api/getpcat/${category}`);
+    const res = await axios.get(`http://localhost:3000/api/getpcat/${category}`,{ headers: { "Authorization": `Bearer ${value}` } });
     if (res.status === 201) {
+      console.log(res);
+      
       getProducts(res.data);
     } else {
       alert('Error fetching products');
