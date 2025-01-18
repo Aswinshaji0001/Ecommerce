@@ -39,7 +39,6 @@ const UserD = ({ setUser, setLogin }) => {
       if (res.status === 201) {
         setUser(res.data.username);
         setLogin(res.data.accounttype);
-        setAddressCards(res.data.address.address || []); // Ensure addressCards is an array
       } else {
         alert("Error fetching seller details");
       }
@@ -76,6 +75,8 @@ const UserD = ({ setUser, setLogin }) => {
     });
 
     if (res.status === 201) {
+      console.log(res.data);
+      
       setAddressCards(res.data.address || []); // Fallback to an empty array if no address data
     } else {
       alert("Failed");
@@ -211,6 +212,7 @@ const UserD = ({ setUser, setLogin }) => {
   const handleCancelEdit = () => {
     setEditMode(null);
   };
+console.log(addressCards);
 
   return (
     <div className="userd">
@@ -451,6 +453,7 @@ const UserD = ({ setUser, setLogin }) => {
             )}
             {Array.isArray(addressCards) && addressCards.length > 0 ? (
               addressCards.map((address, index) => (
+                
                 address.housename && (
                   <div key={index} className="address-card">
                     <div className="bad">

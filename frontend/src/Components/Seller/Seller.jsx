@@ -179,7 +179,7 @@ const Seller = ({ setUser, setLogin }) => {
         <div className="right">
           <div className="products">
             <h1>All Categories</h1>
-            <Link to="/shipping"><button className='cardsss'>Shipping</button></Link>
+            <Link to="/shipping"><button className='cardsss'>SHIPPING</button></Link>
             <div className="add-product-section">
               <Link to="/addproduct"><button className='button-24'>Add Product</button></Link>
               <div className="catm">

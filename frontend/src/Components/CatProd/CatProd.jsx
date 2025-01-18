@@ -13,7 +13,9 @@ const CatProd = ({ setUser, setLogin }) => {
 
   useEffect(() => {
     getProduct();
+   
     getDetails();
+   
   }, [category]);
 
   useEffect(() => {
@@ -26,6 +28,8 @@ const CatProd = ({ setUser, setLogin }) => {
       console.log(res);
       
       getProducts(res.data);
+     
+     
     } else {
       alert('Error fetching products');
     }
@@ -79,6 +83,7 @@ const CatProd = ({ setUser, setLogin }) => {
       alert('Failed');
     }
   };
+  
 
   return (
     <div className="catprod">
@@ -88,6 +93,7 @@ const CatProd = ({ setUser, setLogin }) => {
             <div className="cardy" key={product._id}>
               <Link to={`/product/${product._id}`}>
                 <div className="imagesd">
+                
                   <img src={product.pimages[0]} alt={product.pname} />
                 </div>
               </Link>

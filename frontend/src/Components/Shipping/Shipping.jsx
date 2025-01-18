@@ -78,6 +78,9 @@ const Shipping = ({ setUser, setLogin }) => {
                                 <p className="price">Price: ₹{order.product.price || '0'}</p> {/* Fallback for price */}
                                 <p className="price"> Quantity :{order.quantity}</p>
                                 <p className="price"> Total Price :{order.totalPrice}</p>
+                                <p className="price"> Customer :{order.username}</p>
+
+                                
                             </div>
                         </div>
                     ))}
