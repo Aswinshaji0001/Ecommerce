@@ -3,11 +3,13 @@
   justify-content: center;
   padding: 40px;
   background-color: #f1f1f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .product-container {
     display: flex;
     width: 90%;
-    max-width: 1200px;
+    width: 1200px;
+    height: auto;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -15,12 +17,14 @@
     /* Left Side (Images) */
     .left {
       width: 50%;
+      border: 1px solid b black;
       padding: 20px;
 
       .main-image {
+        text-align: center;
         width: 100%;
         img {
-          width: 100%;
+          width: 70%;
           border-radius: 8px;
         }
       }

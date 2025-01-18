@@ -200,7 +200,7 @@ const Cart = ({ setUser, setLogin }) => {
 
             <div className="final-price">
               <p>Final Price</p>
-              <h3> {cartItems==0?0:calculateTotal() - (calculateTotal() * 0.4) - 100 + 40}</h3>
+              <h3> {cartItems==0?0:calculateTotal() - (calculateTotal() * 0.4)  + 40}</h3>
             </div>
           </div>
 
