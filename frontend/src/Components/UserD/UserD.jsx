@@ -367,6 +367,8 @@ console.log(addressCards);
         </div>
         <div className="cards">
           <div className="cardx">
+            <div className="ads">
+
             <h1>Address Details</h1>
             <div className="buttonsss">
               <button className="button-24" onClick={addAddressCard}>
@@ -487,6 +489,7 @@ console.log(addressCards);
               <p>No address available.</p> // Optional message when no addresses exist
             )}
           </div>
+          </div>  
         </div>
       </div>
     </div>

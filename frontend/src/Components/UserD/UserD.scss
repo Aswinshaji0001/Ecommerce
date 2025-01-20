@@ -259,16 +259,24 @@
     .cards {
         // display: flex;
         height: auto;
-        margin-top: 2%;
+        margin-top: 4%;
         // justify-content: center;
         text-align:center;
-
         .cardx {
-            width: 100%;
-            height: 450px;
-            
+            width: 90%;
+            height: auto;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; 
+            border-radius: 8px; 
+            padding: 10px;
+
+            .ads{
+              
             .buttonsss{
-                .button-24 {
+
+                margin-bottom: 10px;
+
+                .button-24
+                 {
                     width: 20%;
                     margin-top: 3%;
                     color: #002349;
@@ -312,10 +320,10 @@
                 gap: 20px;
                 display: flex;
                 flex-direction: column;
-                margin-bottom: 15px;
-                text-align: left;
+                margin-bottom: 10px;
                 .badx{
                     display: flex;
+                    
                     width: 100%;
                     align-items: center;
                     justify-content: space-evenly ;
@@ -344,19 +352,10 @@
                 background-color: #002349;
             }
 
-            .address-card {
-                margin: 5%;
-                padding: 30px;
-                box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-                border-radius: 8px;
-                
-                input:disabled {
-                    border: 1px solid rgb(217, 214, 214);
-                }
-            }
+          
 
             .buttons {
-                display: flex   ;
+                display: flex;
                 .button-24 {
                     width: 20%;
                     margin-top: 3%;
@@ -398,11 +397,11 @@
     }
 
     .address-card {
-        margin: 5%;
-        padding: 30px;
-        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-        border-radius: 8px;
-        
+        margin: auto;
+        padding: 5px;
+        width: 99%;    
+        border-top: 1px solid rgb(163, 153, 153);    
+
         .ad {
             display: flex;
             justify-content: space-evenly;
@@ -427,4 +426,5 @@
             justify-content: space-between;
         }
     }
+}
 }
