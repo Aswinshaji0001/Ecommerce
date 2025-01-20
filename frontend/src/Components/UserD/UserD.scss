@@ -7,7 +7,6 @@
     .left {
         width: 30%;
         height: 100%;
-        border: 2px solid #8330c2;
         $main-color: #000;
         $submain-color: #78858f;
         $bg-color: #fff;
@@ -143,6 +142,7 @@
                   background: #002349;
                   text-transform: uppercase;
                   transition: all 0.3s;
+                  text-align: center;
           
                   &:hover {
                     background: $main-color;
@@ -170,7 +170,7 @@
                   margin: 2%;
                   width: 120px;
                   height: 35px;
-                  text-align: left;
+                  text-align: center;
                   background-color: #ff4d4d; 
                   color: #ffffff; 
                   background-color: #002349;
@@ -203,8 +203,8 @@
 
     .right {
         width: 70%;
-        height: 100%;
-        border: 1px solid black;
+        height: 100vh;
+        border-left : 1px solid black;
         overflow-y: scroll;
 
         .buttonss {

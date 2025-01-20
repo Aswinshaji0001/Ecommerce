@@ -174,7 +174,7 @@ console.log(product);
             )}
           </select>
 
-          <button type="button" onClick={() => setAddCategory(!isAddCategory)}>
+          <button type="button" className='button-25' onClick={() => setAddCategory(!isAddCategory)}>
             <FiPlus /> {/* Render the plus icon */}
           </button>
 

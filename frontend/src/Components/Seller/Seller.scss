@@ -194,276 +194,119 @@
     }
   
     .right {
-      width: 80%;
-      height: 100%;
+      width: 60%; // Adjusted width to balance layout
+      height: 90%;
+      padding: 20px;
+      background-color: #f9f9f9; // Light background for contrast
       text-align: center;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  
-      .button-24 {
-        width: 40%;
-        margin-top: 3%;
-        background: #002349;
-        border: 1px solid #002349;
+      overflow-y: auto; // Allow scrolling for long content
+      position: relative;
+    
+      // Button at the top-right corner
+      .cardsss {
+        position: absolute;
+
+        right: 20px;
+        top: 20px;
+        background-color: #002349;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
         border-radius: 6px;
-        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-        color: #FFFFFF;
         cursor: pointer;
-        display: inline-block;
-        font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
-        font-size: 16px;
-        font-weight: 800;
-        padding: 12px 14px;
-        text-align: center;
-        vertical-align: middle;
-        transition: background-color 0.3s, color 0.3s;
-      }
-  
-      .button-24:hover,
-      .button-24:active {
-        background-color: initial;
-        color: #002349;
-      }
-  
-      .button-24:active {
-        opacity: 0.5;
-      }
-  
-      .cardm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 20px;
-        
-        .cardn {
-          margin: 2%;
-          width: 100px;
-          height: 50px;
-          border: 1px solid black;
-          border-radius: 10px;
-          line-height: 50px;
-          text-align: center;
-          
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+    
+        &:hover {
+          background-color: #004080; // Slightly lighter blue
+          transform: scale(1.05);
+          box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+        &:active {
+          background-color: #003060; // Darker blue
+          transform: scale(1);
         }
       }
-  
-      /* Category section */
+    
+      // Products section
       .products {
-        margin-top: 20px;
-        text-align: center;
-        .cardsss {
-          margin: 2%;
-          width: 120px;
-          height: 35px;
-          text-align: center;
-          background-color: #ff4d4d; 
-          color: #ffffff; 
-          background-color: #002349;
-          font-size: 12px;
-          font-weight: 700;
-          padding: 12px 24px; 
-          border: none;
-          border-radius: 4px;
-          // Rounded corners
-          cursor: pointer; // Pointer cursor to indicate interactivity
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
-          transition: all 0.3s ease-in-out; // Smooth transitions for hover effects
-  
-          &:hover {
-            background-color: #e60000; // Darker red on hover
-            transform: scale(1.05); // Slightly increase size on hover
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); // Enhance shadow on hover
-          }
-  
-          &:active {
-            background-color: #cc0000; // Even darker red on click
-            transform: scale(1); // Reset scale to default on click
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Slightly reduced shadow
-          }
-        }
-  
-        h1 {
-          font-size: 1.5rem;
-          color: #333;
+
+        margin-top: 50px;
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+        .des {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           margin-bottom: 20px;
-        }
-  
-        .cardm {
-          margin-bottom: 20px;
-        }
-  
-        .cardn {
-          margin: 10px;
-          padding: 10px;
-          width: 150px;
-          height: 60px;
-          border: 1px solid #ddd;
-          border-radius: 10px;
-          line-height: 40px;
-          text-align: center;
-          font-weight: bold;
-          font-size: 14px;
-          background-color: #f4f4f4;
-          transition: background-color 0.3s, transform 0.2s;
-        }
-  
-        .cardn:hover {
-          background-color: #002349;
-          color: #fff;
-          transform: translateY(-5px);
-        }
-  
-        /* Plus button to show the input box */
-        .plus-button {
-          font-size: 1.5rem;
-          color: #002349;
-          border: none;
-          background: none;
-          cursor: pointer;
-          margin-left: 10px;
-          transition: transform 0.2s ease;
-  
-          &:hover {
-            transform: scale(1.1);
+    
+          h2 {
+            font-size: 20px;
+            font-weight: bold;
             color: #002349;
           }
+    
+          .button-25 {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #002349;
+            color: #ffffff;
+            border-radius: 50%;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+    
+            &:hover {
+              transform: scale(1.1);
+              box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            }
+          }
         }
-  
-        /* Category Input Box */
-        .input-box {
+    
+        // Categories section
+        .catm {
           display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 15px;
-          gap: 10px;
-          padding: 10px;
-          border-radius: 8px;
-          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px;
-          background-color: #fff;
-          width: 60%;
-          margin: 0 auto;
-        }
-  
-        .input-box input {
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-          outline: none;
-          width: 60%;
-          transition: border-color 0.3s ease;
-        }
-  
-        .input-box input:focus {
-          border-color: #5c6bc0;
-        }
-  
-        .input-box .button-24 {
-          width: 40%;
-          background-color: #5c6bc0;
-          border-color: #5c6bc0;
-          transition: background-color 0.3s ease;
-        }
-  
-        .input-box .button-24:hover {
-          background-color: #3949ab;
-        }
-        .catm{
-          display: flex;
-          align-items: center;
-          justify-content: center;
           flex-wrap: wrap;
-          .cat{
-            margin: 2%;
-            width: 150px;
-            height: 50px;
-            line-height: 50px;
-            background-color: #002349;
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            border-radius: 8px;
-            h1{
-              color: white;
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-            }
-            a{
-              text-decoration: none;
-              color: white;
-            }
-          }
-        }
-  
-        .category-list {
-          margin-top: 20px;
-          text-align: left;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-  
-          .category-item {
-            font-size: 1rem;
-            color: #333;
+          gap: 15px;
+          justify-content: center;
+    
+          .cat {
+            width: 120px;
+            padding: 10px;
             background-color: #f4f4f4;
-            padding: 8px 12px;
-            margin-bottom: 8px;
-            width: 50%;
-            border-radius: 6px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             text-align: center;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            color: #002349;
+            transition: transform 0.3s, background-color 0.3s;
+    
+            &:hover {
+              background-color: #002349;
+              color: #ffffff;
+              transform: translateY(-5px);
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+    
+            a {
+              text-decoration: none;
+              color: inherit; // Inherit color for hover effect
+            }
           }
-  
-          .category-item:hover {
-            background-color: #8330c2;
-            color: white;
-          }
-          .add-product-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          
-          .add-category-section {
-            margin-top: 20px;
-          }
-          
-          .plus-button {
-            background-color: #8330c2;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 10px;
-          }
-          
-          .input-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 10px;
-          }
-          
-          .input-box input {
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 200px;
-          }
-          
-          .input-box button {
-            background-color: #8330c2;
-            color: white;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-
-     
-          
         }
       }
     }
+    
   }
   

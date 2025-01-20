@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MdAdd } from 'react-icons/md';
 import '../Seller/Seller.scss';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -177,23 +178,33 @@ const Seller = ({ setUser, setLogin }) => {
         </div>
 
         <div className="right">
+        <Link to="/shipping"><button className='cardsss'>SHIPPING</button></Link>
+
           <div className="products">
-            <h1>All Categories</h1>
-            <Link to="/shipping"><button className='cardsss'>SHIPPING</button></Link>
-            <div className="add-product-section">
-              <Link to="/addproduct"><button className='button-24'>Add Product</button></Link>
-              <div className="catm">
+
+            <div className="des">
+
+           <div className="headtag">
+            <h2>All Your Products</h2>
+            </div>
+            <Link to="/addproduct">
+                <button className="button-25">
+                  <MdAdd size={24} /> {/* Replace text with the icon */}
+                </button>
+              </Link>
+            </div>
+            <div className="catm">
                 {categories && categories.length > 0 ? (
                   categories.map((cat, index) => (
                     <div key={index} className="cat">
-                      <Link to={`/catprod/${cat}`}><h1>{cat}</h1></Link>
+                      <Link to={`/catprod/${cat}`}><h3>{cat}</h3></Link>
                     </div>
                   ))
                 ) : (
                   <p>No categories available</p> // Show this if there are no categories
                 )}
               </div>
-            </div>
+          
           </div>
         </div>
       </div>

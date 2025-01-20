@@ -123,16 +123,14 @@ console.log(product);
   
       if (orderResponse.status === 201) {
         alert("Success")
-        
-
+  
         console.log('Product added to orders:', orderResponse.data);
         navigate("/final")
       } else {
         alert('Error placing order.');
       }
     } catch (error) {
-      console.error('Error during the purchase process:', error);
-      alert('Failed to complete the purchase. Please try again.');
+      alert('Product Out of Stock');
     }
   };
 

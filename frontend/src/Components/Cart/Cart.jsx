@@ -88,12 +88,17 @@ const Cart = ({ setUser, setLogin }) => {
       if (resAddToOrders.status === 201) {
         alert("Success! Your order has been placed.");
         setCartItems([]); 
-      } else {
+        navigate("/final")
+      } 
+        else if(res.status==403){
+        alert("Quantity unavailable");
+
+      }
+      else {
         alert('Error processing checkout');
       }
     } catch (error) {
-      console.error('Error during checkout', error);
-      alert('Failed to proceed with checkout');
+      alert('Product Out of Stock');
     }
   };
   
@@ -104,7 +109,9 @@ const Cart = ({ setUser, setLogin }) => {
       if (res.status === 201) {
         alert("Product Purchased");
         getAllProducts();
-      } else {
+      } 
+    
+      else {
         alert("Error purchasing product");
       }
     } catch (error) {

@@ -572,7 +572,7 @@ export async function addOrder(req, res) {
     console.log(newQuantity);
 
     if (newQuantity < 0) {
-      return res.status(201).send({ msg: "Error: Insufficient stock" });
+      return res.status(403).send({ msg: "Error: Insufficient stock" });
     }
 
     // Update the product's size quantity
@@ -651,7 +651,7 @@ export async function addAllOrders(req, res) {
       
       
       if (newQuantity < 0) {
-        return res.status(400).send({ msg: `Not enough stock for size ${sizee} of ${product.pname}` });
+        return res.status(403).send({ msg:"Not enough stock for size"});
       }
 
       await productSchema.updateOne(
