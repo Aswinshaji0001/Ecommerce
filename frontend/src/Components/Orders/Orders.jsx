@@ -168,17 +168,53 @@ console.log(product);
           </div>
 
           <div className="product-right">
-            {/* Right side: Price, Address selection, and Proceed to Buy */}
-            {quantity <= 2 && (
-              <h3 className="delivery-charge">
-                Delivery Charge: ₹40
-              </h3>
-            )}
-            <h3>Offer: 20% Applied</h3>
-            <h3>Coupons for You Applied</h3>
-            <h2 className="product-price">
-              Price: ₹{calculatePrice()}
-            </h2>
+            <div className="ms">
+
+            <div className="maindiv">
+            <div className='div1'>{quantity <= 2 && (
+              <p className="delivery-charge">
+                Delivery Charge: 
+              </p>
+            )}</div>
+            <div>{quantity <= 2 && (
+            <h3>₹40</h3>
+          )}</div>
+            </div>
+            <div className="maindiv2">
+
+           
+            <div className="div2">
+              <p>Offer: </p>
+              </div>
+              <div>
+              <h3>20% Applied</h3>
+              </div>
+              </div>
+            
+            <div className="maindiv2">
+              <div>
+
+              
+            <p>Coupons </p>
+            </div>
+            <div>
+            <h3>Applied </h3>
+            </div>
+            </div>
+            <div className="maindiv2">
+              <div>
+            <p>
+            Price:
+            </p>
+            </div>
+            <div>
+            <h3>
+               ₹{calculatePrice()}
+            </h3>
+            </div>
+            </div>
+            </div>
+
 
             <div className="address-selection">
               <h3>Select Delivery Address</h3>

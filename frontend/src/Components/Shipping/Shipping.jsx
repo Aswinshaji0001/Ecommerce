@@ -63,7 +63,7 @@ const Shipping = ({ setUser, setLogin }) => {
 
             {!loading && !error && orders.length > 0 ? (
                 <div className="orders-container">
-                    {orders.map((order) => (
+                    {orders.map((order,ind) => (
                         <div className="order-item" key={order.id}>
                             <div className="order-image">
                                 {order.product && order.product.pimages && order.product.pimages.length > 0 ? (
@@ -74,7 +74,7 @@ const Shipping = ({ setUser, setLogin }) => {
                             </div>
                             <div className="order-info">
                                 <h3>{order.product.pname || 'Product name not available'}</h3> {/* Fallback for pname */}
-                                <p className="brand">Brand: {order.product.brand || 'Brand not available'}</p> {/* Fallback for brand */}
+                                <p className="brand">Brand: {order.product.brand}</p> {/* Fallback for brand */}
                                 <p className="price">Price: ₹{order.product.price || '0'}</p> {/* Fallback for price */}
                                 <p className="price"> Quantity :{order.quantity}</p>
                                 <p className="price"> Total Price :{order.totalPrice}</p>

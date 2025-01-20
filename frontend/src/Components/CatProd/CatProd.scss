@@ -1,6 +1,7 @@
 .catprod {
   background-color: #f4f7fc;
   padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .main {
     max-width: 1200px;
@@ -30,6 +31,7 @@
       flex-wrap: wrap; /* Ensure cards wrap to the next row */
       gap: 20px;
       justify-content: space-evenly;
+      text-align: center;
 
       .cardy {
         background-color: #fff;
@@ -84,18 +86,19 @@
         }
 
         .buttons {
-          display: flex;
-          justify-content: space-evenly;
           padding: 10px;
+          text-align: center;
+         
 
           .button-3,
           .button-4 {
+            margin-top: 2%; 
             flex: 1;
-            margin: 0 5px;
             padding: 8px;
             font-size: 14px;
             font-weight: 600;
             border-radius: 6px;
+            width: 100%;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
             text-align: center;
