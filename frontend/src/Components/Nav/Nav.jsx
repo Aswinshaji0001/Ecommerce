@@ -1,7 +1,7 @@
 import React from 'react';
 import '../Nav/Nav.scss';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaHeart, FaClipboardList, FaUser } from 'react-icons/fa'; // Importing the FaUser icon
+import { FaShoppingCart, FaHeart, FaClipboardList, FaUser,FaSearch } from 'react-icons/fa'; // Importing the FaUser icon
 
 const Nav = ({ user, login }) => {
 

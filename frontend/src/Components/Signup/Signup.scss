@@ -32,6 +32,18 @@
             font-size: 0.875rem;
             line-height: 1.25rem;
             text-align: center;
+            .strong{
+              border: 1px solid green;
+              &:focus {
+                border-color: green;
+              }
+            }
+            .weak{
+              border-color:  red;
+              &:focus {
+                border-color: red;
+               }
+            }
           }
           
           .input-group label {

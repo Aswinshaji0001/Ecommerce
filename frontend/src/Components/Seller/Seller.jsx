@@ -21,7 +21,7 @@ const Seller = ({ setUser, setLogin }) => {
 
   const getDetails = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/seller", { headers: { "Authorization": `Bearer ${value}` } });
+      const res = await axios.get("http://localhost:3000/api/seller", { headers: { Authorization: `Bearer ${value}` } });
       if (res.status === 201) {
         getData(res.data.seller);
         setUser(res.data.username);
@@ -37,7 +37,7 @@ const Seller = ({ setUser, setLogin }) => {
 
   const getSellerD = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getseller", { headers: { "Authorization": `Bearer ${value}` } });
+      const res = await axios.get("http://localhost:3000/api/getseller", { headers: { Authorization: `Bearer ${value}` } });
       if (res.status === 201) {
         getSeller(res.data);
       } else {
@@ -51,23 +51,22 @@ const Seller = ({ setUser, setLogin }) => {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getcat", { headers: { "Authorization": `Bearer ${value}` } });
-      if (res.status === 201) {
-        console.log(res.data);
-        setCategories(res.data.category); // Ensure categories are set only if the data exists
+      const res = await axios.get("http://localhost:3000/api/getcat", { headers: { Authorization: `Bearer ${value}` } });
+      if (res.status === 201 && Array.isArray(res.data)) {
+        setCategories(res.data);
       } else {
-        setCategories([]); // Explicitly set to an empty array if no categories are returned
+        setCategories([]);
       }
     } catch (error) {
       console.error("Error fetching categories", error);
-      setCategories([]); // Handle error by resetting categories to empty
+      setCategories([]);
       alert("Error fetching categories");
     }
   };
 
   const getProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getproducts", { headers: { "Authorization": `Bearer ${value}` } });
+      const res = await axios.get("http://localhost:3000/api/getproducts", { headers: { Authorization: `Bearer ${value}` } });
       if (res.status === 201) {
         getProduct(res.data);
       } else {
@@ -96,7 +95,7 @@ const Seller = ({ setUser, setLogin }) => {
 
   const shipping = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/getshipping", { headers: { "Authorization": `Bearer ${value}` } });
+      const res = await axios.get("http://localhost:3000/api/getshipping", { headers: { Authorization: `Bearer ${value}` } });
       if (res.status === 201) {
         console.log(res.data);
       } else {
@@ -153,7 +152,7 @@ const Seller = ({ setUser, setLogin }) => {
                     type="text"
                     id="username"
                     name="username"
-                    value={seller.name || ""} // Bind to seller name
+                    value={seller.name || ""}
                     placeholder="Enter username"
                     required
                   />
@@ -163,7 +162,7 @@ const Seller = ({ setUser, setLogin }) => {
                     type="email"
                     id="email"
                     name="email"
-                    value={seller.location || ""} // Bind to seller location
+                    value={seller.location || ""}
                     placeholder="Enter location"
                     required
                   />
@@ -178,33 +177,31 @@ const Seller = ({ setUser, setLogin }) => {
         </div>
 
         <div className="right">
-        <Link to="/shipping"><button className='cardsss'>SHIPPING</button></Link>
-
+          <Link to="/shipping"><button className='cardsss'>SHIPPING</button></Link>
           <div className="products">
-
             <div className="des">
-
-           <div className="headtag">
-            <h2>All Your Products</h2>
-            </div>
-            <Link to="/addproduct">
+              <div className="headtag">
+                <h2>All Your Products</h2>
+              </div>
+              <Link to="/addproduct">
                 <button className="button-25">
-                  <MdAdd size={24} /> {/* Replace text with the icon */}
+                  <MdAdd size={24} />
                 </button>
               </Link>
             </div>
             <div className="catm">
-                {categories && categories.length > 0 ? (
-                  categories.map((cat, index) => (
-                    <div key={index} className="cat">
-                      <Link to={`/catprod/${cat}`}><h3>{cat}</h3></Link>
-                    </div>
-                  ))
-                ) : (
-                  <p>No categories available</p> // Show this if there are no categories
-                )}
-              </div>
-          
+              {categories && categories.length > 0 ? (
+                categories.map((cat, index) => (
+                  <div key={cat._id || index} className="cat">
+                    <Link to={`/catprod/${cat.category}`}>
+                      <h3>{cat.category}</h3>
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p>No categories available</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../Home/Home.scss';
+import Sidebar from '../Sidebar/Sidebar';
 
 const Home = ({ setUser, setLogin }) => {
   const navigate = useNavigate();
@@ -41,6 +42,7 @@ const Home = ({ setUser, setLogin }) => {
 
   return (
     <div className='home'>
+          <Sidebar setProducts={setProducts}/>
       <div className="product-container">
         {products.map((product, index) => (
           <Link key={index} to={`/product/${product._id}`} className="product-card">

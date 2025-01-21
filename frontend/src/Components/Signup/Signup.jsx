@@ -7,6 +7,8 @@ import axios from 'axios';
 
 const Signup = () => {
 const email = localStorage.getItem('email');
+const [checkPassword, setCheckPassword] = useState(false);
+const [checkCPassword, setCheckCPassword] = useState(false);
 const navigate = useNavigate();
 const [data,setData]=useState({
     email:email,
@@ -20,6 +22,8 @@ const handleChange=(e)=>{
     setData((pre)=>({...pre,[e.target.name]:e.target.value}))
   }
   const handleSubmit= async(e)=>{
+	if(checkCPassword&&checkPassword){
+
     e.preventDefault();
     console.log(data);
     const res = await axios.post("http://localhost:3000/api/signup",data,{headers:{"Content-Type":"application/json"}});
@@ -29,9 +33,30 @@ const handleChange=(e)=>{
         localStorage.removeItem('email')
         navigate("/login")
     }
-    else{
-        alert("failed")
+    else if(res.status==403){
+        alert("error")
     }
+  }
+  else{
+	alert("enter a strong password")
+  }
+}
+  const handlePassword=(e)=>{
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+  if (regex.test(e.target.value)) {
+    setData((pre)=>({...pre,[e.target.name]:e.target.value}));
+    if (e.target.name=="password") {
+      setCheckPassword(true);
+    }else if(e.target.name=="cpassword"){
+      setCheckCPassword(true)
+    }
+  } else {
+    if (e.target.name=="password") {
+      setCheckPassword(false);
+    }else if(e.target.name=="cpassword"){
+      setCheckCPassword(false)
+    }
+  }
   }
   return (
     <div className='Signup'>
@@ -45,12 +70,12 @@ const handleChange=(e)=>{
 		</div>
 		<div class="input-group">
 			<label for="password">Password</label>
-			<input type="password" name="password" id="password" placeholder="" onChange={handleChange}/>
+			<input type="password" name="password" id="password" className={checkPassword? "strong":"weak"} placeholder="" onChange={handlePassword}/>
 			
 		</div>
         <div class="input-group">
 			<label for="password">Confirm Password</label>
-			<input type="password" name="cpassword" id="cpassword" placeholder="" onChange={handleChange}/>
+			<input type="password" name="cpassword" id="cpassword" placeholder=""  className={checkCPassword? "strong":"weak"} onChange={handlePassword}/>
 		</div>
         <div class="input-group">
 		<select name="accounttype" id="accounttype" className='login' onChange={handleChange}>

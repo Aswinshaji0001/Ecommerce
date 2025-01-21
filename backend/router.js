@@ -38,5 +38,6 @@ router.route("/addorder").post(Auth,u.addOrder);
 router.route("/addallorders").post(Auth,u.addAllOrders);
 router.route("/getorders").get(Auth,u.getOrders);
 router.route("/getshipping").get(Auth,u.getShipping);
+router.route("/getsdata").get(Auth,u.getSearchData);
 
 export default router;

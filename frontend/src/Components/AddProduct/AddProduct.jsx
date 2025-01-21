@@ -56,7 +56,7 @@ console.log(product);
     try {
       const res = await axios.get("http://localhost:3000/api/getcat", { headers: { "Authorization": `Bearer ${value}` } });
       if (res.status === 201) { 
-        setCategories(res.data.category); // Assuming res.data is an array
+        setCategories(res.data); // Assuming res.data is an array
       } else {
         alert("Failed to fetch categories");
       }
@@ -163,16 +163,17 @@ console.log(product);
           <h2>Add Product</h2>
           <input type="text" placeholder='Name' name='pname' id='pname' onChange={handleChange} />
 
-          <select name='category' id='category' onChange={handleChange} value={product.category}>
-            <option value="">Select Category</option>
-            {Array.isArray(categories) && categories.length > 0 ? (
-              categories.map((cat, index) => (
-                <option key={index} value={cat}>{cat}</option>
-              ))
-            ) : (
-              <option value="">No categories available</option>
-            )}
-          </select>
+          <select name="category" id="category" onChange={handleChange} value={product.category}>
+  <option value="">Select Category</option>
+  {Array.isArray(categories) && categories.length > 0 ? (
+    categories.map((cat, index) => (
+      <option key={index} value={cat.category}>{cat.category}</option>
+    ))
+  ) : (
+    <option value="">No categories available</option>
+  )}
+</select>
+
 
           <button type="button" className='button-25' onClick={() => setAddCategory(!isAddCategory)}>
             <FiPlus /> {/* Render the plus icon */}

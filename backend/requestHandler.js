@@ -332,12 +332,7 @@ export async function addCategory(req,res) {
       console.log(req.body);
       const id =req.user.userId;
       const {newCategory} = req.body;
-      const category=await categorySchema.findOne({});
-      
-      if (category) {
-        const datas = await categorySchema.updateOne({_id:category._id},{$push:{category:newCategory}})
-      }
-      const datas = await categorySchema.create({category:[newCategory]})
+      const datas = await categorySchema.create({category:newCategory})
       return res.status(201).send({msg:"Success"})
 
     }
@@ -350,7 +345,7 @@ export async function addCategory(req,res) {
 export async function getCategory(req,res) {
   try {
         const id = req.user.userId;
-        const data = await categorySchema.findOne({});
+        const data = await categorySchema.find();
         return res.status(201).send(data)
   } catch (error) {
     res.status(404).send({msg:error})
@@ -708,5 +703,22 @@ export async function getShipping(req, res) {
   } catch (error) {
     console.error(error);
     return res.status(404).send({ msg: "Error processing orders" });
+  }
+}
+
+export async  function getSearchData(req,res){
+  try {
+        const id = req.user.userId;
+
+        const data = await productSchema.find();
+        const data1 = await categorySchema.find();
+        
+        
+        return res.status(201).send({data,data1});
+        console.log("HAI");
+
+  } catch (error) {
+    return res.status(404).send({ msg: "Error processing orders" });
+
   }
 }
