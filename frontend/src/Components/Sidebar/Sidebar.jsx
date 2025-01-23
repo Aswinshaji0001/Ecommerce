@@ -72,37 +72,60 @@ const Sidebar = ({setProducts}) => {
   };
   return (
     <div className="Sidebar">
-      <div className="group">
-        <FaSearch className="icon" />
-        <input className="input" type="search" 
-          id="search"
-          value={searchTerm}
-          onChange={handleSearchChange} placeholder="Search" />
-      </div>
+  {/* Search Section */}
+  <div className="section">
+    <h3 className="section-title">Search</h3>
+    <div className="group">
+      <FaSearch className="icon" />
+      <input
+        type="search"
+        className="input"
+        placeholder="Search products..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
+    </div>
+  </div>
 
-      <div className="category-filter">
-        <label htmlFor="categories">Category:</label>
-        <select
-          id="categories"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option  value="">
-            All
-          </option>
-          {categories.map((cat,ind)=>(
-            <option key={ind} value={cat.category}>
+  {/* Category Filter Section */}
+  <div className="section">
+    <h3 className="section-title">Category</h3>
+    <div className="category-filter">
+      <select value={selectedCategory} onChange={handleCategoryChange}>
+        <option value="">All Categories</option>
+        {categories.map((cat, index) => (
+          <option key={index} value={cat.category}>
             {cat.category.toUpperCase()}
           </option>
-          ))}
-        </select>
-      </div>
-      <div className="price-filter">
-      <label for="rangeInput">Price Filter:</label>
-      <p id="rangeValue">Under:- ${maxPrice}</p>
-      <input type="range" id="rangeInput" name="range" min="0" max="10000" step="1"  onChange={handlePriceChange} />
-      </div>
+        ))}
+      </select>
     </div>
+  </div>
+
+  {/* Price Filter Section */}
+  <div className="section">
+    <h3 className="section-title">Price Range</h3>
+    <div className="price-filter">
+      <p id="rangeValue">Under: ₹{maxPrice}</p>
+      <input
+        type="range"
+        min="0"
+        max="10000"
+        step="100"
+        value={maxPrice}
+        onChange={handlePriceChange}
+      />
+    </div>
+  </div>
+
+  {/* Apply Filters Button */}
+  <div className="section">
+    <button className="apply-btn" onClick={() => getDetails()}>
+      Apply Filters
+    </button>
+  </div>
+</div>
+
 
 
   );
